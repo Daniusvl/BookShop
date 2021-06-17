@@ -16,7 +16,7 @@ namespace BookShop.Domain.Entities
 
         public bool Hidden { get; set; }
 
-        public DateTime DateReleased { get; set; } = DateTime.Now;
+        public DateTime DateReleased { get; set; }
 
         public IList<BookPhoto> Photos { get; set; } = new List<BookPhoto>();
 
