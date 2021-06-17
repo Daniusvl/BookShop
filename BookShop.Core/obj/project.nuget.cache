@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "JNuJ1JQKN1efvmEH+olF3u30wpGXiux3/r3U0FbqlvLl49g/xP0fgEdXWZCm/rEGknWjqx5FC/qod3AQkhFn/A==",
+  "dgSpecHash": "fMP2w6+v2L+eB5TJeTPYEapu6XoawqyPJGMfhkLR4Yk5kPEMhIJ+j8WshcI7hCBAZQ4auJwlOq4sqL7DJJvjbg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\BookShop\\BookShop.Core\\BookShop.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.0.0\\microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512"
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.configuration.binder\\5.0.0\\microsoft.extensions.configuration.binder.5.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.0.0\\microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }
