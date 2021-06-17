@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mediatr\" />
+    <Folder Include="Mediatr\BookAuthor\Commands\" />
+    <Folder Include="Mediatr\BookAuthor\Queries\" />
+    <Folder Include="Mediatr\BookPhoto\Commands\" />
+    <Folder Include="Mediatr\BookPhoto\Queries\" />
+    <Folder Include="Mediatr\Category\Commands\" />
+    <Folder Include="Mediatr\Category\Queries\" />
+    <Folder Include="Mediatr\Product\Commands\" />
+    <Folder Include="Mediatr\Product\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
