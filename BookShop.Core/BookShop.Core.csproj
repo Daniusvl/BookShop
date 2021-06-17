@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
     <Folder Include="Mediatr\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookShop.Domain\BookShop.Domain.csproj" />
   </ItemGroup>
 
 </Project>
