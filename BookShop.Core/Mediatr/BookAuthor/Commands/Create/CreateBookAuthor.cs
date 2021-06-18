@@ -11,7 +11,7 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
 {
     public static class CreateBookAuthor
     {
-        public record Command(Domain.Entities.BookAuthor BookAuthor) : IRequest;
+        public record Command(string Name) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
@@ -43,15 +43,20 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
                         throw new ArgumentNullException(nameof(request));
                     }
 
-                    if(request.BookAuthor == null)
+                    if(request.Name == null)
                     {
-                        throw new ArgumentNullException(nameof(request.BookAuthor));
+                        throw new ArgumentNullException(nameof(request.Name));
                     }
                 }
 
                 // TODO: Add validation and logging.
 
-                await repository.Create(request?.BookAuthor);
+                Domain.Entities.BookAuthor bookAuthor = new()
+                {
+                    Name = request?.Name ?? string.Empty
+                };
+
+                await repository.Create(bookAuthor);
 
                 return default;
             }
