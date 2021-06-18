@@ -5,12 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mediatr\BookPhoto\Commands\" />
-    <Folder Include="Mediatr\BookPhoto\Queries\" />
-    <Folder Include="Mediatr\Category\Commands\" />
-    <Folder Include="Mediatr\Category\Queries\" />
-    <Folder Include="Mediatr\Product\Commands\" />
-    <Folder Include="Mediatr\Product\Queries\" />
+    <Folder Include="Mediatr\BookPhoto\Commands\Create\" />
+    <Folder Include="Mediatr\BookPhoto\Commands\Delete\" />
+    <Folder Include="Mediatr\BookPhoto\Commands\Update\" />
+    <Folder Include="Mediatr\BookPhoto\Queries\GetAll\" />
+    <Folder Include="Mediatr\BookPhoto\Queries\GetById\" />
+    <Folder Include="Mediatr\Category\Commands\Create\" />
+    <Folder Include="Mediatr\Category\Commands\Delete\" />
+    <Folder Include="Mediatr\Category\Commands\Update\" />
+    <Folder Include="Mediatr\Category\Queries\GetAll\" />
+    <Folder Include="Mediatr\Category\Queries\GetById\" />
+    <Folder Include="Mediatr\Product\Commands\Create\" />
+    <Folder Include="Mediatr\Product\Commands\Delete\" />
+    <Folder Include="Mediatr\Product\Commands\Update\" />
+    <Folder Include="Mediatr\Product\Queries\GetAll\" />
+    <Folder Include="Mediatr\Product\Queries\GetById\" />
   </ItemGroup>
 
   <ItemGroup>
