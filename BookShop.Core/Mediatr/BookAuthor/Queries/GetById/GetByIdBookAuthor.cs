@@ -6,9 +6,6 @@ using BookShop.Core.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,6 +38,11 @@ namespace BookShop.Core.Mediatr.BookAuthor.Queries.GetById
                 if (configuration == null)
                 {
                     throw new ServiceNullException(nameof(IConfiguration), nameof(Handler));
+                }
+
+                if(mapper == null)
+                {
+                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
                 }
 
                 if (configuration.IsDevelopment())
