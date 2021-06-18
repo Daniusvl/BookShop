@@ -51,6 +51,13 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Update
 
                 // TODO: Add validation and logging.
 
+                Domain.Entities.BookAuthor bookAuthor = await repository.GetById(request.BookAuthor.Id);
+
+                if(bookAuthor == null)
+                {
+                    throw new NotFoundException(nameof(Domain.Entities.BookAuthor), request.BookAuthor.Id);
+                }
+
                 await repository.Update(request?.BookAuthor);
 
                 return default;
