@@ -12,5 +12,10 @@ namespace BookShop.Core.Exceptions
 
         public string ParamName { get; }
         public int Id { get; }
+
+        public override string ToString()
+        {
+            return nameof(NotFoundException) + $": {ParamName}, {Id}";
+        }
     }
 }

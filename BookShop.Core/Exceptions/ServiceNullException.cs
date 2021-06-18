@@ -13,5 +13,10 @@ namespace BookShop.Core.Exceptions
         public string ParamName { get; }
 
         public string Where { get; }
+
+        public override string ToString()
+        {
+            return nameof(ServiceNullException) + $": {ParamName} in {Where}";
+        }
     }
 }
