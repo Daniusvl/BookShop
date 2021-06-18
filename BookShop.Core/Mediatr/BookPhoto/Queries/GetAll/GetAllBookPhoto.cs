@@ -7,8 +7,8 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -66,6 +66,11 @@ namespace BookShop.Core.Mediatr.BookPhoto.Queries.GetAll
                 }
 
                 IList<BookPhotoModel> bookPhotoModels = mapper.Map<IList<Domain.Entities.BookPhoto>, IList<BookPhotoModel>>(bookPhotos);
+
+                for (int i = 0; i < bookPhotoModels.Count; i++)
+                {
+                    bookPhotoModels[i].FileBytes = File.ReadAllBytes(bookPhotoModels[i].FilePath).ToList();
+                }
 
                 return bookPhotoModels;
             }
