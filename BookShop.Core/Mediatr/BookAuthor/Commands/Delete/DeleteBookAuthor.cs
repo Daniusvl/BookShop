@@ -11,7 +11,7 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Delete
 {
     public static class DeleteBookAuthor
     {
-        public record Command(Domain.Entities.BookAuthor BookAuthor) : IRequest;
+        public record Command(int Id) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
@@ -42,16 +42,18 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Delete
                     {
                         throw new ArgumentNullException(nameof(request));
                     }
-
-                    if (request.BookAuthor == null)
-                    {
-                        throw new ArgumentNullException(nameof(request.BookAuthor));
-                    }
                 }
 
                 // TODO: Add validation and logging.
 
-                await repository.Delete(request?.BookAuthor);
+                Domain.Entities.BookAuthor bookAuthor = await repository.GetById(request.Id);
+
+                if(bookAuthor == null)
+                {
+                    throw new NotFoundException(nameof(Domain.Entities.BookAuthor), request.Id);
+                }
+
+                await repository.Delete(bookAuthor);
 
                 return default;
             }
