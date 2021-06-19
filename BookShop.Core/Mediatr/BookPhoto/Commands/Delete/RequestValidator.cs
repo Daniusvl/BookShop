@@ -2,9 +2,9 @@
 
 namespace BookShop.Core.Mediatr.BookPhoto.Commands.Delete
 {
-    public class RequestValidator : AbstractValidator<DeleteBookPhoto.Command>
+    internal class RequestValidator : AbstractValidator<DeleteBookPhoto.Command>
     {
-        public RequestValidator()
+        internal RequestValidator()
         {
             RuleFor(command => command)
                 .NotNull()

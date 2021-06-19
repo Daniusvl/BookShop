@@ -3,11 +3,11 @@ using FluentValidation;
 
 namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
 {
-    public class RequestValidator : AbstractValidator<CreateBookPhoto.Command>
+    internal class RequestValidator : AbstractValidator<CreateBookPhoto.Command>
     {
         private readonly IProductRepository repository;
 
-        public RequestValidator(IProductRepository repository)
+        internal RequestValidator(IProductRepository repository)
         {
             this.repository = repository;
             
