@@ -5,5 +5,6 @@ namespace BookShop.Core.Abstract.Repositories
 {
     public interface IProductRepository : IAsyncRepository<Product>, IAsyncLinqHelper<Product>
     {
+        bool ContainsWithName(string name);
     }
 }

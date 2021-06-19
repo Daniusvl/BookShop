@@ -3,6 +3,7 @@ using BookShop.Core.Abstract.Repositories.Base;
 using BookShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.Repositories.Repositories
@@ -18,6 +19,11 @@ namespace BookShop.Repositories.Repositories
             this.ctx = ctx;
             this.repo = repo;
             this.helper = helper;
+        }
+
+        public bool ContainsWithName(string name)
+        {
+            return ctx.Products.Any(ent => ent.Name == name);
         }
 
         public async Task Create(Product entity)
