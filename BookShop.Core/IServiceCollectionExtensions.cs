@@ -29,7 +29,7 @@ namespace BookShop.Core
 
             if(!Directory.Exists(Directory.GetCurrentDirectory() + @"\Books"))
             {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Books"));
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Books");
             }
             return services;
         }
