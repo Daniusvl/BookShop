@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.Core.Mediatr.Product.Queries.GetByPrice
 {
-    public static class GetByPrice
+    public static class GetByPriceProduct
     {
         public record Query(decimal Min, decimal Max) : IRequest<IList<ProductModel>>;
 
