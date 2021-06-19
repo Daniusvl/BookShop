@@ -1,9 +1,7 @@
 ﻿using BookShop.Core.Abstract.Repositories;
-using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,13 +19,11 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
         {
             private readonly IBookPhotoRepository repository;
             private readonly IProductRepository productRepository;
-            private readonly IConfiguration configuration;
 
-            public Handler(IBookPhotoRepository repository, IProductRepository productRepository, IConfiguration configuration)
+            public Handler(IBookPhotoRepository repository, IProductRepository productRepository)
             {
                 this.repository = repository;
                 this.productRepository = productRepository;
-                this.configuration = configuration;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -35,19 +31,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
                 if(repository == null)
                 {
                     throw new ServiceNullException(nameof(IBookPhotoRepository), nameof(Handler));
-                }
-
-                if(configuration == null)
-                {
-                    throw new ServiceNullException(nameof(IConfiguration), nameof(Handler));
-                }
-
-                if (configuration.IsDevelopment())
-                {
-                    if(request == null)
-                    {
-                        throw new ArgumentNullException(nameof(request));
-                    }
                 }
 
                 RequestValidator validator = new(productRepository);
