@@ -41,9 +41,34 @@ namespace BookShop.Repositories.Repositories
             return await repo.GetAll();
         }
 
+        public IList<Product> GetByAuthor(BookAuthor author)
+        {
+            return ctx.Products.Where(ent => ent.Author == author).ToList();
+        }
+
+        public IList<Product> GetByAuthorName(string author_name)
+        {
+            return ctx.Products.Where(ent => ent.Author.Name == author_name).ToList();
+        }
+
+        public IList<Product> GetByCategory(Category category)
+        {
+            return ctx.Products.Where(ent => ent.Category == category).ToList();
+        }
+
+        public IList<Product> GetByCategoryName(string category_name)
+        {
+            return ctx.Products.Where(ent => ent.Category.Name == category_name).ToList();
+        }
+
         public async Task<Product> GetById(int id)
         {
             return await repo.GetById(id);
+        }
+
+        public IList<Product> GetByPrice(decimal min, decimal max)
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsUniqueName(string name)
