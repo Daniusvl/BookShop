@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using BookShop.Core.Abstract.Repositories;
-using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
 using BookShop.Core.Models;
 using MediatR;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,13 +15,11 @@ namespace BookShop.Core.Mediatr.Category.Queries.GetById
         public class Handler : IRequestHandler<Query, CategoryModel>
         {
             private readonly ICategoryRepository repository;
-            private readonly IConfiguration configuration;
             private readonly IMapper mapper;
 
-            public Handler(ICategoryRepository repository, IConfiguration configuration, IMapper mapper)
+            public Handler(ICategoryRepository repository, IMapper mapper)
             {
                 this.repository = repository;
-                this.configuration = configuration;
                 this.mapper = mapper;
             }
 
@@ -35,22 +30,14 @@ namespace BookShop.Core.Mediatr.Category.Queries.GetById
                     throw new ServiceNullException(nameof(ICategoryRepository), nameof(Handler));
                 }
 
-                if (configuration == null)
-                {
-                    throw new ServiceNullException(nameof(IConfiguration), nameof(Handler));
-                }
-
                 if (mapper == null)
                 {
                     throw new ServiceNullException(nameof(IMapper), nameof(Handler));
                 }
 
-                if (configuration.IsDevelopment())
+                if (request == null)
                 {
-                    if (request == null)
-                    {
-                        throw new ArgumentNullException(nameof(request));
-                    }
+                    throw new ValidationException("Query cannot be null");
                 }
 
                 Domain.Entities.Category category = await repository.GetById(request.Id);
