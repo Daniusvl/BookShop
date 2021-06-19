@@ -38,13 +38,18 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Update
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.BookPhoto bookPhoto = await repository.GetById(request.BookPhoto.Id);
 
                 if(bookPhoto == null)
                 {
                     throw new NotFoundException(nameof(Domain.Entities.BookPhoto), request.BookPhoto.Id);
+                }
+
+                if(bookPhoto.FilePath != request.BookPhoto.FilePath)
+                {
+                    result.Errors.Add(new ValidationFailure("FilePath"
+                        , "You cannot change FilePath. If you want to update file it self, delete the old BookPhoto and ad new one"));
+                    throw new ValidationException(result);
                 }
 
                 await repository.Update(request.BookPhoto);
