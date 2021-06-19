@@ -35,8 +35,6 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.BookAuthor bookAuthor = new()
                 {
                     Name = request.Name

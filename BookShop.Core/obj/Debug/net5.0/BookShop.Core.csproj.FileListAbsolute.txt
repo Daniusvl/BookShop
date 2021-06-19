@@ -1,0 +1,15 @@
+D:\Projects\BookShop\BookShop.Core\bin\Debug\net5.0\BookShop.Core.deps.json
+D:\Projects\BookShop\BookShop.Core\bin\Debug\net5.0\BookShop.Core.dll
+D:\Projects\BookShop\BookShop.Core\bin\Debug\net5.0\ref\BookShop.Core.dll
+D:\Projects\BookShop\BookShop.Core\bin\Debug\net5.0\BookShop.Core.pdb
+D:\Projects\BookShop\BookShop.Core\bin\Debug\net5.0\BookShop.Domain.dll
+D:\Projects\BookShop\BookShop.Core\bin\Debug\net5.0\BookShop.Domain.pdb
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.csprojAssemblyReference.cache
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.AssemblyInfoInputs.cache
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.AssemblyInfo.cs
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.csproj.CoreCompileInputs.cache
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.csproj.CopyComplete
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.dll
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\ref\BookShop.Core.dll
+D:\Projects\BookShop\BookShop.Core\obj\Debug\net5.0\BookShop.Core.pdb

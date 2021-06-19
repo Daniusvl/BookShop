@@ -35,8 +35,6 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Delete
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.BookAuthor bookAuthor = await repository.GetById(request.Id);
 
                 if(bookAuthor == null)

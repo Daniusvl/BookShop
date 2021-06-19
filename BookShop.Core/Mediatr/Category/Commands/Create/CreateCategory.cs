@@ -35,8 +35,6 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.Category category = new()
                 {
                     Name = request?.Name ?? string.Empty

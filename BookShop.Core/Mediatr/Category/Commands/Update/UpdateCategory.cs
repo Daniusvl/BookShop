@@ -38,8 +38,6 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.Category category = await repository.GetById(request.Category.Id);
 
                 if(category == null)

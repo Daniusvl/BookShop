@@ -53,8 +53,6 @@ namespace BookShop.Core.Mediatr.Category.Queries.GetById
                     }
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.Category category = await repository.GetById(request.Id);
 
                 if(category == null)

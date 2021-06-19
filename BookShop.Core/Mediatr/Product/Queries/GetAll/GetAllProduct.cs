@@ -54,8 +54,6 @@ namespace BookShop.Core.Mediatr.Product.Queries.GetAll
                     }
                 }
 
-                // TODO: Add validation and logging.
-
                 IList<Domain.Entities.Product> products = await repository.GetAll();
 
                 if(products == null || products.Count == 0)

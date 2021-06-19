@@ -5,3 +5,13 @@ D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositorie
 D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositories.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositories.AssemblyInfoInputs.cache
 D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositories.AssemblyInfo.cs
+D:\Projects\BookShop\BookShop.Repositories\bin\Debug\net5.0\BookShop.Repositories.deps.json
+D:\Projects\BookShop\BookShop.Repositories\bin\Debug\net5.0\BookShop.Repositories.dll
+D:\Projects\BookShop\BookShop.Repositories\bin\Debug\net5.0\ref\BookShop.Repositories.dll
+D:\Projects\BookShop\BookShop.Repositories\bin\Debug\net5.0\BookShop.Repositories.pdb
+D:\Projects\BookShop\BookShop.Repositories\bin\Debug\net5.0\BookShop.Core.pdb
+D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositories.csproj.CoreCompileInputs.cache
+D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositories.csproj.CopyComplete
+D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositories.dll
+D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\ref\BookShop.Repositories.dll
+D:\Projects\BookShop\BookShop.Repositories\obj\Debug\net5.0\BookShop.Repositories.pdb

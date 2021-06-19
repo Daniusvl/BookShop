@@ -56,8 +56,6 @@ namespace BookShop.Core.Mediatr.Product.Queries.GetById
                     }
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.Product product = await repository.GetById(request.Id);
 
                 if(product == null)

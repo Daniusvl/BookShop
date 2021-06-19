@@ -39,8 +39,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Delete
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.BookPhoto bookPhoto = await repository.GetById(request.Id);
 
                 if(bookPhoto == null)

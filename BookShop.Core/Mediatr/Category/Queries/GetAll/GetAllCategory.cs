@@ -54,8 +54,6 @@ namespace BookShop.Core.Mediatr.Category.Queries.GetAll
                     }
                 }
 
-                // TODO: Add validation and logging.
-
                 IList<Domain.Entities.Category> categories = await repository.GetAll();
 
                 if(categories == null || categories.Count == 0)

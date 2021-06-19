@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZwclbdvLzNrjNF6EaBRg1iyI4QlGVhX1gtkXAQaI3GAQ1YmElM/6cOriec7d5EEHH5k4iOkhOg4HgApUIpXdvQ==",
+  "dgSpecHash": "4vgaDZND4mAjUCPvZJ0eQtQv0LfgbdrMLR6fM/G+ps0Petz8wDJVhOD68P65xW/aHEHYPtiJYkmSKworqirzEQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\BookShop\\BookShop.Core\\BookShop.Core.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.configuration.binder\\5.0.0\\microsoft.extensions.configuration.binder.5.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.0.0\\microsoft.extensions.dependencyinjection.abstractions.3.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.options\\3.0.0\\microsoft.extensions.options.3.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512"

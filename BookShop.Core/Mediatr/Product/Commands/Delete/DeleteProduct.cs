@@ -36,8 +36,6 @@ namespace BookShop.Core.Mediatr.Product.Commands.Delete
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.Product product = await repository.GetById(request.Id);
 
                 if(product == null)
