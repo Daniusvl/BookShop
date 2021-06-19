@@ -2,6 +2,7 @@
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,11 +20,13 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
         {
             private readonly IBookPhotoRepository repository;
             private readonly IProductRepository productRepository;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(IBookPhotoRepository repository, IProductRepository productRepository)
+            public Handler(IBookPhotoRepository repository, IProductRepository productRepository, ILogger<Handler> logger)
             {
                 this.repository = repository;
                 this.productRepository = productRepository;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -40,8 +43,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
                 {
                     throw new ValidationException(result);
                 }
-
-                // TODO: Add validation and logging.
                 
                 if(!Directory.Exists(Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}"))
                 {
@@ -50,9 +51,16 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
 
                 string path = Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}\{Guid.NewGuid()}.png";
 
+                int i = 0;
                 while (File.Exists(path))
                 {
                     path = Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}\{Guid.NewGuid()}.png";
+                    i++;
+                }
+
+                if(i >= 5)
+                {
+                    logger.LogWarning("Photo file name generation takes more than 4 iterations");
                 }
 
                 await File.WriteAllBytesAsync(path, request.FileBytes.ToArray());
