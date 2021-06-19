@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mediatr\Product\Commands\Create\" />
-    <Folder Include="Mediatr\Product\Commands\Delete\" />
-    <Folder Include="Mediatr\Product\Commands\Update\" />
-    <Folder Include="Mediatr\Product\Queries\GetAll\" />
-    <Folder Include="Mediatr\Product\Queries\GetById\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
