@@ -1,10 +1,7 @@
 ﻿using BookShop.Core.Abstract.Repositories;
-using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,13 +35,18 @@ namespace BookShop.Core.Mediatr.Product.Commands.Update
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 Domain.Entities.Product product = await repository.GetById(request.Product.Id);
 
                 if(product == null)
                 {
                     throw new NotFoundException(nameof(Domain.Entities.Product), request.Product.Id);
+                }
+
+                if(product.FilePath != request.Product.FilePath)
+                {
+                    result.Errors.Add(new ValidationFailure ( "FilePath"
+                        , "You cannot change FilePath. If you want to update file it self, delete the old product and ad new one" ));
+                    throw new ValidationException(result);
                 }
 
                 await repository.Update(request.Product);
