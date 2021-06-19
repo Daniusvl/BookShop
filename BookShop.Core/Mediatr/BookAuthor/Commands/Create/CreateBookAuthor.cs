@@ -24,7 +24,7 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
             {
                 if(repository == null)
                 {
-                    throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
+                    throw new ServiceNullException(nameof(IBookAuthorRepository), nameof(Handler));
                 }
 
                 RequestValidator validator = new (repository);

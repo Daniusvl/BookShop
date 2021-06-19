@@ -27,7 +27,7 @@ namespace BookShop.Core.Mediatr.BookAuthor.Queries.GetById
             {
                 if (repository == null)
                 {
-                    throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
+                    throw new ServiceNullException(nameof(IBookAuthorRepository), nameof(Handler));
                 }
 
                 if(mapper == null)
