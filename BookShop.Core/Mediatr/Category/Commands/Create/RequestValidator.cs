@@ -21,7 +21,9 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
                 .NotEmpty()
                     .WithMessage("{PropertyName} cannot be empty")
                 .Must(repository.IsUniqueName)
-                    .WithMessage("Category with specified name already exists: {PropertyName}");
+                    .WithMessage("Category with specified name already exists: {PropertyName}")
+                .Length(2, 100)
+                    .WithMessage("{PropertyName} must contain from 2 to 100 characters");
                 
         }
     }

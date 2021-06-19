@@ -20,8 +20,8 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
                     .WithMessage("{PropertyName} cannot be null")
                 .NotEmpty()
                     .WithMessage("{PropertyName} cannot be empty")
-                .MaximumLength(200)
-                    .WithMessage("{PropertyName} cannot be more than 200 characters")
+                .Length(5, 200)
+                    .WithMessage("{PropertyName} must contain from 5 to 200 characters")
                 .Must(repository.IsUniqueName)
                     .WithMessage("There is already author with this name: {PropertyName}");
         }
