@@ -46,6 +46,11 @@ namespace BookShop.Repositories.Repositories
             return await repo.GetById(id);
         }
 
+        public bool IsUniqueName(string name)
+        {
+            return !ContainsWithName(name);
+        }
+
         public async Task Update(Product entity)
         {
             await repo.Update(entity);
