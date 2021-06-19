@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookShop.Core.Models;
 using BookShop.Domain.Entities;
+using System.IO;
 
 namespace BookShop.Core.AutoMapperProfiles
 {
@@ -9,7 +10,12 @@ namespace BookShop.Core.AutoMapperProfiles
         public AutoMapperProfile()
         {
             CreateMap<BookAuthor, BookAuthorModel>().ReverseMap();
-            CreateMap<BookPhoto, BookPhotoModel>().ReverseMap();
+            CreateMap<BookPhoto, BookPhotoModel>()
+                .AfterMap((ent, model) => 
+                {
+                    model.FileBytes = File.ReadAllBytes(model.FilePath);
+                })
+                .ReverseMap();
             CreateMap<Category, CategoryModel>().ReverseMap();
             CreateMap<Product, ProductModel>()
                 .AfterMap((ent, model) => 
