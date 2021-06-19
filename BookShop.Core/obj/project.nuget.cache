@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "XDCBLMd+WH4yMd242Gq2jUlSDvvnqSKA43jOIn9isFRQE/fZE/1q0yKKX6xoU6jHuspewI6d5a7PTwCsFNSr5A==",
+  "dgSpecHash": "ZwclbdvLzNrjNF6EaBRg1iyI4QlGVhX1gtkXAQaI3GAQ1YmElM/6cOriec7d5EEHH5k4iOkhOg4HgApUIpXdvQ==",
   "success": true,
   "projectFilePath": "D:\\Projects\\BookShop\\BookShop.Core\\BookShop.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\10.2.3\\fluentvalidation.10.2.3.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
