@@ -5,5 +5,6 @@ namespace BookShop.Core.Abstract.Repositories
 {
     public interface ICategoryRepository : IAsyncRepository<Category>, IAsyncLinqHelper<Category>
     {
+        bool IsUniqueName(string name);
     }
 }
