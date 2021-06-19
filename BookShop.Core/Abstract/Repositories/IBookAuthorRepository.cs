@@ -5,5 +5,6 @@ namespace BookShop.Core.Abstract.Repositories
 {
     public interface IBookAuthorRepository : IAsyncRepository<BookAuthor>, IAsyncLinqHelper<BookAuthor>
     {
+        bool IsUniqueName(string name);
     }
 }

@@ -3,6 +3,7 @@ using BookShop.Core.Abstract.Repositories.Base;
 using BookShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.Repositories.Repositories
@@ -38,6 +39,11 @@ namespace BookShop.Repositories.Repositories
         public async Task<BookAuthor> GetById(int id)
         {
             return await repo.GetById(id);
+        }
+
+        public bool IsUniqueName(string name)
+        {
+            return !ctx.BookAuthors.Any(ent => ent.Name == name);
         }
 
         public async Task Update(BookAuthor entity)
