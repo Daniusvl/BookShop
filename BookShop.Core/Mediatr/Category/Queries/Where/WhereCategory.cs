@@ -19,7 +19,7 @@ namespace BookShop.Core.Mediatr.Category.Queries.Where
             private readonly ICategoryRepository repository;
             private readonly IMapper mapper;
 
-            public Handler(ICategoryRepository repository,, IMapper mapper)
+            public Handler(ICategoryRepository repository, IMapper mapper)
             {
                 this.repository = repository;
                 this.mapper = mapper;
