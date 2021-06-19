@@ -45,11 +45,6 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
                     {
                         throw new ArgumentNullException(nameof(request));
                     }
-
-                    if(request.Category == null)
-                    {
-                        throw new ArgumentNullException(nameof(request.Category));
-                    }
                 }
 
                 // TODO: Add validation and logging.

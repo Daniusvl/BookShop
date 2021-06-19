@@ -45,16 +45,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
                     {
                         throw new ArgumentNullException(nameof(request));
                     }
-
-                    if(request.FileBytes == null)
-                    {
-                        throw new ArgumentNullException(nameof(request.FileBytes));
-                    }
-
-                    if (request.ProductName == null)
-                    {
-                        throw new ArgumentNullException(nameof(request.FileBytes));
-                    }
                 }
 
                 // TODO: Add validation and logging.

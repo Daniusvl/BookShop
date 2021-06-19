@@ -42,11 +42,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Update
                     {
                         throw new ArgumentNullException(nameof(request));
                     }
-
-                    if(request.BookPhoto == null)
-                    {
-                        throw new ArgumentNullException(nameof(request.BookPhoto));
-                    }
                 }
 
                 // TODO: Add validation and logging.

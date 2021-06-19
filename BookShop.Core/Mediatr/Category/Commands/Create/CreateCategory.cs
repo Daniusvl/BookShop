@@ -42,11 +42,6 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
                     {
                         throw new ArgumentNullException(nameof(request));
                     }
-
-                    if(request.Name == null)
-                    {
-                        throw new ArgumentNullException(nameof(request.Name));
-                    }
                 }
 
                 // TODO: Add validation and logging.

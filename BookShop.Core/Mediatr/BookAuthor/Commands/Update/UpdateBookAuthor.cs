@@ -42,11 +42,6 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Update
                     {
                         throw new ArgumentNullException(nameof(request));
                     }
-
-                    if (request.BookAuthor == null)
-                    {
-                        throw new ArgumentNullException(nameof(request.BookAuthor));
-                    }
                 }
 
                 // TODO: Add validation and logging.
