@@ -5,5 +5,6 @@ namespace BookShop.Core.Abstract.Repositories
 {
     public interface IBookPhotoRepository : IAsyncRepository<BookPhoto>, IAsyncLinqHelper<BookPhoto>
     {
+        bool PhotoExists(string path);
     }
 }

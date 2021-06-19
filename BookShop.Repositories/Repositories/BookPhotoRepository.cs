@@ -3,6 +3,7 @@ using BookShop.Core.Abstract.Repositories.Base;
 using BookShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BookShop.Repositories.Repositories
@@ -38,6 +39,11 @@ namespace BookShop.Repositories.Repositories
         public async Task<BookPhoto> GetById(int id)
         {
             return await repo.GetById(id);
+        }
+
+        public bool PhotoExists(string path)
+        {
+            return File.Exists(path);
         }
 
         public async Task Update(BookPhoto entity)
