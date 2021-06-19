@@ -2,13 +2,13 @@
 
 namespace BookShop.Core.Configuration
 {
-    internal static class IConfigurationExtensions
+    public static class IConfigurationExtensions
     {
         private const string enviroment = "ASPNETCORE_ENVIRONMENT";
 
         private const string development = "Development";
 
-        internal static bool IsDevelopment(this IConfiguration configuration)
+        public static bool IsDevelopment(this IConfiguration configuration)
         {
             return configuration.GetValue<string>(enviroment) == development;
         }
