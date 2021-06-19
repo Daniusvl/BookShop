@@ -1,9 +1,7 @@
 ﻿using BookShop.Core.Abstract.Repositories;
-using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
+using FluentValidation.Results;
 using MediatR;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,12 +14,10 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
         public class Handler : IRequestHandler<Command>
         {
             private readonly ICategoryRepository repository;
-            private readonly IConfiguration configuration;
 
-            public Handler(ICategoryRepository repository, IConfiguration configuration)
+            public Handler(ICategoryRepository repository)
             {
                 this.repository = repository;
-                this.configuration = configuration;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -31,17 +27,12 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
                     throw new ServiceNullException(nameof(ICategoryRepository), nameof(Handler));
                 }
 
-                if(configuration == null)
-                {
-                    throw new ServiceNullException(nameof(IConfiguration), nameof(Handler));
-                }
+                RequestValidator validator = new(repository);
+                ValidationResult result = await validator.ValidateAsync(request);
 
-                if (configuration.IsDevelopment())
+                if(result.Errors.Count > 0)
                 {
-                    if (request == null)
-                    {
-                        throw new ArgumentNullException(nameof(request));
-                    }
+                    throw new ValidationException(result);
                 }
 
                 // TODO: Add validation and logging.
