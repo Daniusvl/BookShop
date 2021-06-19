@@ -45,15 +45,12 @@ namespace BookShop.Core.Mediatr.BookPhoto.Queries.GetById
 
                 Domain.Entities.BookPhoto bookPhoto = await repository.GetById(request.Id);
 
-                IList<byte> bytes = File.ReadAllBytes(bookPhoto.FilePath).ToList();
-
                 if(bookPhoto == null)
                 {
                     throw new NotFoundException(nameof(Domain.Entities.BookPhoto), request.Id);
                 }
 
                 BookPhotoModel bookPhotoModel = mapper.Map<Domain.Entities.BookPhoto, BookPhotoModel>(bookPhoto);
-                bookPhotoModel.FileBytes = bytes;
 
                 return bookPhotoModel;
             }
