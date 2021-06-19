@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using BookShop.Core.Abstract.Repositories;
-using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
 using BookShop.Core.Models;
 using MediatR;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,13 +16,11 @@ namespace BookShop.Core.Mediatr.Product.Queries.GetAll
         public class Handler : IRequestHandler<Query, IList<ProductModel>>
         {
             private readonly IProductRepository repository;
-            private readonly IConfiguration configuration;
             private readonly IMapper mapper;
 
-            public Handler(IProductRepository repository, IConfiguration configuration, IMapper mapper)
+            public Handler(IProductRepository repository, IMapper mapper)
             {
                 this.repository = repository;
-                this.configuration = configuration;
                 this.mapper = mapper;
             }
 
@@ -36,22 +31,9 @@ namespace BookShop.Core.Mediatr.Product.Queries.GetAll
                     throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
                 }
 
-                if (configuration == null)
-                {
-                    throw new ServiceNullException(nameof(IConfiguration), nameof(Handler));
-                }
-
                 if(mapper == null)
                 {
                     throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
-                if (configuration.IsDevelopment())
-                {
-                    if (request == null)
-                    {
-                        throw new ArgumentNullException(nameof(request));
-                    }
                 }
 
                 IList<Domain.Entities.Product> products = await repository.GetAll();

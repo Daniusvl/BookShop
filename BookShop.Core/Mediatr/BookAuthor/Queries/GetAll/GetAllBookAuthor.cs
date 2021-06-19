@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using BookShop.Core.Abstract.Repositories;
-using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
 using BookShop.Core.Models;
 using MediatR;
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,13 +16,11 @@ namespace BookShop.Core.Mediatr.BookAuthor.Queries.GetAll
         public class Handler : IRequestHandler<Query, IList<BookAuthorModel>>
         {
             private readonly IBookAuthorRepository repository;
-            private readonly IConfiguration configuration;
             private readonly IMapper mapper;
 
-            public Handler(IBookAuthorRepository repository, IConfiguration configuration, IMapper mapper)
+            public Handler(IBookAuthorRepository repository, IMapper mapper)
             {
                 this.repository = repository;
-                this.configuration = configuration;
                 this.mapper = mapper;
             }
 
@@ -36,25 +31,10 @@ namespace BookShop.Core.Mediatr.BookAuthor.Queries.GetAll
                     throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
                 }
 
-                if (configuration == null)
-                {
-                    throw new ServiceNullException(nameof(IConfiguration), nameof(Handler));
-                }
-
                 if (mapper == null)
                 {
                     throw new ServiceNullException(nameof(IMapper), nameof(Handler));
                 }
-
-                if (configuration.IsDevelopment())
-                {
-                    if (request == null)
-                    {
-                        throw new ArgumentNullException(nameof(request));
-                    }
-                }
-
-                // TODO: Add validation and logging.
 
                 IList<Domain.Entities.BookAuthor> bookAuthors = await repository.GetAll();
 
