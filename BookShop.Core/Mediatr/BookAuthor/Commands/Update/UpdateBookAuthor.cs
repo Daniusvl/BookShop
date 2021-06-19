@@ -1,6 +1,7 @@
 ﻿using BookShop.Core.Abstract.Repositories;
 using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -42,6 +43,13 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Update
                     {
                         throw new ArgumentNullException(nameof(request));
                     }
+                }
+                RequestValidator validator = new(repository);
+                ValidationResult result = await validator.ValidateAsync(request.BookAuthor);
+                
+                if(result.Errors.Count > 0)
+                {
+                    throw new ValidationException(result);
                 }
 
                 // TODO: Add validation and logging.
