@@ -66,6 +66,11 @@ namespace BookShop.Repositories.Repositories
             return await repo.GetById(id);
         }
 
+        public IList<Product> GetByName(string name)
+        {
+            return ctx.Products.Where(ent => ent.Name == name).ToList();
+        }
+
         public IList<Product> GetByPrice(decimal min, decimal max)
         {
             throw new NotImplementedException();

@@ -10,6 +10,8 @@ namespace BookShop.Core.Abstract.Repositories
 
         bool IsUniqueName(string name);
 
+        IList<Product> GetByName(string name);
+
         IList<Product> GetByPrice(decimal min, decimal max);
 
         IList<Product> GetByCategory(Category category);
