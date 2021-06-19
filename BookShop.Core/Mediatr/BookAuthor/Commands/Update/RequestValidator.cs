@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace BookShop.Core.Mediatr.BookAuthor.Commands.Update
 {
-    internal class RequestValidator : AbstractValidator<Domain.Entities.BookAuthor>
+    internal class RequestValidator : AbstractValidator<UpdateBookAuthor.Command>
     {
         private readonly IBookAuthorRepository repository;
 
@@ -11,11 +11,15 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Update
         {
             this.repository = repository;
 
-            RuleFor(ent => ent)
+            RuleFor(command => command)
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null");
 
-            RuleFor(ent => ent.Name)
+            RuleFor(command => command.BookAuthor)
+                .NotNull()
+                    .WithMessage("{PropertyName} cannot be null");
+
+            RuleFor(ent => ent.BookAuthor.Name)
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null")
                 .NotEmpty()
