@@ -13,7 +13,7 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
 
         public class Handler : IRequestHandler<Command>
         {
-            private readonly IBookAuthorRepository repository;;
+            private readonly IBookAuthorRepository repository;
 
             public Handler(IBookAuthorRepository repository)
             {
