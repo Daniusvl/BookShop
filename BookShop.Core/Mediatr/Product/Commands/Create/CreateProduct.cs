@@ -2,6 +2,7 @@
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,10 +19,12 @@ namespace BookShop.Core.Mediatr.Product.Commands.Create
         public class Handler : IRequestHandler<Command>
         {
             private readonly IProductRepository repository;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(IProductRepository repository)
+            public Handler(IProductRepository repository, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -39,13 +42,18 @@ namespace BookShop.Core.Mediatr.Product.Commands.Create
                     throw new ValidationException(result);
                 }
 
-                // TODO: Add validation and logging.
-
                 string path = Directory.GetCurrentDirectory() + $@"\Books\{Guid.NewGuid()}.pdf";
 
+                int i = 0;
                 while (File.Exists(path))
                 {
                     path = Directory.GetCurrentDirectory() + $@"\Books\{Guid.NewGuid()}.pdf";
+                    i++;
+                }
+
+                if(i >= 5)
+                {
+                    logger.LogWarning("Product file name generation takes more than 4 iterations");
                 }
 
                 await File.WriteAllBytesAsync(path, request.Bytes.ToArray());
