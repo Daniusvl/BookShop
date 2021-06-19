@@ -59,11 +59,11 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
 
                 // TODO: Add validation and logging.
                 
-                string path = Directory.GetCurrentDirectory() + @$"\{request.ProductName}\{Guid.NewGuid()}.png";
+                string path = Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}\{Guid.NewGuid()}.png";
 
                 while (File.Exists(path))
                 {
-                    path = Directory.GetCurrentDirectory() + @$"\{request.ProductName}\{Guid.NewGuid()}.png";
+                    path = Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}\{Guid.NewGuid()}.png";
                 }
 
                 await File.WriteAllBytesAsync(path, request.FileBytes.ToArray());
