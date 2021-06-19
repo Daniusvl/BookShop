@@ -7,7 +7,7 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
     {
         private readonly IBookAuthorRepository repository;
 
-        public RequestValidator(IBookAuthorRepository repository)
+        internal RequestValidator(IBookAuthorRepository repository)
         {
             this.repository = repository;
 
