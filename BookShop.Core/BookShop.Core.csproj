@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mediatr\Category\Commands\Create\" />
-    <Folder Include="Mediatr\Category\Commands\Delete\" />
-    <Folder Include="Mediatr\Category\Commands\Update\" />
-    <Folder Include="Mediatr\Category\Queries\GetAll\" />
-    <Folder Include="Mediatr\Category\Queries\GetById\" />
     <Folder Include="Mediatr\Product\Commands\Create\" />
     <Folder Include="Mediatr\Product\Commands\Delete\" />
     <Folder Include="Mediatr\Product\Commands\Update\" />
