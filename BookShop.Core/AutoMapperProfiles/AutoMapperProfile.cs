@@ -9,6 +9,9 @@ namespace BookShop.Core.AutoMapperProfiles
         public AutoMapperProfile()
         {
             CreateMap<BookAuthor, BookAuthorModel>().ReverseMap();
+            CreateMap<BookPhoto, BookPhotoModel>().ReverseMap();
+            CreateMap<Category, CategoryModel>().ReverseMap();
+            CreateMap<Product, ProductModel>().ReverseMap();
         }
     }
 }
