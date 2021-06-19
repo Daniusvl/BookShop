@@ -11,7 +11,13 @@ namespace BookShop.Core.AutoMapperProfiles
             CreateMap<BookAuthor, BookAuthorModel>().ReverseMap();
             CreateMap<BookPhoto, BookPhotoModel>().ReverseMap();
             CreateMap<Category, CategoryModel>().ReverseMap();
-            CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<Product, ProductModel>()
+                .AfterMap((ent, model) => 
+                {
+                    model.AuthorName = ent.Author.Name;
+                    model.CategoryName = ent.Category.Name;
+                })
+                .ReverseMap();
         }
     }
 }
