@@ -24,7 +24,7 @@ namespace BookShop.Core
         {
             if(!Directory.Exists(Directory.GetCurrentDirectory() + @"\Photos"))
             {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Photos"));
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Photos");
             }
 
             if(!Directory.Exists(Directory.GetCurrentDirectory() + @"\Books"))
