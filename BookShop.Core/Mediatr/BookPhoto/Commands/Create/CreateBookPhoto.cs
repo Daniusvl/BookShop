@@ -49,6 +49,11 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
 
                 // TODO: Add validation and logging.
                 
+                if(!Directory.Exists(Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}"))
+                {
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}");
+                }
+
                 string path = Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}\{Guid.NewGuid()}.png";
 
                 while (File.Exists(path))
