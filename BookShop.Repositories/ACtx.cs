@@ -1,15 +1,21 @@
-﻿using BookShop.Core.Configuration;
+﻿using BookShop.Core.Abstract;
+using BookShop.Core.Configuration;
 using BookShop.Domain.Entities;
+using BookShop.Domain.Entities.Abstract;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BookShop.Repositories
 {
     public class ACtx : DbContext
     {
         private readonly IConfiguration configuration;
+        private readonly ILoggedInUser logged_in_user;
 
         public DbSet<Product> Products { get; set; }
 
@@ -19,9 +25,10 @@ namespace BookShop.Repositories
 
         public DbSet<BookPhoto> BookPhotos { get; set; }
 
-        public ACtx(DbContextOptions<ACtx> options, IConfiguration configuration) : base(options)
+        public ACtx(DbContextOptions<ACtx> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
         {
             this.configuration = configuration;
+            this.logged_in_user = logged_in_user;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,11 +58,33 @@ namespace BookShop.Repositories
                     Price = 35,
                     FilePath = "TEST",
                     Hidden = false,
-                    DateReleased = new DateTime(1603, 0, 0),
+                    DateReleased = new DateTime(1603, 1, 1),
                     Photos = new List<BookPhoto> { bookPhoto },
                     Author = bookAuthor,
                     Category = category
                 });
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            IEnumerable<EntityEntry> entries = ChangeTracker.Entries();
+
+            foreach (EntityEntry entry  in entries)
+            {
+                if(entry.State == EntityState.Added)
+                {
+                    ((BaseEntity)entry.Entity).CreatedBy = logged_in_user.UserId;
+                    ((BaseEntity)entry.Entity).DateCreated = DateTime.Now;
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    ((BaseEntity)entry.Entity).LastModifiedBy = logged_in_user.UserId;
+                    ((BaseEntity)entry.Entity).DateLastModified = DateTime.Now;
+                }
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }
