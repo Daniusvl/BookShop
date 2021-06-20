@@ -1,6 +1,5 @@
 ﻿using BookShop.Core.Configuration;
 using BookShop.Identity.Authorization;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +13,7 @@ namespace BookShop.Identity
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddAuthenticationAuthorization(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAuthenticationAndAuthorization(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<IdentityDb>(options =>
             {
