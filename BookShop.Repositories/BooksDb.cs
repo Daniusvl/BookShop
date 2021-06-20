@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.Repositories
 {
-    public class ACtx : DbContext
+    public class BookDb : DbContext
     {
         private readonly IConfiguration configuration;
         private readonly ILoggedInUser logged_in_user;
@@ -25,7 +25,7 @@ namespace BookShop.Repositories
 
         public DbSet<BookPhoto> BookPhotos { get; set; }
 
-        public ACtx(DbContextOptions<ACtx> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
+        public BookDb(DbContextOptions<BookDb> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
         {
             this.configuration = configuration;
             this.logged_in_user = logged_in_user;
