@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Core", "BookShop.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Domain", "BookShop.Domain\BookShop.Domain.csproj", "{B7FAC5A6-2742-49F6-8B52-2E2EE633A4B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.Repositories", "BookShop.Repositories\BookShop.Repositories.csproj", "{FD56AC96-6E83-4200-A523-C43A94690568}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Repositories", "BookShop.Repositories\BookShop.Repositories.csproj", "{FD56AC96-6E83-4200-A523-C43A94690568}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.Identity", "BookShop.Identity\BookShop.Identity.csproj", "{09A065D9-87C0-442B-AA54-D852848686DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{FD56AC96-6E83-4200-A523-C43A94690568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD56AC96-6E83-4200-A523-C43A94690568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD56AC96-6E83-4200-A523-C43A94690568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A065D9-87C0-442B-AA54-D852848686DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A065D9-87C0-442B-AA54-D852848686DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A065D9-87C0-442B-AA54-D852848686DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A065D9-87C0-442B-AA54-D852848686DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{E1BBCF7B-0313-4BEA-9285-08F37D31E8A0} = {38B7968D-5479-4D50-A4DB-39D1A2A60B31}
 		{B7FAC5A6-2742-49F6-8B52-2E2EE633A4B6} = {38B7968D-5479-4D50-A4DB-39D1A2A60B31}
 		{FD56AC96-6E83-4200-A523-C43A94690568} = {4FA2CFC6-3A88-41D7-9F6A-A13A3B9E596B}
+		{09A065D9-87C0-442B-AA54-D852848686DD} = {4FA2CFC6-3A88-41D7-9F6A-A13A3B9E596B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {630AF308-FF70-4753-9565-27A0E1198367}
