@@ -28,7 +28,7 @@ namespace BookShop.Repositories
             {
                 if (configuration.IsDevelopment())
                 {
-                    options.UseInMemoryDatabase("_");
+                    options.UseInMemoryDatabase("BooksDb");
                 }
                 else
                 {
