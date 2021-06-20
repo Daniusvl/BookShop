@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace BookShop.Identity.Services
             authentication_model.UserId = user.Id;
             authentication_model.UserName = user.UserName;
             authentication_model.Email = user.Email;
+            authentication_model.Role = (await user_manager.GetClaimsAsync(user)).FirstOrDefault(claim => claim.Type == "Role").Value;
             authentication_model.Token = token_string;
             authentication_model.Success = true;
             return authentication_model;
