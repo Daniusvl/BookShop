@@ -1,15 +1,77 @@
 ﻿using BookShop.Core.Abstract.Identity;
 using BookShop.Core.Models.Authentication;
+using BookShop.Identity.Models.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BookShop.Identity.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public Task<AuthenticationModel> Authenticate(AuthenticationRequest request)
+        private readonly UserManager<IdentityUser> user_manager;
+        private readonly JwtSettings jwt_settings;
+
+        public AuthenticationService(UserManager<IdentityUser> user_manager, IOptions<JwtSettings> jwt_settings)
         {
-            throw new NotImplementedException();
+            this.user_manager = user_manager;
+            this.jwt_settings = jwt_settings.Value;
+        }
+
+        public async Task<AuthenticationModel> Authenticate(AuthenticationRequest request)
+        {
+            AuthenticationModel authentication_model = new();
+
+            IdentityUser user = await user_manager.FindByEmailAsync(request?.Email);
+
+            if(user == null)
+            {
+                authentication_model.Success = false;
+                return authentication_model;
+            }
+
+            bool correct_password = await user_manager.CheckPasswordAsync(user, request?.Passwrod);
+
+            if (!correct_password)
+            {
+                authentication_model.Success = false;
+                return authentication_model;
+            }
+
+            Claim[] claims = new Claim[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
+
+            SigningCredentials credentials = new (
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt_settings.Key)),
+                    SecurityAlgorithms.HmacSha256
+                );
+
+            JwtSecurityToken token = new JwtSecurityToken(
+                    jwt_settings.Issuer,
+                    jwt_settings.Audience,
+                    claims,
+                    DateTime.Now,
+                    DateTime.Now.AddHours(1),
+                    credentials
+                );
+
+            string token_string = new JwtSecurityTokenHandler().WriteToken(token);
+
+            authentication_model.UserId = user.Id;
+            authentication_model.UserName = user.UserName;
+            authentication_model.Email = user.Email;
+            authentication_model.Token = token_string;
+            authentication_model.Success = true;
+            return authentication_model;
         }
 
         public Task<RegisterModel> Register(RegisterRequest request)
