@@ -2,6 +2,6 @@
 {
     public interface ILoggedInUser
     {
-        string UserId { get; set; }
+        string UserId { get; }
     }
 }
