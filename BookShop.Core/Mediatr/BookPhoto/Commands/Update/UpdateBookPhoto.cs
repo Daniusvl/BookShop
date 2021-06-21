@@ -4,6 +4,7 @@ using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,10 +18,12 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Update
         public class Handler : IRequestHandler<Command>
         {
             private readonly IBookPhotoRepository repository;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(IBookPhotoRepository repository)
+            public Handler(IBookPhotoRepository repository, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -53,6 +56,9 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Update
                 }
 
                 await repository.Update(request.BookPhoto);
+
+                logger.LogInformation($"{nameof(Domain.Entities.BookPhoto)} with Id: {bookPhoto.Id} modified by {bookPhoto.LastModifiedBy} at {bookPhoto.DateLastModified}");
+
 
                 return default;
             }

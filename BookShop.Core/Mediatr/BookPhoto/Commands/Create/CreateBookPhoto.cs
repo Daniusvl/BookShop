@@ -72,6 +72,8 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
 
                 await repository.Create(bookPhoto);
 
+                logger.LogInformation($"{nameof(Domain.Entities.BookPhoto)} with Id: {bookPhoto.Id} created by {bookPhoto.CreatedBy} at {bookPhoto.DateCreated}");
+
                 return default;
             }
         }

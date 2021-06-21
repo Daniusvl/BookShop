@@ -2,6 +2,7 @@
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,10 +15,12 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
         public class Handler : IRequestHandler<Command>
         {
             private readonly ICategoryRepository repository;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(ICategoryRepository repository)
+            public Handler(ICategoryRepository repository, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -41,6 +44,8 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
                 };
 
                 await repository.Create(category);
+
+                logger.LogInformation($"{nameof(Domain.Entities.Category)} with Id: {category.Id} created by {category.CreatedBy} at {category.DateCreated}");
 
                 return default;
             }

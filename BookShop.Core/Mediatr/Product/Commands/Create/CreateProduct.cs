@@ -62,6 +62,8 @@ namespace BookShop.Core.Mediatr.Product.Commands.Create
 
                 await repository.Create(request.Product);
 
+                logger.LogInformation($"{nameof(Domain.Entities.Product)} with Id: {request.Product.Id} created by {request.Product.CreatedBy} at {request.Product.DateCreated}");
+
                 return default;
             }
         }

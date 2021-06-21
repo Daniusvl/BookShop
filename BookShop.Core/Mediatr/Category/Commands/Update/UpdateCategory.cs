@@ -1,10 +1,8 @@
 ﻿using BookShop.Core.Abstract.Repositories;
-using BookShop.Core.Configuration;
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.Extensions.Configuration;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,10 +15,12 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
         public class Handler : IRequestHandler<Command>
         {
             private readonly ICategoryRepository repository;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(ICategoryRepository repository)
+            public Handler(ICategoryRepository repository, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -46,6 +46,8 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
                 }
 
                 await repository.Update(category);
+
+                logger.LogInformation($"{nameof(Domain.Entities.Category)} with Id: {category.Id} modified by {category.LastModifiedBy} at {category.DateLastModified}");
 
                 return default;
             }

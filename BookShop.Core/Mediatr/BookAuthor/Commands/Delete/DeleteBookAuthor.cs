@@ -1,7 +1,10 @@
-﻿using BookShop.Core.Abstract.Repositories;
+﻿using BookShop.Core.Abstract;
+using BookShop.Core.Abstract.Repositories;
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,10 +17,14 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Delete
         public class Handler : IRequestHandler<Command>
         {
             private readonly IBookAuthorRepository repository;
+            private readonly ILoggedInUser loggedInUser;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(IBookAuthorRepository repository)
+            public Handler(IBookAuthorRepository repository, ILoggedInUser loggedInUser, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.loggedInUser = loggedInUser;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -43,6 +50,8 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Delete
                 }
 
                 await repository.Delete(bookAuthor);
+
+                logger.LogInformation($"{nameof(Domain.Entities.BookAuthor)} with Id: {request.Id} deleted by {loggedInUser.UserId} at {DateTime.Now}");
 
                 return default;
             }

@@ -2,6 +2,7 @@
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,10 +15,12 @@ namespace BookShop.Core.Mediatr.Product.Commands.Update
         public class Handler : IRequestHandler<Command>
         {
             private readonly IProductRepository repository;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(IProductRepository repository)
+            public Handler(IProductRepository repository, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -50,6 +53,8 @@ namespace BookShop.Core.Mediatr.Product.Commands.Update
                 }
 
                 await repository.Update(request.Product);
+
+                logger.LogInformation($"{nameof(Domain.Entities.Product)} with Id: {request.Product.Id} modified by {request.Product.LastModifiedBy} at {request.Product.DateLastModified}");
 
                 return default;
             }

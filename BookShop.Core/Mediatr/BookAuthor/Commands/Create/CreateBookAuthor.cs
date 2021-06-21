@@ -2,6 +2,7 @@
 using BookShop.Core.Exceptions;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,10 +15,12 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
         public class Handler : IRequestHandler<Command>
         {
             private readonly IBookAuthorRepository repository;
+            private readonly ILogger<Handler> logger;
 
-            public Handler(IBookAuthorRepository repository)
+            public Handler(IBookAuthorRepository repository, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -41,6 +44,8 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Create
                 };
 
                 await repository.Create(bookAuthor);
+
+                logger.LogInformation($"{nameof(Domain.Entities.BookAuthor)} with Id: {bookAuthor.Id} created by {bookAuthor.CreatedBy} at {bookAuthor.DateCreated}");
 
                 return default;
             }
