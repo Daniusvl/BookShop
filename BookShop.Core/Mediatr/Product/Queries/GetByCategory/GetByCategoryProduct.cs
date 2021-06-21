@@ -11,37 +11,36 @@ namespace BookShop.Core.Mediatr.Product.Queries.GetByCategory
 {
     public static class GetByAuthorCategory
     {
-        public record Query(Domain.Entities.Category Category) : IRequest<IList<ProductModel>>;
+        public record Query(int CategoryId) : IRequest<IList<ProductModel>>;
 
         public class Handler : IRequestHandler<Query, IList<ProductModel>>
         {
             private readonly IProductRepository repository;
+            private readonly ICategoryRepository categoryRepository;
             private readonly IMapper mapper;
 
-            public Handler(IProductRepository repository, IMapper mapper)
+            public Handler(IProductRepository repository, ICategoryRepository categoryRepository, IMapper mapper)
             {
                 this.repository = repository;
+                this.categoryRepository = categoryRepository;
                 this.mapper = mapper;
             }
 
             public async Task<IList<ProductModel>> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
-                }
-
-                if (mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 if (request == null)
                 {
                     throw new ValidationException("Query cannot be null");
                 }
 
-                IList<Domain.Entities.Product> products = repository.GetByCategory(request.Category);
+                Domain.Entities.Category category = await categoryRepository.GetById(request.CategoryId);
+
+                if(category == null)
+                {
+                    throw new NotFoundException(nameof(Domain.Entities.Category), request.CategoryId);
+                }
+
+                IList<Domain.Entities.Product> products = repository.GetByCategory(category);
 
                 if (products == null || products.Count == 0)
                 {
