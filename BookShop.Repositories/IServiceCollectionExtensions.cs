@@ -10,19 +10,7 @@ namespace BookShop.Repositories
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
-            services.AddScoped(typeof(IAsyncLinqHelper<>), typeof(AsyncLinqHelper<>));
-
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IBookAuthorRepository, BookAuthorRepository>();
-            services.AddScoped<IBookPhotoRepository, BookPhotoRepository>();
-            return services;
-        }
-
-        public static IServiceCollection AddACtx(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddRepositoriesAndBookDb(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<BookDb>(options =>
             {
@@ -35,6 +23,14 @@ namespace BookShop.Repositories
                     options.UseSqlServer(configuration.GetConnectionString("BooksDb"));
                 }
             });
+
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+            services.AddScoped(typeof(IAsyncLinqHelper<>), typeof(AsyncLinqHelper<>));
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IBookAuthorRepository, BookAuthorRepository>();
+            services.AddScoped<IBookPhotoRepository, BookPhotoRepository>();
             return services;
         }
     }
