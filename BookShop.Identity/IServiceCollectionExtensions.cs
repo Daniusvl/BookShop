@@ -1,5 +1,6 @@
 ﻿using BookShop.Core.Configuration;
 using BookShop.Identity.Authorization;
+using BookShop.Identity.Models.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace BookShop.Identity
     {
         public static IServiceCollection AddAuthenticationAndAuthorization(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+
             services.AddDbContext<IdentityDb>(options =>
             {
                 if (configuration.IsDevelopment())
