@@ -15,11 +15,7 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null");
 
-            RuleFor(command => command.Category)
-                .NotNull()
-                    .WithMessage("{PropertyName} cannot be null");
-
-            RuleFor(command => command.Category.Name)
+            RuleFor(command => command.Name)
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null")
                 .NotEmpty()

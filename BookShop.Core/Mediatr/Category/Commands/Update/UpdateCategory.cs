@@ -10,7 +10,7 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
 {
     public static class UpdateCategory
     {
-        public record Command(Domain.Entities.Category Category) : IRequest;
+        public record Command(int Id, string Name) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
@@ -38,12 +38,14 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
                     throw new ValidationException(result);
                 }
 
-                Domain.Entities.Category category = await repository.GetById(request.Category.Id);
+                Domain.Entities.Category category = await repository.GetById(request.Id);
 
                 if(category == null)
                 {
-                    throw new NotFoundException(nameof(Domain.Entities.Category), request.Category.Id);
+                    throw new NotFoundException(nameof(Domain.Entities.Category), request.Id);
                 }
+
+                category.Name = request.Name;
 
                 await repository.Update(category);
 
