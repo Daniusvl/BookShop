@@ -41,7 +41,7 @@ namespace BookShop.Repositories.Repositories
             return await repo.GetAll();
         }
 
-        public IList<Product> GetByAuthor(BookAuthor author)
+        public IList<Product> GetByAuthor(Author author)
         {
             return ctx.Products.Where(ent => ent.Author == author).ToList();
         }
