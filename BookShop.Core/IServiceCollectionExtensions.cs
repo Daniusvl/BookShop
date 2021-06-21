@@ -13,7 +13,7 @@ namespace BookShop.Core
             return services;
         }
 
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
+        public static IServiceCollection AddMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(AutoMapperProfile));
             return services;
