@@ -11,32 +11,32 @@ namespace BookShop.Repositories.Repositories
     public class BookAuthorRepository : IBookAuthorRepository
     {
         private readonly BooksDb ctx;
-        private readonly IAsyncRepository<BookAuthor> repo;
-        private readonly IAsyncLinqHelper<BookAuthor> helper;
+        private readonly IAsyncRepository<Author> repo;
+        private readonly IAsyncLinqHelper<Author> helper;
 
-        public BookAuthorRepository(BooksDb ctx, IAsyncRepository<BookAuthor> repo, IAsyncLinqHelper<BookAuthor> helper)
+        public BookAuthorRepository(BooksDb ctx, IAsyncRepository<Author> repo, IAsyncLinqHelper<Author> helper)
         {
             this.ctx = ctx;
             this.repo = repo;
             this.helper = helper;
         }
 
-        public async Task Create(BookAuthor entity)
+        public async Task Create(Author entity)
         {
             await repo.Create(entity);
         }
 
-        public async Task Delete(BookAuthor entity)
+        public async Task Delete(Author entity)
         {
             await repo.Delete(entity);
         }
 
-        public async Task<IList<BookAuthor>> GetAll()
+        public async Task<IList<Author>> GetAll()
         {
             return await repo.GetAll();
         }
 
-        public async Task<BookAuthor> GetById(int id)
+        public async Task<Author> GetById(int id)
         {
             return await repo.GetById(id);
         }
@@ -46,12 +46,12 @@ namespace BookShop.Repositories.Repositories
             return !ctx.BookAuthors.Any(ent => ent.Name == name);
         }
 
-        public async Task Update(BookAuthor entity)
+        public async Task Update(Author entity)
         {
             await repo.Update(entity);
         }
 
-        public async Task<IList<BookAuthor>> Where(Func<BookAuthor, bool> predicate)
+        public async Task<IList<Author>> Where(Func<Author, bool> predicate)
         {
             return await helper.Where(predicate);
         }

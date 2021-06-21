@@ -20,7 +20,7 @@ namespace BookShop.Domain.Entities
 
         public IList<BookPhoto> Photos { get; set; } = new List<BookPhoto>();
 
-        public BookAuthor Author { get; set; }
+        public Author Author { get; set; }
 
         public Category Category { get; set; }
 
