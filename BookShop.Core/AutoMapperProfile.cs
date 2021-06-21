@@ -3,7 +3,7 @@ using BookShop.Core.Models;
 using BookShop.Domain.Entities;
 using System.IO;
 
-namespace BookShop.Core.AutoMapperProfiles
+namespace BookShop.Core
 {
     class AutoMapperProfile : Profile
     {

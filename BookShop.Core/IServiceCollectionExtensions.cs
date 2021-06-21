@@ -1,5 +1,4 @@
-﻿using BookShop.Core.AutoMapperProfiles;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using System.Reflection;
