@@ -43,7 +43,7 @@ namespace BookShop.Repositories.Repositories
 
         public bool IsUniqueName(string name)
         {
-            return !ctx.BookAuthors.Any(ent => ent.Name == name);
+            return !ctx.Authors.Any(ent => ent.Name == name);
         }
 
         public async Task Update(Author entity)
