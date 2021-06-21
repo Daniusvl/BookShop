@@ -37,10 +37,16 @@ namespace BookShop.Api
             services.AddAuthenticationAndAuthorization(Configuration);
 
             services.AddControllers();
+
+            services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "BookShop API"));
+
             app.UseRouting();
             app.UseHttpsRedirection();
 
