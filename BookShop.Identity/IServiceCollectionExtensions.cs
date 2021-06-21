@@ -1,6 +1,6 @@
 ﻿using BookShop.Core;
 using BookShop.Identity.Authorization;
-using BookShop.Identity.Models.Configuration;
+using BookShop.Identity.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

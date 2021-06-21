@@ -1,6 +1,6 @@
 ﻿using BookShop.Core.Abstract.Identity;
 using BookShop.Core.Models.Authentication;
-using BookShop.Identity.Models.Configuration;
+using BookShop.Identity.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
