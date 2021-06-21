@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace BookShop.Api
 {
@@ -20,8 +21,6 @@ namespace BookShop.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ILoggedInUser, LoggedInUser>();
-
             services.ConfigureDirectories();
             services.AddMapper();
             services.AddMediator();
@@ -30,9 +29,17 @@ namespace BookShop.Api
 
             services.AddAuthenticationAndAuthorization(Configuration);
 
+            services.AddHttpContextAccessor();
+            services.AddScoped<ILoggedInUser, LoggedInUser>();
+
             services.AddControllers();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(setup => 
+                setup.SwaggerDoc("v1", new OpenApiInfo 
+                {
+                    Version= "v1",
+                    Title = "BookShop API",
+                }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
