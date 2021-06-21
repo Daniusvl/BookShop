@@ -12,7 +12,7 @@ namespace BookShop.Repositories
     {
         public static IServiceCollection AddRepositoriesAndBookDb(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<BookDb>(options =>
+            services.AddDbContext<BooksDb>(options =>
             {
                 if (configuration.IsDevelopment())
                 {

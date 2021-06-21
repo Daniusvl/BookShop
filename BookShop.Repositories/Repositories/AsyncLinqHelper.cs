@@ -10,9 +10,9 @@ namespace BookShop.Repositories.Repositories
     public class AsyncLinqHelper<TEntity> : IAsyncLinqHelper<TEntity>
         where TEntity : BaseEntity
     {
-        private readonly BookDb ctx;
+        private readonly BooksDb ctx;
 
-        public AsyncLinqHelper(BookDb ctx)
+        public AsyncLinqHelper(BooksDb ctx)
         {
             this.ctx = ctx;
         }

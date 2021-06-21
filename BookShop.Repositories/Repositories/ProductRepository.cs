@@ -10,11 +10,11 @@ namespace BookShop.Repositories.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly BookDb ctx;
+        private readonly BooksDb ctx;
         private readonly IAsyncRepository<Product> repo;
         private readonly IAsyncLinqHelper<Product> helper;
 
-        public ProductRepository(BookDb ctx, IAsyncRepository<Product> repo, IAsyncLinqHelper<Product> helper)
+        public ProductRepository(BooksDb ctx, IAsyncRepository<Product> repo, IAsyncLinqHelper<Product> helper)
         {
             this.ctx = ctx;
             this.repo = repo;

@@ -9,9 +9,9 @@ namespace BookShop.Repositories.Repositories
     public class AsyncRepository<TEntity> : IAsyncRepository<TEntity>
         where TEntity : BaseEntity
     {
-        private readonly BookDb ctx;
+        private readonly BooksDb ctx;
 
-        public AsyncRepository(BookDb ctx)
+        public AsyncRepository(BooksDb ctx)
         {
             this.ctx = ctx;
         }
