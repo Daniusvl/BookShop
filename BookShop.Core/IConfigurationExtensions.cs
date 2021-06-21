@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace BookShop.Core.Configuration
+namespace BookShop.Core
 {
     public static class IConfigurationExtensions
     {

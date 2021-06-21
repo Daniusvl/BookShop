@@ -1,6 +1,6 @@
 ﻿using BookShop.Core.Abstract.Repositories;
 using BookShop.Core.Abstract.Repositories.Base;
-using BookShop.Core.Configuration;
+using BookShop.Core;
 using BookShop.Repositories.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -1,5 +1,5 @@
 ﻿using BookShop.Core.Abstract;
-using BookShop.Core.Configuration;
+using BookShop.Core;
 using BookShop.Domain.Entities;
 using BookShop.Domain.Entities.Abstract;
 using Microsoft.EntityFrameworkCore;
