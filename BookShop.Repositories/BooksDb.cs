@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.Repositories
 {
-    public class BookDb : DbContext
+    public class BooksDb : DbContext
     {
         private readonly IConfiguration configuration;
         private readonly ILoggedInUser logged_in_user;
@@ -21,11 +21,11 @@ namespace BookShop.Repositories
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<BookAuthor> BookAuthors { get; set; }
+        public DbSet<Author> BookAuthors { get; set; }
 
         public DbSet<BookPhoto> BookPhotos { get; set; }
 
-        public BookDb(DbContextOptions<BookDb> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
+        public BooksDb(DbContextOptions<BooksDb> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
         {
             this.configuration = configuration;
             this.logged_in_user = logged_in_user;
@@ -38,8 +38,8 @@ namespace BookShop.Repositories
             if (!configuration.IsDevelopment())
                 return;
 
-            BookAuthor bookAuthor = new BookAuthor { Id = 1, Name = "William Shakespeare" };
-            modelBuilder.Entity<BookAuthor>()
+            Author bookAuthor = new Author { Id = 1, Name = "William Shakespeare" };
+            modelBuilder.Entity<Author>()
                 .HasData(bookAuthor);
 
             Category category = new Category { Id = 1, Name = "Literature" };

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BookShop.Domain.Entities
 {
-    public class BookAuthor : BaseEntity
+    public class Author : BaseEntity
     {
         public string Name { get; set; } = string.Empty;
 
@@ -11,7 +11,7 @@ namespace BookShop.Domain.Entities
 
         public override string ToString()
         {
-            return nameof(BookAuthor) + $" Name: {Name}";
+            return nameof(Author) + $" Name: {Name}";
         }
     }
 }
