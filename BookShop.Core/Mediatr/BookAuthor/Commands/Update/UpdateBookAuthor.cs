@@ -10,7 +10,7 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Update
 {
     public static class UpdateBookAuthor
     {
-        public record Command(Domain.Entities.BookAuthor BookAuthor) : IRequest;
+        public record Command(int Id, string Name) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
@@ -38,14 +38,16 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Update
                     throw new ValidationException(result);
                 }
 
-                Domain.Entities.BookAuthor bookAuthor = await repository.GetById(request.BookAuthor.Id);
+                Domain.Entities.BookAuthor bookAuthor = await repository.GetById(request.Id);
 
                 if(bookAuthor == null)
                 {
-                    throw new NotFoundException(nameof(Domain.Entities.BookAuthor), request.BookAuthor.Id);
+                    throw new NotFoundException(nameof(Domain.Entities.BookAuthor), request.Id);
                 }
 
-                await repository.Update(request?.BookAuthor);
+                bookAuthor.Name = request.Name;
+
+                await repository.Update(bookAuthor);
 
                 logger.LogInformation($"{nameof(Domain.Entities.BookAuthor)} with Id: {bookAuthor.Id} updated by {bookAuthor.LastModifiedBy} at {bookAuthor.DateLastModified}");
 
