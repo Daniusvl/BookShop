@@ -14,16 +14,24 @@ namespace BookShop.Core.Mediatr.Product.Commands.Create
 {
     public static class CreateProduct
     {
-        public record Command(Domain.Entities.Product Product, IList<byte> Bytes) : IRequest;
+        public record Command(string Name, string Description, decimal Price, bool Hidden, DateTime DateReleased,
+            IList<int> BookPhotoIds, int AuthorId, int CategoryId, IList<byte> Bytes) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly IProductRepository repository;
+            private readonly IBookPhotoRepository photoRepository;
+            private readonly IBookAuthorRepository authorRepository;
+            private readonly ICategoryRepository categoryRepository;
             private readonly ILogger<Handler> logger;
 
-            public Handler(IProductRepository repository, ILogger<Handler> logger)
+            public Handler(IProductRepository repository, IBookPhotoRepository photoRepository, IBookAuthorRepository authorRepository, 
+                ICategoryRepository categoryRepository, ILogger<Handler> logger)
             {
                 this.repository = repository;
+                this.photoRepository = photoRepository;
+                this.authorRepository = authorRepository;
+                this.categoryRepository = categoryRepository;
                 this.logger = logger;
             }
 
@@ -58,11 +66,49 @@ namespace BookShop.Core.Mediatr.Product.Commands.Create
 
                 await File.WriteAllBytesAsync(path, request.Bytes.ToArray());
 
-                request.Product.FilePath = path;
+                Domain.Entities.Product product = new Domain.Entities.Product
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    Price = request.Price,
+                    FilePath = path,
+                    Hidden = request.Hidden,
+                    DateReleased = request.DateReleased
+                };
 
-                await repository.Create(request.Product);
+                foreach (int id in request.BookPhotoIds)
+                {
+                    Domain.Entities.BookPhoto photo = await photoRepository.GetById(id);
 
-                logger.LogInformation($"{nameof(Domain.Entities.Product)} with Id: {request.Product.Id} created by {request.Product.CreatedBy} at {request.Product.DateCreated}");
+                    if(photo == null)
+                    {
+                        throw new NotFoundException(nameof(Domain.Entities.BookPhoto), id);
+                    }
+
+                    product.Photos.Add(photo);
+                }
+
+                Domain.Entities.BookAuthor author = await authorRepository.GetById(request.AuthorId);
+
+                if(author == null)
+                {
+                    throw new NotFoundException(nameof(Domain.Entities.BookAuthor), request.AuthorId);
+                }
+
+                product.Author = author;
+
+                Domain.Entities.Category category = await categoryRepository.GetById(request.CategoryId);
+
+                if (categoryRepository == null)
+                {
+                    throw new NotFoundException(nameof(Domain.Entities.Category), request.CategoryId);
+                }
+
+                product.Category = category;
+
+                await repository.Create(product);
+
+                logger.LogInformation($"{nameof(Domain.Entities.Product)} with Id: {product.Id} created by {product.CreatedBy} at {product.DateCreated}");
 
                 return default;
             }
