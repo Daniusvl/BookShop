@@ -18,15 +18,15 @@ namespace BookShop.Api
 
         public async Task InvokeAsync(HttpContext context)
         {
+            HttpStatusCode httpStatusCode = HttpStatusCode.InternalServerError;
+            string result = string.Empty;
+            Exception exception = null;
             try
             {
                 await next.Invoke(context);
             }
             catch (Exception ex)
             {
-                HttpStatusCode httpStatusCode = HttpStatusCode.InternalServerError;
-                string result = string.Empty;
-
                 context.Response.ContentType = "application/json";
 
                 switch (ex)
@@ -40,12 +40,16 @@ namespace BookShop.Api
                         result = JsonConvert.SerializeObject(v.Errors);
                         break;
                     default:
+                        exception = ex;
                         break;
                 }
-
-                context.Response.StatusCode = (int)httpStatusCode;
-                await context.Response.WriteAsync(result);
             }
+
+            if (exception != null)
+                throw exception;
+
+            context.Response.StatusCode = (int)httpStatusCode;
+            await context.Response.WriteAsync(result);
         }
     }
 }
