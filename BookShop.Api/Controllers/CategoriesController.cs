@@ -1,8 +1,8 @@
-﻿using BookShop.Core.Mediatr.BookAuthor.Commands.Create;
-using BookShop.Core.Mediatr.BookAuthor.Commands.Delete;
-using BookShop.Core.Mediatr.BookAuthor.Commands.Update;
-using BookShop.Core.Mediatr.BookAuthor.Queries.GetAll;
-using BookShop.Core.Mediatr.BookAuthor.Queries.GetById;
+﻿using BookShop.Core.Mediatr.Category.Commands.Create;
+using BookShop.Core.Mediatr.Category.Commands.Delete;
+using BookShop.Core.Mediatr.Category.Commands.Update;
+using BookShop.Core.Mediatr.Category.Queries.GetAll;
+using BookShop.Core.Mediatr.Category.Queries.GetById;
 using BookShop.Core.Models;
 using BookShop.Identity.Authorization;
 using MediatR;
@@ -15,11 +15,11 @@ namespace BookShop.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookAuthorController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly IMediator mediator;
 
-        public BookAuthorController(IMediator mediator)
+        public CategoriesController(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -27,20 +27,20 @@ namespace BookShop.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IList<BookAuthorModel> authors = await mediator.Send(new GetAllBookAuthor.Query());
-            return Ok(authors);
+            IList<CategoryModel> categories = await mediator.Send(new GetAllCategory.Query());
+            return Ok(categories);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            BookAuthorModel author = await mediator.Send(new GetByIdBookAuthor.Query(id));
-            return Ok(author);
+            CategoryModel category = await mediator.Send(new GetByIdCategory.Query(id));
+            return Ok(category);
         }
 
         [HttpPost]
         [Authorize(Policy = RoleConstants.ModeratorName)]
-        public async Task<IActionResult> Add([FromBody] CreateBookAuthor.Command command)
+        public async Task<IActionResult> Add([FromBody] CreateCategory.Command command)
         {
             await mediator.Send(command);
             return Ok();
@@ -48,7 +48,7 @@ namespace BookShop.Api.Controllers
 
         [HttpPut]
         [Authorize(Policy = RoleConstants.ModeratorName)]
-        public async Task<IActionResult> Update([FromBody] UpdateBookAuthor.Command command)
+        public async Task<IActionResult> Update([FromBody] UpdateCategory.Command command)
         {
             await mediator.Send(command);
             return Ok();
@@ -58,7 +58,7 @@ namespace BookShop.Api.Controllers
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Delete(int id)
         {
-            await mediator.Send(new DeleteBookAuthor.Command(id));
+            await mediator.Send(new DeleteCategory.Command(id));
             return Ok();
         }
     }

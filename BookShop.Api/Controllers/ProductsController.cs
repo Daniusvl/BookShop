@@ -19,11 +19,11 @@ namespace BookShop.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IMediator mediator;
 
-        public ProductController(IMediator mediator)
+        public ProductsController(IMediator mediator)
         {
             this.mediator = mediator;
         }
