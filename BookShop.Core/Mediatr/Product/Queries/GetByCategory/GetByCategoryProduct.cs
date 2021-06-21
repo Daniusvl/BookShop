@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.Core.Mediatr.Product.Queries.GetByCategory
 {
-    public static class GetByAuthorCategory
+    public static class GetByCategoryProduct
     {
         public record Query(int CategoryId) : IRequest<IList<ProductModel>>;
 
