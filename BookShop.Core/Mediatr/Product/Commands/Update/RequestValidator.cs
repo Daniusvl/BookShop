@@ -15,11 +15,7 @@ namespace BookShop.Core.Mediatr.Product.Commands.Update
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null");
 
-            RuleFor(command => command.Product)
-                .NotNull()
-                    .WithMessage("{PropertyName} cannot be null");
-
-            RuleFor(command => command.Product.Name)
+            RuleFor(command => command.Name)
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null")
                 .NotEmpty()
@@ -29,7 +25,7 @@ namespace BookShop.Core.Mediatr.Product.Commands.Update
                 .Length(3, 150)
                     .WithMessage("{PropertyName} must contain from 3 to 150 characters");
 
-            RuleFor(command => command.Product.Description)
+            RuleFor(command => command.Description)
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null")
                 .NotEmpty()
@@ -37,17 +33,9 @@ namespace BookShop.Core.Mediatr.Product.Commands.Update
                 .Length(10, 1000)
                     .WithMessage("Description must contain from 10 to 1000 characters");
 
-            RuleFor(command => command.Product.Price)
+            RuleFor(command => command.Price)
                 .GreaterThan(0)
                     .WithMessage("{PropertyName} must be more than 0");
-
-            RuleFor(command => command.Product.Author)
-                .NotNull()
-                    .WithMessage("{PropertyName} cannot be null");
-
-            RuleFor(command => command.Product.Category)
-                .NotNull()
-                    .WithMessage("{PropertyName} cannot be null");
         }
     }
 }
