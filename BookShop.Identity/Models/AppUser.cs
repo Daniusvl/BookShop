@@ -6,6 +6,8 @@ namespace BookShop.Identity.Models
 {
     public class AppUser : IdentityUser
     {
+        public AppUser() { }
+
         public AppUser(string userName) : base (userName){}
 
         public string OwnedProducts { get; set; } = "[]";
