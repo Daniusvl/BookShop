@@ -52,3 +52,21 @@ Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate 
    at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2021-06-21 23:43:04.652 +03:00 [ERR] Connection id "0HM9KUKAOAOHG", Request id "0HM9KUKAOAOHG:0000000F": An unhandled exception was thrown by the application.
+System.InvalidOperationException: The seed entity for entity type 'Book' cannot be added because it has the navigation 'Author' set. To seed relationships,  add the entity seed to 'Book' and specify the foreign key values {'AuthorId'}. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the involved property values.
+   at BookShop.Api.ExceptionHandlerMiddleware.InvokeAsync(HttpContext context) in D:\Projects\BookShop\BookShop.Api\ExceptionHandlerMiddleware.cs:line 49
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2021-06-21 23:43:09.618 +03:00 [ERR] Connection id "0HM9KUKAOAOHG", Request id "0HM9KUKAOAOHG:00000011": An unhandled exception was thrown by the application.
+System.InvalidOperationException: The seed entity for entity type 'Book' cannot be added because it has the navigation 'Author' set. To seed relationships,  add the entity seed to 'Book' and specify the foreign key values {'AuthorId'}. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the involved property values.
+   at BookShop.Api.ExceptionHandlerMiddleware.InvokeAsync(HttpContext context) in D:\Projects\BookShop\BookShop.Api\ExceptionHandlerMiddleware.cs:line 49
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2021-06-21 23:45:14.232 +03:00 [ERR] Connection id "0HM9KUKAOAOHG", Request id "0HM9KUKAOAOHG:00000017": An unhandled exception was thrown by the application.
+System.InvalidOperationException: The seed entity for entity type 'Book' cannot be added because it has the navigation 'Author' set. To seed relationships,  add the entity seed to 'Book' and specify the foreign key values {'AuthorId'}. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the involved property values.
+   at BookShop.Api.ExceptionHandlerMiddleware.InvokeAsync(HttpContext context) in D:\Projects\BookShop\BookShop.Api\ExceptionHandlerMiddleware.cs:line 49
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)

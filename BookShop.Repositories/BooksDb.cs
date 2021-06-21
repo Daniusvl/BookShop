@@ -17,13 +17,13 @@ namespace BookShop.Repositories
         private readonly IConfiguration configuration;
         private readonly ILoggedInUser logged_in_user;
 
-        public DbSet<Book> Products { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Author> BookAuthors { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
-        public DbSet<Photo> BookPhotos { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         public BooksDb(DbContextOptions<BooksDb> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
         {

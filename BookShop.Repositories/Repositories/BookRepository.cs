@@ -23,7 +23,7 @@ namespace BookShop.Repositories.Repositories
 
         public bool ContainsWithName(string name)
         {
-            return ctx.Products.Any(ent => ent.Name == name);
+            return ctx.Books.Any(ent => ent.Name == name);
         }
 
         public async Task Create(Book entity)
@@ -43,22 +43,22 @@ namespace BookShop.Repositories.Repositories
 
         public IList<Book> GetByAuthor(Author author)
         {
-            return ctx.Products.Where(ent => ent.Author == author).ToList();
+            return ctx.Books.Where(ent => ent.Author == author).ToList();
         }
 
         public IList<Book> GetByAuthorName(string author_name)
         {
-            return ctx.Products.Where(ent => ent.Author.Name == author_name).ToList();
+            return ctx.Books.Where(ent => ent.Author.Name == author_name).ToList();
         }
 
         public IList<Book> GetByCategory(Category category)
         {
-            return ctx.Products.Where(ent => ent.Category == category).ToList();
+            return ctx.Books.Where(ent => ent.Category == category).ToList();
         }
 
         public IList<Book> GetByCategoryName(string category_name)
         {
-            return ctx.Products.Where(ent => ent.Category.Name == category_name).ToList();
+            return ctx.Books.Where(ent => ent.Category.Name == category_name).ToList();
         }
 
         public async Task<Book> GetById(int id)
@@ -68,7 +68,7 @@ namespace BookShop.Repositories.Repositories
 
         public IList<Book> GetByName(string name)
         {
-            return ctx.Products.Where(ent => ent.Name == name).ToList();
+            return ctx.Books.Where(ent => ent.Name == name).ToList();
         }
 
         public IList<Book> GetByPrice(decimal min, decimal max)
