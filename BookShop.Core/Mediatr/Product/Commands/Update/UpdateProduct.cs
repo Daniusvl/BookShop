@@ -12,7 +12,7 @@ namespace BookShop.Core.Mediatr.Product.Commands.Update
 {
     public static class UpdateProduct
     {
-        public record Command(string Name, string Description, decimal Price, bool Hidden, DateTime DateReleased,
+        public record Command(int Id, string Name, string Description, decimal Price, bool Hidden, DateTime DateReleased,
             IList<int> BookPhotoIds, int AuthorId, int CategoryId) : IRequest;
 
         public class Handler : IRequestHandler<Command>
