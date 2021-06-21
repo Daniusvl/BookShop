@@ -38,21 +38,22 @@ namespace BookShop.Repositories
             if (!configuration.IsDevelopment())
                 return;
 
-            BookAuthor bookAuthor = new BookAuthor { Name = "William Shakespeare" };
+            BookAuthor bookAuthor = new BookAuthor { Id = 1, Name = "William Shakespeare" };
             modelBuilder.Entity<BookAuthor>()
                 .HasData(bookAuthor);
 
-            Category category = new Category { Name = "Literature" };
+            Category category = new Category { Id = 1, Name = "Literature" };
             modelBuilder.Entity<Category>()
                 .HasData(category);
 
-            BookPhoto bookPhoto = new BookPhoto { FilePath = "TEST" };
+            BookPhoto bookPhoto = new BookPhoto { Id = 1, FilePath = "TEST" };
             modelBuilder.Entity<BookPhoto>()
                 .HasData(bookPhoto);
 
             modelBuilder.Entity<Product>()
                 .HasData(new Product
                 {
+                    Id = 1,
                     Name = "Hamlet",
                     Description = "The Tragedy of Hamlet, Prince of Denmark, often shortened to Hamlet, is a tragedy written by William Shakespeare sometime between 1599 and 1601. It is Shakespeare's longest play, with 29,551 words.",
                     Price = 35,
@@ -63,6 +64,7 @@ namespace BookShop.Repositories
                     Author = bookAuthor,
                     Category = category
                 });
+
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
