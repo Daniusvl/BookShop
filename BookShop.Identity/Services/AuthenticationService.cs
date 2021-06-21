@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -76,9 +77,58 @@ namespace BookShop.Identity.Services
             return authentication_model;
         }
 
-        public Task<RegisterModel> Register(RegisterRequest request)
+        public async Task<RegisterModel> Register(RegisterRequest request)
         {
-            throw new NotImplementedException();
+            IdentityUser user = new IdentityUser
+            {
+                UserName = request.UserName,
+                Email = request.Email
+            };
+
+            IList<string> password_errors = new List<string>();
+            foreach (IPasswordValidator<IdentityUser> password_validator in user_manager.PasswordValidators)
+            {
+                IdentityResult validation_result = await password_validator.ValidateAsync(user_manager, user, request?.Password);
+                if (!validation_result.Succeeded)
+                {
+                    foreach (IdentityError error in validation_result.Errors)
+                    {
+                        password_errors.Add(error.Description);
+                    }
+                }
+            }
+
+            if(password_errors.Count > 0)
+            {
+                return new RegisterModel
+                {
+                    Success = false,
+                    PasswordErrors = password_errors
+                };
+            }
+
+            IdentityResult result = await user_manager.CreateAsync(user, request?.Password);
+
+            if (!result.Succeeded)
+            {
+                return new RegisterModel { Success = false };
+            }
+
+            RegisterModel registerModel = new RegisterModel
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                Success = true
+            };
+
+            result = await user_manager.AddClaimAsync(user, new Claim("Role", "DefaultUser"));
+
+            if (!result.Succeeded)
+            {
+                return new RegisterModel { Success = false };
+            }
+
+            return registerModel;
         }
     }
 }
