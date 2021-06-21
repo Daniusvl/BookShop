@@ -41,6 +41,8 @@ namespace BookShop.Api
             app.UseSwaggerUI(s =>
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "BookShop API"));
 
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             app.UseRouting();
             app.UseHttpsRedirection();
 
