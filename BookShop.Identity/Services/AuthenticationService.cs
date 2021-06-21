@@ -20,10 +20,10 @@ namespace BookShop.Identity.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<AppUser> user_manager;
-        private readonly IProductRepository productRepository;
+        private readonly IBookRepository productRepository;
         private readonly JwtSettings jwt_settings;
 
-        public AuthenticationService(UserManager<AppUser> user_manager, IProductRepository productRepository, IOptions<JwtSettings> jwt_settings)
+        public AuthenticationService(UserManager<AppUser> user_manager, IBookRepository productRepository, IOptions<JwtSettings> jwt_settings)
         {
             this.user_manager = user_manager;
             this.productRepository = productRepository;
@@ -37,7 +37,7 @@ namespace BookShop.Identity.Services
             if (user == null)
                 return false;
 
-            Product product = await productRepository.GetById(product_id);
+            Book product = await productRepository.GetById(product_id);
 
             if (product == null)
                 return false;

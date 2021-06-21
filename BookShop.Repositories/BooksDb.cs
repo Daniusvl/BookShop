@@ -17,13 +17,13 @@ namespace BookShop.Repositories
         private readonly IConfiguration configuration;
         private readonly ILoggedInUser logged_in_user;
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Book> Products { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Author> BookAuthors { get; set; }
 
-        public DbSet<BookPhoto> BookPhotos { get; set; }
+        public DbSet<Photo> BookPhotos { get; set; }
 
         public BooksDb(DbContextOptions<BooksDb> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
         {
@@ -46,12 +46,12 @@ namespace BookShop.Repositories
             modelBuilder.Entity<Category>()
                 .HasData(category);
 
-            BookPhoto bookPhoto = new BookPhoto { Id = 1, FilePath = "TEST" };
-            modelBuilder.Entity<BookPhoto>()
+            Photo bookPhoto = new Photo { Id = 1, FilePath = "TEST" };
+            modelBuilder.Entity<Photo>()
                 .HasData(bookPhoto);
 
-            modelBuilder.Entity<Product>()
-                .HasData(new Product
+            modelBuilder.Entity<Book>()
+                .HasData(new Book
                 {
                     Id = 1,
                     Name = "Hamlet",
@@ -60,7 +60,7 @@ namespace BookShop.Repositories
                     FilePath = "TEST",
                     Hidden = false,
                     DateReleased = new DateTime(1603, 1, 1),
-                    Photos = new List<BookPhoto> { bookPhoto },
+                    Photos = new List<Photo> { bookPhoto },
                     Author = bookAuthor,
                     Category = category
                 });

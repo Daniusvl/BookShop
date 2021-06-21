@@ -9,15 +9,15 @@ namespace BookShop.Core
     {
         public AutoMapperProfile()
         {
-            CreateMap<BookAuthor, BookAuthorModel>().ReverseMap();
-            CreateMap<BookPhoto, BookPhotoModel>()
+            CreateMap<Author, AuthorModel>().ReverseMap();
+            CreateMap<Photo, PhotoModel>()
                 .AfterMap((ent, model) => 
                 {
                     model.FileBytes = File.ReadAllBytes(model.FilePath);
                 })
                 .ReverseMap();
             CreateMap<Category, CategoryModel>().ReverseMap();
-            CreateMap<Product, ProductModel>()
+            CreateMap<Book, BookModel>()
                 .AfterMap((ent, model) => 
                 {
                     model.AuthorName = ent.Author.Name;

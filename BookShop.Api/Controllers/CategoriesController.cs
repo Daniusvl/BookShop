@@ -1,8 +1,7 @@
 ﻿using BookShop.Core.Mediatr.Category.Commands.Create;
 using BookShop.Core.Mediatr.Category.Commands.Delete;
 using BookShop.Core.Mediatr.Category.Commands.Update;
-using BookShop.Core.Mediatr.Category.Queries.GetAll;
-using BookShop.Core.Mediatr.Category.Queries.GetById;
+using BookShop.Core.Mediatr.Category.Queries;
 using BookShop.Core.Models;
 using BookShop.Identity.Authorization;
 using MediatR;
@@ -27,20 +26,20 @@ namespace BookShop.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IList<CategoryModel> categories = await mediator.Send(new GetAllCategory.Query());
+            IList<CategoryModel> categories = await mediator.Send(new GetAllCategoryQuery());
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            CategoryModel category = await mediator.Send(new GetByIdCategory.Query(id));
+            CategoryModel category = await mediator.Send(new GetByIdCategoryQuery(id));
             return Ok(category);
         }
 
         [HttpPost]
         [Authorize(Policy = RoleConstants.ModeratorName)]
-        public async Task<IActionResult> Add([FromBody] CreateCategory.Command command)
+        public async Task<IActionResult> Add([FromBody] CreateCategoryCommand command)
         {
             await mediator.Send(command);
             return Ok();
@@ -48,7 +47,7 @@ namespace BookShop.Api.Controllers
 
         [HttpPut]
         [Authorize(Policy = RoleConstants.ModeratorName)]
-        public async Task<IActionResult> Update([FromBody] UpdateCategory.Command command)
+        public async Task<IActionResult> Update([FromBody] UpdateCategoryCommand command)
         {
             await mediator.Send(command);
             return Ok();
@@ -58,7 +57,7 @@ namespace BookShop.Api.Controllers
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Delete(int id)
         {
-            await mediator.Send(new DeleteCategory.Command(id));
+            await mediator.Send(new DeleteCategoryCommand(id));
             return Ok();
         }
     }

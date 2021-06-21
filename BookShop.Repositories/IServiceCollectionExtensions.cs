@@ -27,10 +27,10 @@ namespace BookShop.Repositories
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
             services.AddScoped(typeof(IAsyncLinqHelper<>), typeof(AsyncLinqHelper<>));
 
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IBookAuthorRepository, BookAuthorRepository>();
-            services.AddScoped<IBookPhotoRepository, BookPhotoRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             return services;
         }
     }
