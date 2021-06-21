@@ -30,11 +30,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Delete
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IBookPhotoRepository), nameof(Handler));
-                }
-
                 RequestValidator validator = new();
                 ValidationResult result = await validator.ValidateAsync(request);
 

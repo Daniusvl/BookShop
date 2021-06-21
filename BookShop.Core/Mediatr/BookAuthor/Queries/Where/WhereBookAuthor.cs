@@ -27,16 +27,6 @@ namespace BookShop.Core.Mediatr.BookAuthor.Queries.Where
 
             public async Task<IList<BookAuthorModel>> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IBookAuthorRepository), nameof(Handler));
-                }
-
-                if (mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 if (request == null)
                 {
                     throw new ValidationException("Query cannot be null");

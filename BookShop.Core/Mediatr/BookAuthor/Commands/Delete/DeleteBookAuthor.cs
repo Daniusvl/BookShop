@@ -29,11 +29,6 @@ namespace BookShop.Core.Mediatr.BookAuthor.Commands.Delete
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IBookAuthorRepository), nameof(Handler));
-                }
-
                 RequestValidator validatiors = new();
                 ValidationResult result = await validatiors.ValidateAsync(request);
 

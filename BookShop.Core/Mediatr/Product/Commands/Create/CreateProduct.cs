@@ -37,11 +37,6 @@ namespace BookShop.Core.Mediatr.Product.Commands.Create
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                if(repository == null)
-                {
-                    throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
-                }
-
                 RequestValidator validator = new(repository);
                 ValidationResult result = await validator.ValidateAsync(request);
 

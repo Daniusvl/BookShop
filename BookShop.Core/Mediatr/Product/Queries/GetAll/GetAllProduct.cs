@@ -26,16 +26,6 @@ namespace BookShop.Core.Mediatr.Product.Queries.GetAll
 
             public async Task<IList<ProductModel>> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
-                }
-
-                if(mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 IList<Domain.Entities.Product> products = await repository.GetAll();
 
                 if(products == null || products.Count == 0)

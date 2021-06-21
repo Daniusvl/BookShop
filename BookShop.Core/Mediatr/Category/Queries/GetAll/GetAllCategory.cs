@@ -26,16 +26,6 @@ namespace BookShop.Core.Mediatr.Category.Queries.GetAll
 
             public async Task<IList<CategoryModel>> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(ICategoryRepository), nameof(Handler));
-                }
-
-                if(mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 IList<Domain.Entities.Category> categories = await repository.GetAll();
 
                 if(categories == null || categories.Count == 0)

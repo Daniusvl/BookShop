@@ -26,16 +26,6 @@ namespace BookShop.Core.Mediatr.BookAuthor.Queries.GetAll
 
             public async Task<IList<BookAuthorModel>> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IBookAuthorRepository), nameof(Handler));
-                }
-
-                if (mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 IList<Domain.Entities.BookAuthor> bookAuthors = await repository.GetAll();
 
                 if(bookAuthors == null || bookAuthors.Count == 0)

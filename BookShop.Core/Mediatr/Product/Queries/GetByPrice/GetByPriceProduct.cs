@@ -26,16 +26,6 @@ namespace BookShop.Core.Mediatr.Product.Queries.GetByPrice
 
             public async Task<IList<ProductModel>> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IProductRepository), nameof(Handler));
-                }
-
-                if (mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 if (request == null)
                 {
                     throw new ValidationException("Query cannot be null");

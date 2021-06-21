@@ -28,16 +28,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Queries.GetAll
 
             public async Task<IList<BookPhotoModel>> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(IBookPhotoRepository), nameof(Handler));
-                }
-
-                if (mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 IList<Domain.Entities.BookPhoto> bookPhotos = await repository.GetAll();
 
                 if(bookPhotos == null || bookPhotos.Count == 0)

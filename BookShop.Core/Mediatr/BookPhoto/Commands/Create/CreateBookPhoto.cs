@@ -31,11 +31,6 @@ namespace BookShop.Core.Mediatr.BookPhoto.Commands.Create
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                if(repository == null)
-                {
-                    throw new ServiceNullException(nameof(IBookPhotoRepository), nameof(Handler));
-                }
-
                 RequestValidator validator = new(productRepository);
                 ValidationResult result = await validator.ValidateAsync(request);
 

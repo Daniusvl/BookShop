@@ -25,16 +25,6 @@ namespace BookShop.Core.Mediatr.Category.Queries.GetById
 
             public async Task<CategoryModel> Handle(Query request, CancellationToken cancellationToken)
             {
-                if (repository == null)
-                {
-                    throw new ServiceNullException(nameof(ICategoryRepository), nameof(Handler));
-                }
-
-                if (mapper == null)
-                {
-                    throw new ServiceNullException(nameof(IMapper), nameof(Handler));
-                }
-
                 if (request == null)
                 {
                     throw new ValidationException("Query cannot be null");
