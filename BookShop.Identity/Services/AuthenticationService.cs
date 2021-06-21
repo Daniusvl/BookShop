@@ -1,5 +1,7 @@
 ﻿using BookShop.Core.Abstract.Identity;
+using BookShop.Core.Abstract.Repositories;
 using BookShop.Core.Models.Authentication;
+using BookShop.Domain.Entities;
 using BookShop.Identity.Configuration;
 using BookShop.Identity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -18,12 +20,32 @@ namespace BookShop.Identity.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<AppUser> user_manager;
+        private readonly IProductRepository productRepository;
         private readonly JwtSettings jwt_settings;
 
-        public AuthenticationService(UserManager<AppUser> user_manager, IOptions<JwtSettings> jwt_settings)
+        public AuthenticationService(UserManager<AppUser> user_manager, IProductRepository productRepository, IOptions<JwtSettings> jwt_settings)
         {
             this.user_manager = user_manager;
+            this.productRepository = productRepository;
             this.jwt_settings = jwt_settings.Value;
+        }
+
+        public async Task<bool> AddOwnedProduct(string user_id, int product_id)
+        {
+            AppUser user = await user_manager.FindByIdAsync(user_id);
+
+            if (user == null)
+                return false;
+
+            Product product = await productRepository.GetById(product_id);
+
+            if (product == null)
+                return false;
+
+            user.AddOwnedProduct(product.Id, product.Name, product.FilePath);
+
+            IdentityResult result = await user_manager.UpdateAsync(user);
+            return result.Succeeded;
         }
 
         public async Task<AuthenticationModel> Authenticate(AuthenticationRequest request)

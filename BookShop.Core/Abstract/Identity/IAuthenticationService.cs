@@ -8,5 +8,7 @@ namespace BookShop.Core.Abstract.Identity
         Task<RegisterModel> Register(RegisterRequest request);
 
         Task<AuthenticationModel> Authenticate(AuthenticationRequest request);
+
+        Task<bool> AddOwnedProduct(string user_id, int product_id);
     }
 }
