@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookShop.Core\BookShop.Core.csproj" />
+    <ProjectReference Include="..\BookShop.Identity\BookShop.Identity.csproj" />
+    <ProjectReference Include="..\BookShop.Repositories\BookShop.Repositories.csproj" />
+  </ItemGroup>
+
 </Project>
