@@ -6468,7 +6468,10 @@
     "net5.0": [
       "BookShop.Core >= 1.0.0",
       "BookShop.Identity >= 1.0.0",
-      "BookShop.Repositories >= 1.0.0"
+      "BookShop.Repositories >= 1.0.0",
+      "MediatR >= 9.0.0",
+      "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.7",
+      "Newtonsoft.Json >= 13.0.1"
     ]
   },
   "packageFolders": {
@@ -6527,6 +6530,20 @@
     "frameworks": {
       "net5.0": {
         "targetAlias": "net5.0",
+        "dependencies": {
+          "MediatR": {
+            "target": "Package",
+            "version": "[9.0.0, )"
+          },
+          "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "target": "Package",
+            "version": "[5.0.7, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
