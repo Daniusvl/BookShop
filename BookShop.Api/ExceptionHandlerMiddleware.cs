@@ -22,7 +22,7 @@ namespace BookShop.Api
         {
             try
             {
-                next.Invoke(context);
+                await next.Invoke(context);
             }
             catch (Exception ex)
             {
@@ -41,14 +41,12 @@ namespace BookShop.Api
                         httpStatusCode = HttpStatusCode.BadRequest;
                         result = JsonConvert.SerializeObject(v.Errors);
                         break;
-                    case ServiceNullException sn:
-                        httpStatusCode = HttpStatusCode.InternalServerError;
-                        
-                        break;
                     default:
                         break;
                 }
 
+                context.Response.StatusCode = (int)httpStatusCode;
+                await context.Response.WriteAsync(result);
             }
         }
     }
