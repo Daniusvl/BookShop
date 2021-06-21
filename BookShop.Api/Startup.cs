@@ -1,4 +1,5 @@
 using BookShop.Core;
+using BookShop.Core.Abstract;
 using BookShop.Identity;
 using BookShop.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,8 @@ namespace BookShop.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ILoggedInUser, LoggedInUser>();
+
             services.ConfigureDirectories();
             services.AddMapper();
             services.AddMediator();
