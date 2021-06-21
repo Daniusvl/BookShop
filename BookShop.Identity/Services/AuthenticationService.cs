@@ -1,6 +1,7 @@
 ﻿using BookShop.Core.Abstract.Identity;
 using BookShop.Core.Models.Authentication;
 using BookShop.Identity.Configuration;
+using BookShop.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -16,10 +17,10 @@ namespace BookShop.Identity.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly UserManager<IdentityUser> user_manager;
+        private readonly UserManager<AppUser> user_manager;
         private readonly JwtSettings jwt_settings;
 
-        public AuthenticationService(UserManager<IdentityUser> user_manager, IOptions<JwtSettings> jwt_settings)
+        public AuthenticationService(UserManager<AppUser> user_manager, IOptions<JwtSettings> jwt_settings)
         {
             this.user_manager = user_manager;
             this.jwt_settings = jwt_settings.Value;
@@ -29,7 +30,7 @@ namespace BookShop.Identity.Services
         {
             AuthenticationModel authentication_model = new();
 
-            IdentityUser user = await user_manager.FindByEmailAsync(request?.Email);
+            AppUser user = await user_manager.FindByEmailAsync(request?.Email);
 
             if(user == null)
             {
@@ -79,14 +80,14 @@ namespace BookShop.Identity.Services
 
         public async Task<RegisterModel> Register(RegisterRequest request)
         {
-            IdentityUser user = new IdentityUser
+            AppUser user = new AppUser
             {
                 UserName = request.UserName,
                 Email = request.Email
             };
 
             IList<string> password_errors = new List<string>();
-            foreach (IPasswordValidator<IdentityUser> password_validator in user_manager.PasswordValidators)
+            foreach (IPasswordValidator<AppUser> password_validator in user_manager.PasswordValidators)
             {
                 IdentityResult validation_result = await password_validator.ValidateAsync(user_manager, user, request?.Password);
                 if (!validation_result.Succeeded)

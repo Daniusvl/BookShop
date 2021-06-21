@@ -1,6 +1,7 @@
 ﻿using BookShop.Core;
 using BookShop.Identity.Authorization;
 using BookShop.Identity.Configuration;
+using BookShop.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,7 @@ namespace BookShop.Identity
                 }
             });
 
-            services.AddIdentityCore<IdentityUser>(options => 
+            services.AddIdentityCore<AppUser>(options => 
             {
                 options.Password.RequireNonAlphanumeric = false;
                 //options.SignIn.RequireConfirmedEmail = true;
