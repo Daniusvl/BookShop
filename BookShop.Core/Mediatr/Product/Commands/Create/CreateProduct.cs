@@ -76,7 +76,7 @@ namespace BookShop.Core.Mediatr.Product.Commands.Create
                     DateReleased = request.DateReleased
                 };
 
-                foreach (int id in request.BookPhotoIds)
+                foreach (int id in request.BookPhotoIds ?? new List<int>())
                 {
                     Domain.Entities.BookPhoto photo = await photoRepository.GetById(id);
 
