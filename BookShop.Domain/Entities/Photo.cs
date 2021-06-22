@@ -6,9 +6,9 @@ namespace BookShop.Domain.Entities
     {
         public string FilePath { get; set; } = string.Empty;
 
-        public int ProductId { get; set; }
+        public int PhotoId { get; set; }
 
-        public virtual Book Product { get; set; }
+        public virtual Book Book { get; set; }
 
         public override string ToString()
         {
