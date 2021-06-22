@@ -29,6 +29,12 @@ namespace BookShop.Repositories
         {
             this.configuration = configuration;
             this.logged_in_user = logged_in_user;
+
+            if (configuration.IsDevelopment())
+            {
+                Database.EnsureDeleted();
+                Database.EnsureCreated();
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

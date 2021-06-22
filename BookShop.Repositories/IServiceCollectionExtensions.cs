@@ -1,6 +1,5 @@
 ﻿using BookShop.Core.Abstract.Repositories;
 using BookShop.Core.Abstract.Repositories.Base;
-using BookShop.Core;
 using BookShop.Repositories.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,16 +12,7 @@ namespace BookShop.Repositories
         public static IServiceCollection AddRepositoriesAndBookDb(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<BooksDb>(options =>
-            {
-                if (configuration.IsDevelopment())
-                {
-                    options.UseInMemoryDatabase("BooksDb");
-                }
-                else
-                {
-                    options.UseSqlServer(configuration.GetConnectionString("BooksDb"));
-                }
-            });
+                    options.UseSqlServer(configuration.GetConnectionString("BooksDb")));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
             services.AddScoped(typeof(IAsyncLinqHelper<>), typeof(AsyncLinqHelper<>));
