@@ -66,9 +66,9 @@ namespace BookShop.Books.Repositories
             return await repo.GetById(id);
         }
 
-        public IList<Book> GetByName(string name)
+        public Book GetByName(string name)
         {
-            return ctx.Books.Where(ent => ent.Name == name).ToList();
+            return ctx.Books.FirstOrDefault(ent => ent.Name == name);
         }
 
         public IList<Book> GetByPrice(decimal min, decimal max)
