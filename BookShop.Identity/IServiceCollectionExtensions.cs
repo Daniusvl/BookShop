@@ -20,16 +20,7 @@ namespace BookShop.Identity
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
             services.AddDbContext<IdentityDb>(options =>
-            {
-                if (configuration.IsDevelopment())
-                {
-                    options.UseInMemoryDatabase("IdentityDb");
-                }
-                else
-                {
-                    options.UseSqlServer(configuration.GetConnectionString("IdentityDb"));
-                }
-            });
+                options.UseSqlServer(configuration.GetConnectionString("IdentityDb")));
 
             services.AddIdentityCore<AppUser>(options => 
             {
