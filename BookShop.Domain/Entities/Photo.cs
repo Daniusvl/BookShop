@@ -6,7 +6,7 @@ namespace BookShop.Domain.Entities
     {
         public string FilePath { get; set; } = string.Empty;
 
-        public int PhotoId { get; set; }
+        public int BookId { get; set; }
 
         public virtual Book Book { get; set; }
 
