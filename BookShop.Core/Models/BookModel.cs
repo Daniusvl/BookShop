@@ -24,7 +24,11 @@ namespace BookShop.Core.Models
 
         public IList<PhotoModel> Photos { get; set; }
 
+        public string AuthorId { get; set; }
+
         public string AuthorName { get; set; }
+
+        public string CategoryId { get; set; }
 
         public string CategoryName { get; set; }
 
