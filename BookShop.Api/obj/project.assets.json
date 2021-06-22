@@ -2277,6 +2277,23 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
+      "BookShop.Books/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "BookShop.Core": "1.0.0",
+          "BookShop.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.7",
+          "Microsoft.EntityFrameworkCore.InMemory": "5.0.7",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.7"
+        },
+        "compile": {
+          "bin/placeholder/BookShop.Books.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookShop.Books.dll": {}
+        }
+      },
       "BookShop.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -2326,23 +2343,6 @@
         },
         "runtime": {
           "bin/placeholder/BookShop.Identity.dll": {}
-        }
-      },
-      "BookShop.Repositories/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "BookShop.Core": "1.0.0",
-          "BookShop.Domain": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.7",
-          "Microsoft.EntityFrameworkCore.InMemory": "5.0.7",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.7"
-        },
-        "compile": {
-          "bin/placeholder/BookShop.Repositories.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BookShop.Repositories.dll": {}
         }
       }
     }
@@ -7660,6 +7660,11 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
+    "BookShop.Books/1.0.0": {
+      "type": "project",
+      "path": "../BookShop.Books/BookShop.Books.csproj",
+      "msbuildProject": "../BookShop.Books/BookShop.Books.csproj"
+    },
     "BookShop.Core/1.0.0": {
       "type": "project",
       "path": "../BookShop.Core/BookShop.Core.csproj",
@@ -7674,18 +7679,13 @@
       "type": "project",
       "path": "../BookShop.Identity/BookShop.Identity.csproj",
       "msbuildProject": "../BookShop.Identity/BookShop.Identity.csproj"
-    },
-    "BookShop.Repositories/1.0.0": {
-      "type": "project",
-      "path": "../BookShop.Repositories/BookShop.Repositories.csproj",
-      "msbuildProject": "../BookShop.Repositories/BookShop.Repositories.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "BookShop.Books >= 1.0.0",
       "BookShop.Core >= 1.0.0",
       "BookShop.Identity >= 1.0.0",
-      "BookShop.Repositories >= 1.0.0",
       "MediatR >= 9.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.7",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.7",
@@ -7731,14 +7731,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+            "D:\\Projects\\BookShop\\BookShop.Books\\BookShop.Books.csproj": {
+              "projectPath": "D:\\Projects\\BookShop\\BookShop.Books\\BookShop.Books.csproj"
+            },
             "D:\\Projects\\BookShop\\BookShop.Core\\BookShop.Core.csproj": {
               "projectPath": "D:\\Projects\\BookShop\\BookShop.Core\\BookShop.Core.csproj"
             },
             "D:\\Projects\\BookShop\\BookShop.Identity\\BookShop.Identity.csproj": {
               "projectPath": "D:\\Projects\\BookShop\\BookShop.Identity\\BookShop.Identity.csproj"
-            },
-            "D:\\Projects\\BookShop\\BookShop.Repositories\\BookShop.Repositories.csproj": {
-              "projectPath": "D:\\Projects\\BookShop\\BookShop.Repositories\\BookShop.Repositories.csproj"
             }
           }
         }

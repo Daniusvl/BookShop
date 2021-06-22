@@ -1,7 +1,7 @@
 using BookShop.Core;
 using BookShop.Core.Abstract;
 using BookShop.Identity;
-using BookShop.Repositories;
+using BookShop.Books;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
