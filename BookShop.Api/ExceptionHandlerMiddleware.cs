@@ -18,7 +18,6 @@ namespace BookShop.Api
 
         public async Task InvokeAsync(HttpContext context)
         {
-            Exception exception = null;
             try
             {
                 await next.Invoke(context);
