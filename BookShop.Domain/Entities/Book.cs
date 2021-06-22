@@ -18,15 +18,15 @@ namespace BookShop.Domain.Entities
 
         public DateTime DateReleased { get; set; }
 
-        public IList<Photo> Photos { get; set; } = new List<Photo>();
+        public virtual IList<Photo> Photos { get; set; } = new List<Photo>();
 
         public int AuthorId { get; set; }
 
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
 
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
         public override string ToString()
         {
