@@ -4,14 +4,16 @@ using BookShop.Books;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookShop.Books.Migrations
 {
     [DbContext(typeof(BooksDb))]
-    partial class BooksDbModelSnapshot : ModelSnapshot
+    [Migration("20210622152544_third")]
+    partial class third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
