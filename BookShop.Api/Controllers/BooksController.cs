@@ -54,8 +54,8 @@ namespace BookShop.Api.Controllers
         [HttpGet("/ByName/{name}")]
         public async Task<IActionResult> GetByName(string name)
         {
-            IList<BookModel> books = await mediator.Send(new GetByNameBookQuery(name));
-            return Ok(books);
+            BookModel book = await mediator.Send(new GetByNameBookQuery(name));
+            return Ok(book);
         }
 
         [HttpGet("/ByPrice/{Min}/{Max}")]
