@@ -39,8 +39,6 @@ namespace BookShop.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             if (!configuration.IsDevelopment())
                 return;
 
@@ -52,10 +50,6 @@ namespace BookShop.Repositories
             modelBuilder.Entity<Category>()
                 .HasData(category);
 
-            Photo bookPhoto = new Photo { Id = 1, FilePath = "TEST" };
-            modelBuilder.Entity<Photo>()
-                .HasData(bookPhoto);
-
             modelBuilder.Entity<Book>()
                 .HasData(new Book
                 {
@@ -66,9 +60,8 @@ namespace BookShop.Repositories
                     FilePath = "TEST",
                     Hidden = false,
                     DateReleased = new DateTime(1603, 1, 1),
-                    Photos = new List<Photo> { bookPhoto },
-                    Author = bookAuthor,
-                    Category = category
+                    AuthorId = 1,
+                    CategoryId = 1
                 });
 
         }
