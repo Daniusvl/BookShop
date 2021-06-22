@@ -26,43 +26,43 @@ namespace BookShop.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IList<BookModel> products = await mediator.Send(new GetAllBookQuery());
-            return Ok(products);
+            IList<BookModel> books = await mediator.Send(new GetAllBookQuery());
+            return Ok(books);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetbyId(int id)
         {
-            BookModel product = await mediator.Send(new GetByIdBookQuery(id));
-            return Ok(product);
+            BookModel book = await mediator.Send(new GetByIdBookQuery(id));
+            return Ok(book);
         }
 
         [HttpGet("/ByAuthor/{id}")]
         public async Task<IActionResult> GetByAuthor(int id)
         {
-            IList<BookModel> products = await mediator.Send(new GetByAuthorBookQuery(id));
-            return Ok(products);
+            IList<BookModel> books = await mediator.Send(new GetByAuthorBookQuery(id));
+            return Ok(books);
         }
 
         [HttpGet("/ByCategory/{id}")]
         public async Task<IActionResult> GetByCategory(int id)
         {
-            IList<BookModel> products = await mediator.Send(new GetByCategoryBookQuery(id));
-            return Ok(products);
+            IList<BookModel> books = await mediator.Send(new GetByCategoryBookQuery(id));
+            return Ok(books);
         }
 
         [HttpGet("/ByName/{name}")]
         public async Task<IActionResult> GetByName(string name)
         {
-            IList<BookModel> products = await mediator.Send(new GetByNameBookQuery(name));
-            return Ok(products);
+            IList<BookModel> books = await mediator.Send(new GetByNameBookQuery(name));
+            return Ok(books);
         }
 
         [HttpGet("/ByPrice/{Min}/{Max}")]
         public async Task<IActionResult> GetByName(decimal min, decimal max)
         {
-            IList<BookModel> products = await mediator.Send(new GetByPriceBookQuery(min, max));
-            return Ok(products);
+            IList<BookModel> books = await mediator.Send(new GetByPriceBookQuery(min, max));
+            return Ok(books);
         }
 
         [HttpPost]
