@@ -41,18 +41,18 @@ namespace BookShop.Core.Mediatr.Book.Commands.Update
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Book product = await repository.GetById(request.Id);
+            Domain.Entities.Book book = await repository.GetById(request.Id);
 
-            if (product == null)
+            if (book == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Book), request.Id);
             }
 
-            product.Name = request.Name;
-            product.Description = request.Description;
-            product.Price = request.Price;
-            product.Hidden = request.Hidden;
-            product.DateReleased = request.DateReleased;
+            book.Name = request.Name;
+            book.Description = request.Description;
+            book.Price = request.Price;
+            book.Hidden = request.Hidden;
+            book.DateReleased = request.DateReleased;
 
             foreach (int id in request.BookPhotoIds ?? new List<int>())
             {
@@ -63,7 +63,7 @@ namespace BookShop.Core.Mediatr.Book.Commands.Update
                     throw new NotFoundException(nameof(Domain.Entities.Photo), id);
                 }
 
-                product.Photos.Add(photo);
+                book.Photos.Add(photo);
             }
 
             Domain.Entities.Author author = await authorRepository.GetById(request.AuthorId);
@@ -73,7 +73,7 @@ namespace BookShop.Core.Mediatr.Book.Commands.Update
                 throw new NotFoundException(nameof(Domain.Entities.Author), request.AuthorId);
             }
 
-            product.Author = author;
+            book.Author = author;
 
             Domain.Entities.Category category = await categoryRepository.GetById(request.CategoryId);
 
@@ -82,13 +82,13 @@ namespace BookShop.Core.Mediatr.Book.Commands.Update
                 throw new NotFoundException(nameof(Domain.Entities.Category), request.CategoryId);
             }
 
-            product.Category = category;
+            book.Category = category;
 
-            await repository.Update(product);
+            await repository.Update(book);
 
-            logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {product.Id} modified by {product.LastModifiedBy} at {product.DateLastModified}");
+            logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {book.Id} modified by {book.LastModifiedBy} at {book.DateLastModified}");
 
-            return mapper.Map<Domain.Entities.Book, BookModel>(product);
+            return mapper.Map<Domain.Entities.Book, BookModel>(book);
         }
     }
 }

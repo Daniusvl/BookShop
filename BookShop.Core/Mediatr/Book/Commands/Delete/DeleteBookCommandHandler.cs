@@ -34,16 +34,16 @@ namespace BookShop.Core.Mediatr.Book.Commands.Delete
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Book product = await repository.GetById(request.Id);
+            Domain.Entities.Book book = await repository.GetById(request.Id);
 
-            if (product == null)
+            if (book == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Book), request.Id);
             }
 
-            File.Delete(product.FilePath);
+            File.Delete(book.FilePath);
 
-            await repository.Delete(product);
+            await repository.Delete(book);
 
             logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {request.Id} deleted by {loggedInUser.UserId} at {DateTime.Now}");
 

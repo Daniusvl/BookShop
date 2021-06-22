@@ -36,14 +36,14 @@ namespace BookShop.Core.Mediatr.Book.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            Domain.Entities.Book product = await repository.GetById(request.Id);
+            Domain.Entities.Book book = await repository.GetById(request.Id);
 
-            if (product == null)
+            if (book == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Book), request.Id);
             }
 
-            BookModel model = mapper.Map<Domain.Entities.Book, BookModel>(product);
+            BookModel model = mapper.Map<Domain.Entities.Book, BookModel>(book);
 
             return model;
         }

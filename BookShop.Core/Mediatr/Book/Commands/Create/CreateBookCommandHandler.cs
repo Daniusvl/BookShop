@@ -62,7 +62,7 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
 
             await File.WriteAllBytesAsync(path, request.Bytes.ToArray());
 
-            Domain.Entities.Book product = new Domain.Entities.Book
+            Domain.Entities.Book book = new Domain.Entities.Book
             {
                 Name = request.Name,
                 Description = request.Description,
@@ -80,8 +80,8 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
                 {
                     throw new NotFoundException(nameof(Domain.Entities.Photo), id);
                 }
-
-                product.Photos.Add(photo);
+                
+                book.Photos.Add(photo);
             }
 
             Domain.Entities.Author author = await authorRepository.GetById(request.AuthorId);
@@ -91,7 +91,7 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
                 throw new NotFoundException(nameof(Domain.Entities.Author), request.AuthorId);
             }
 
-            product.Author = author;
+            book.Author = author;
 
             Domain.Entities.Category category = await categoryRepository.GetById(request.CategoryId);
 
@@ -100,13 +100,13 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
                 throw new NotFoundException(nameof(Domain.Entities.Category), request.CategoryId);
             }
 
-            product.Category = category;
+            book.Category = category;
 
-            await repository.Create(product);
+            await repository.Create(book);
 
-            logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {product.Id} created by {product.CreatedBy} at {product.DateCreated}");
+            logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {book.Id} created by {book.CreatedBy} at {book.DateCreated}");
 
-            return mapper.Map<Domain.Entities.Book, BookModel>(product);
+            return mapper.Map<Domain.Entities.Book, BookModel>(book);
         }
     }
 }

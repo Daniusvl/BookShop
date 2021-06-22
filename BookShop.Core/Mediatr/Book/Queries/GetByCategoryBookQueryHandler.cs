@@ -46,14 +46,14 @@ namespace BookShop.Core.Mediatr.Book.Queries
                 throw new NotFoundException(nameof(Domain.Entities.Category), request.CategoryId);
             }
 
-            IList<Domain.Entities.Book> products = repository.GetByCategory(category);
+            IList<Domain.Entities.Book> books = repository.GetByCategory(category);
 
-            if (products == null || products.Count == 0)
+            if (books == null || books.Count == 0)
             {
                 return new List<BookModel>();
             }
 
-            IList<BookModel> productModels = mapper.Map<IList<Domain.Entities.Book>, IList<BookModel>>(products);
+            IList<BookModel> productModels = mapper.Map<IList<Domain.Entities.Book>, IList<BookModel>>(books);
 
             return productModels;
         }

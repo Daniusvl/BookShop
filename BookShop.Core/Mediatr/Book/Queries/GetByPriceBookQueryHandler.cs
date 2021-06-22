@@ -39,16 +39,16 @@ namespace BookShop.Core.Mediatr.Book.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            IList<Domain.Entities.Book> products = repository.GetByPrice(request.Min, request.Max);
+            IList<Domain.Entities.Book> books = repository.GetByPrice(request.Min, request.Max);
 
-            if (products == null || products.Count == 0)
+            if (books == null || books.Count == 0)
             {
                 return new List<BookModel>();
             }
 
-            IList<BookModel> productModels = mapper.Map<IList<Domain.Entities.Book>, IList<BookModel>>(products);
+            IList<BookModel> bookModels = mapper.Map<IList<Domain.Entities.Book>, IList<BookModel>>(books);
 
-            return productModels;
+            return bookModels;
         }
     }
 }
