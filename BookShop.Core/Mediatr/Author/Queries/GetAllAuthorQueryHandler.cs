@@ -23,14 +23,14 @@ namespace BookShop.Core.Mediatr.Author.Queries
 
         public async Task<IList<AuthorModel>> Handle(GetAllAuthorQuery request, CancellationToken cancellationToken)
         {
-            IList<Domain.Entities.Author> bookAuthors = await repository.GetAll();
+            IList<Domain.Entities.Author> authors = await repository.GetAll();
 
-            if (bookAuthors == null || bookAuthors.Count == 0)
+            if (authors == null || authors.Count == 0)
             {
                 return new List<AuthorModel>();
             }
 
-            IList<AuthorModel> bookAuthorModels = mapper.Map<IList<Domain.Entities.Author>, IList<AuthorModel>>(bookAuthors);
+            IList<AuthorModel> bookAuthorModels = mapper.Map<IList<Domain.Entities.Author>, IList<AuthorModel>>(authors);
 
             return bookAuthorModels;
         }
