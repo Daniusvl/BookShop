@@ -38,13 +38,11 @@ namespace BookShop.Api
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(v.Errors));
                         break;
                     default:
-                        exception = ex;
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        await context.Response.WriteAsync("Unhandled error");
                         break;
                 }
             }
-
-            if (exception != null)
-                throw exception;
         }
     }
 }
