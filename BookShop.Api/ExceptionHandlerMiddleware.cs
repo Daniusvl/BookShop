@@ -30,7 +30,7 @@ namespace BookShop.Api
                 {
                     case NotFoundException nf:
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                        await context.Response.WriteAsync(nf.ToString());
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(nf.ToString()));
                         break;
                     case ValidationException v:
                         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -38,7 +38,7 @@ namespace BookShop.Api
                         break;
                     default:
                         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        await context.Response.WriteAsync("Unhandled error");
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject("Unknown error"));
                         break;
                 }
             }
