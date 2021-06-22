@@ -23,14 +23,14 @@ namespace BookShop.Core.Mediatr.Photo.Queries
 
         public async Task<IList<PhotoModel>> Handle(GetAllPhotoQuery request, CancellationToken cancellationToken)
         {
-            IList<Domain.Entities.Photo> bookPhotos = await repository.GetAll();
+            IList<Domain.Entities.Photo> photos = await repository.GetAll();
 
-            if (bookPhotos == null || bookPhotos.Count == 0)
+            if (photos == null || photos.Count == 0)
             {
                 return new List<PhotoModel>();
             }
 
-            IList<PhotoModel> bookPhotoModels = mapper.Map<IList<Domain.Entities.Photo>, IList<PhotoModel>>(bookPhotos);
+            IList<PhotoModel> bookPhotoModels = mapper.Map<IList<Domain.Entities.Photo>, IList<PhotoModel>>(photos);
 
             return bookPhotoModels;
         }
