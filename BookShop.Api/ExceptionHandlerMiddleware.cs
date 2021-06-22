@@ -18,8 +18,6 @@ namespace BookShop.Api
 
         public async Task InvokeAsync(HttpContext context)
         {
-            HttpStatusCode httpStatusCode = HttpStatusCode.InternalServerError;
-            string result = string.Empty;
             Exception exception = null;
             try
             {
@@ -32,12 +30,12 @@ namespace BookShop.Api
                 switch (ex)
                 {
                     case NotFoundException nf:
-                        httpStatusCode = HttpStatusCode.NotFound;
-                        result = nf.ToString ();
+                        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        await context.Response.WriteAsync(nf.ToString());
                         break;
                     case ValidationException v:
-                        httpStatusCode = HttpStatusCode.BadRequest;
-                        result = JsonConvert.SerializeObject(v.Errors);
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(v.Errors));
                         break;
                     default:
                         exception = ex;
@@ -47,9 +45,6 @@ namespace BookShop.Api
 
             if (exception != null)
                 throw exception;
-
-            context.Response.StatusCode = (int)httpStatusCode;
-            await context.Response.WriteAsync(result);
         }
     }
 }
