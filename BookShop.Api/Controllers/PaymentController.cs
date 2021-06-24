@@ -13,19 +13,19 @@ namespace BookShop.Api.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IAuthenticationService authService;
+        private readonly IUserService userService;
         private readonly ILoggedInUser logged_in_user;
 
-        public PaymentController(IAuthenticationService authService, ILoggedInUser logged_in_user)
+        public PaymentController(IUserService userService, ILoggedInUser logged_in_user)
         {
-            this.authService = authService;
+            this.userService = userService;
             this.logged_in_user = logged_in_user;
         }
 
         [HttpPost("/BuyBook")]
         public async Task<IActionResult> BuyBook([FromBody] BuyBookRequest buyBook)
         {
-            bool result = await authService.AddOwnedProduct(logged_in_user.UserId, buyBook.BookId);
+            bool result = await userService.AddOwnedProduct(logged_in_user.UserId, buyBook.BookId);
 
             return Ok(result);
         }
