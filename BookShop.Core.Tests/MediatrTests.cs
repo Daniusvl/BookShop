@@ -10,6 +10,8 @@ using System;
 using BookShop.Core.Mediatr.Photo.Commands.Create;
 using System.Collections.Generic;
 using System.IO;
+using BookShop.Core.Mediatr.Author.Commands.Update;
+using BookShop.Core.Exceptions;
 
 namespace BookShop.Core.Tests
 {
@@ -48,6 +50,27 @@ namespace BookShop.Core.Tests
             // assert
             Assert.NotNull(result);
             Assert.True(file_exists);
+        }
+
+        [Fact]
+        public async Task Update_Author_Throw_Exception_If_Id_Not_Found_Test()
+        {
+            // arange
+            Mock<IAuthorRepository> repository = new();
+            repository.Setup(ex => ex.GetById(It.IsAny<int>()))
+                .Returns(Task.FromResult<Author>(null));
+            repository.Setup(ex => ex.IsUniqueName(It.IsAny<string>()))
+                .Returns(true);
+
+            Mock<IMapper> mapper = new();
+
+            Mock<ILogger<UpdateAuthorCommandHandler>> logger = new();
+
+            UpdateAuthorCommand command = new() { Id = 1337, Name = "Dont care" };
+            UpdateAuthorCommandHandler handler = new(repository.Object, mapper.Object, logger.Object);
+
+            // act, assert
+            await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(command, default));
         }
     }
 }
