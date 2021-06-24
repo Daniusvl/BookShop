@@ -74,5 +74,77 @@ namespace BookShop.Books.Tests
             Assert.NotNull(result);
             Assert.Equal(category, result);
         }
+
+        [Fact]
+        public async Task Create_And_Delete_Product_Test()
+        {
+            // arrange
+            DbContextOptionsBuilder<BooksDb> options = new();
+            options.UseInMemoryDatabase(MethodBase.GetCurrentMethod().Name);
+
+            Mock<ILoggedInUser> logged_in_user = new();
+            logged_in_user.SetupGet(ex => ex.UserId)
+                .Returns($"{nameof(BooksDbTests)} {MethodBase.GetCurrentMethod().Name}");
+
+            using BooksDb context = new TestableBooksDb(options.Options, logged_in_user.Object);
+
+            IAsyncRepository<Book> repository = new AsyncRepository<Book>(context);
+
+            Book book = new()
+            {
+                Name = "C# in Depth"
+            };
+
+            // act
+            await repository.Create(book);
+
+            // assert
+            Assert.True(book.Id != 0);
+
+            // act again
+            await repository.Delete(book);
+            Book result = await repository.GetById(book.Id);
+
+            // assert again
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task Create_And_Update_Photo_Test()
+        {
+            // arrange
+            DbContextOptionsBuilder<BooksDb> options = new();
+            options.UseInMemoryDatabase(MethodBase.GetCurrentMethod().Name);
+
+            Mock<ILoggedInUser> logged_in_user = new();
+            logged_in_user.SetupGet(ex => ex.UserId)
+                .Returns($"{nameof(BooksDbTests)} {MethodBase.GetCurrentMethod().Name}");
+
+            using BooksDb context = new TestableBooksDb(options.Options, logged_in_user.Object);
+
+            IAsyncRepository<Photo> repository = new AsyncRepository<Photo>(context);
+
+            Photo photo = new()
+            {
+                FilePath = "Cyberpunk 2077 is shit"
+            };
+
+            string previous_value = photo.FilePath;
+
+            // act
+            await repository.Create(photo);
+
+            // assert
+            Assert.True(photo.Id != 0);
+
+            // act again
+            photo.FilePath = "But I didnt played it";
+            await repository.Update(photo);
+            Photo result = await repository.GetById(photo.Id);
+
+            // assert again
+            Assert.Equal(photo, result);
+            Assert.False(result.FilePath == previous_value);
+        }
     }
 }
