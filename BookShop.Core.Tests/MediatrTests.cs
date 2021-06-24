@@ -38,14 +38,16 @@ namespace BookShop.Core.Tests
             // act
             PhotoModel result = await handler.Handle(command, default);
 
-            // assert
-            Assert.NotNull(result);
-            Assert.True(File.Exists(result.FilePath));
+            bool file_exists = File.Exists(result.FilePath);
 
             // delete created junk file and directories
             File.Delete(result.FilePath);
             Directory.Delete($@"Photos\{command.ProductName}");
             Directory.Delete("Photos");
+
+            // assert
+            Assert.NotNull(result);
+            Assert.True(file_exists);
         }
     }
 }
