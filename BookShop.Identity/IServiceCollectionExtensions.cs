@@ -1,7 +1,8 @@
-﻿using BookShop.Core;
+﻿using BookShop.Core.Abstract.Identity;
 using BookShop.Identity.Authorization;
 using BookShop.Identity.Configuration;
 using BookShop.Identity.Models;
+using BookShop.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +61,9 @@ namespace BookShop.Identity
                     policy_cfg.RequireClaim(RoleConstants.RoleClaim, RoleConstants.Administrator));
 
             });
+
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
