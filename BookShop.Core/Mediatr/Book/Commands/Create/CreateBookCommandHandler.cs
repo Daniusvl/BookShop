@@ -60,8 +60,6 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
                 logger.LogWarning("Product file name generation takes more than 4 iterations");
             }
 
-            await File.WriteAllBytesAsync(path, request.Bytes.ToArray());
-
             Domain.Entities.Book book = new Domain.Entities.Book
             {
                 Name = request.Name,
@@ -105,6 +103,8 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
             await repository.Create(book);
 
             logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {book.Id} created by {book.CreatedBy} at {book.DateCreated}");
+
+            await File.WriteAllBytesAsync(path, request.Bytes.ToArray());
 
             return mapper.Map<Domain.Entities.Book, BookModel>(book);
         }
