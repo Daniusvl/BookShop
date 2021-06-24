@@ -22,7 +22,6 @@ namespace BookShop.Identity.Services
         {
             this.user_manager = user_manager;
             this.productRepository = productRepository;
-            this.jwt_settings = jwt_settings.Value;
         }
 
         public async Task<bool> AddOwnedProduct(string user_id, int product_id)
