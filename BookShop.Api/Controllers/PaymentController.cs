@@ -1,12 +1,15 @@
 ﻿using BookShop.Core.Abstract;
 using BookShop.Core.Abstract.Identity;
 using BookShop.Core.Models.Payment;
+using BookShop.Identity.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace BookShop.Api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = RoleConstants.DefaultUserName)]
     [ApiController]
     public class PaymentController : ControllerBase
     {
