@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.Core.Mediatr.Photo.Commands.Create
 {
-    class CreatePhotoCommandHandler : IRequestHandler<CreatePhotoCommand, PhotoModel>
+    public class CreatePhotoCommandHandler : IRequestHandler<CreatePhotoCommand, PhotoModel>
     {
         private readonly IPhotoRepository repository;
         private readonly IBookRepository productRepository;
@@ -69,7 +69,7 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
 
             logger.LogInformation($"{nameof(Domain.Entities.Photo)} with Id: {photo.Id} created by {photo.CreatedBy} at {photo.DateCreated}");
 
-            return mapper.Map< Domain.Entities.Photo, PhotoModel>(photo);
+            return mapper.Map<Domain.Entities.Photo, PhotoModel>(photo);
         }
     }
 }
