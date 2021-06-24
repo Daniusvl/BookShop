@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.IO;
 using BookShop.Core.Mediatr.Author.Commands.Update;
 using BookShop.Core.Exceptions;
+using BookShop.Core.Abstract;
+using BookShop.Core.Mediatr.Book.Commands.Delete;
 
 namespace BookShop.Core.Tests
 {
@@ -71,6 +73,41 @@ namespace BookShop.Core.Tests
 
             // act, assert
             await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(command, default));
+        }
+
+        [Fact]
+        public async Task Delete_Book_File_Test()
+        {
+            // arrange
+            string path = $@"{Directory.GetCurrentDirectory()}\Books";
+            Directory.CreateDirectory(path);
+            string file_path = $@"{path}\file.pdf";
+            File.WriteAllBytes(file_path, new byte[] { 0, 0, 0, 0 });
+
+            Mock<IBookRepository> repository = new();
+            repository.Setup(ex => ex.GetById(It.IsAny<int>()))
+                .Returns(Task.FromResult(new Book { FilePath = file_path }));
+
+            Mock<ILoggedInUser> logged_in_user = new();
+
+            Mock<ILogger<DeleteBookCommandHandler>> logger = new();
+
+            DeleteBookCommand command = new(1337);
+
+            DeleteBookCommandHandler handler = new(repository.Object, logged_in_user.Object, logger.Object);
+
+            // act
+            await handler.Handle(command, default);
+
+            bool file_exists = File.Exists(file_path);
+
+            // delete created files
+            if (file_exists)
+                File.Delete(file_path);
+            Directory.Delete(path);
+
+            // assert
+            Assert.False(file_exists);
         }
     }
 }
