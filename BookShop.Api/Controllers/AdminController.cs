@@ -23,21 +23,16 @@ namespace BookShop.Api.Controllers
         [HttpPost("/ChangeRole")]
         public async Task<ActionResult> ChangeRole([FromBody] ChangeRoleRequest request)
         {
-            bool result = false;
             switch (request.Role)
             {
                 case "DefaultUser":
-                     result = await userService.ChangeRole(request.UserId, Role.DefaultUser);
-                    if (result)
-                        return Ok(result);
-                    else return BadRequest();
+                     await userService.ChangeRole(request.UserId, Role.DefaultUser);
+                    return Ok();
                 case "Manager":
-                    result = await userService.ChangeRole(request.UserId, Role.Manager);
-                    if (result)
-                        return Ok(result);
-                    else return BadRequest();
+                    await userService.ChangeRole(request.UserId, Role.Manager);
+                    return Ok();
                 default:
-                    return BadRequest(false);
+                    return BadRequest();
             }
         }
     }

@@ -25,9 +25,9 @@ namespace BookShop.Api.Controllers
         [HttpPost("/BuyBook")]
         public async Task<IActionResult> BuyBook([FromBody] BuyBookRequest buyBook)
         {
-            bool result = await userService.AddOwnedProduct(logged_in_user.UserId, buyBook.BookId);
+            await userService.AddOwnedProduct(logged_in_user.UserId, buyBook.BookId);
 
-            return Ok(result);
+            return Ok();
         }
     }
 }
