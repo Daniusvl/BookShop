@@ -24,8 +24,4 @@
     <ProjectReference Include="..\BookShop.Identity\BookShop.Identity.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Logs\" />
-  </ItemGroup>
-
 </Project>
