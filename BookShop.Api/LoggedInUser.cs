@@ -14,9 +14,9 @@ namespace BookShop.Api
         {
             HttpContext context = httpContextAccessor?.HttpContext;
 
-            bool contains_token = context.Request.Query.ContainsKey("access_token");
+            bool? contains_token = context?.Request?.Query?.ContainsKey("access_token");
 
-            if (!contains_token)
+            if (!contains_token.HasValue || !contains_token.Value)
             {
                 UserId = "Unknown";
                 return;

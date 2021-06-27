@@ -23,7 +23,7 @@ namespace BookShop.Books.Tests
             logged_in_user.SetupGet(ex => ex.UserId)
                 .Returns($"{nameof(BooksDbTests)} {MethodBase.GetCurrentMethod().Name}");
 
-            using BooksDb context = new TestableBooksDb(options.Options, logged_in_user.Object);
+            using BooksDb context = new TestableBooksDb(options.Options, null, logged_in_user.Object);
 
             IAsyncRepository<Author> repository = new AsyncRepository<Author>(context);
 
@@ -51,7 +51,7 @@ namespace BookShop.Books.Tests
             logged_in_user.SetupGet(ex => ex.UserId)
                 .Returns($"{nameof(BooksDbTests)} {MethodBase.GetCurrentMethod().Name}");
 
-            using BooksDb context = new TestableBooksDb(options.Options, logged_in_user.Object);
+            using BooksDb context = new TestableBooksDb(options.Options,null, logged_in_user.Object);
 
             IAsyncRepository<Category> repository = new AsyncRepository<Category>(context);
 
@@ -86,7 +86,7 @@ namespace BookShop.Books.Tests
             logged_in_user.SetupGet(ex => ex.UserId)
                 .Returns($"{nameof(BooksDbTests)} {MethodBase.GetCurrentMethod().Name}");
 
-            using BooksDb context = new TestableBooksDb(options.Options, logged_in_user.Object);
+            using BooksDb context = new TestableBooksDb(options.Options, null, logged_in_user.Object);
 
             IAsyncRepository<Book> repository = new AsyncRepository<Book>(context);
 
@@ -120,7 +120,7 @@ namespace BookShop.Books.Tests
             logged_in_user.SetupGet(ex => ex.UserId)
                 .Returns($"{nameof(BooksDbTests)} {MethodBase.GetCurrentMethod().Name}");
 
-            using BooksDb context = new TestableBooksDb(options.Options, logged_in_user.Object);
+            using BooksDb context = new TestableBooksDb(options.Options, null, logged_in_user.Object);
 
             IAsyncRepository<Photo> repository = new AsyncRepository<Photo>(context);
 

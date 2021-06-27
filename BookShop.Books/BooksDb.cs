@@ -25,29 +25,10 @@ namespace BookShop.Books
 
         public DbSet<Photo> Photos { get; set; }
 
-        /// <summary>
-        /// !!!! USE ONLY FOR UNIT TESTING !!!! And override OnModelCreating and dont call base OnModelCreating!
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="logged_in_user"></param>
-        protected BooksDb(DbContextOptions<BooksDb> options, ILoggedInUser logged_in_user) : base(options)
-        {
-            this.logged_in_user = logged_in_user;
-
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
-        }
-
         public BooksDb(DbContextOptions<BooksDb> options, IConfiguration configuration, ILoggedInUser logged_in_user) : base(options)
         {
             this.configuration = configuration;
             this.logged_in_user = logged_in_user;
-
-            if (configuration.IsDevelopment())
-            {
-                Database.EnsureDeleted();
-                Database.EnsureCreated();
-            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

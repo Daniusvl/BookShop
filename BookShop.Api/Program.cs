@@ -21,7 +21,9 @@ namespace BookShop.Api
                 .WriteTo.File("Logs\\log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
-            CreateHostBuilder(args).Build().Run();
+            IHost host = CreateHostBuilder(args).Build();
+            host.ClearDatabase();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
