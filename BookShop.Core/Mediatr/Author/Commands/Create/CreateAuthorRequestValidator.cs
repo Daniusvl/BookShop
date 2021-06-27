@@ -18,7 +18,7 @@ namespace BookShop.Core.Mediatr.Author.Commands.Create
                     .WithMessage("{PropertyName} cannot be empty")
                 .Length(5, 200)
                     .WithMessage("{PropertyName} must contain from 5 to 200 characters")
-                .Must(repository.IsUniqueName)
+                .MustAsync(async (name, token) => await repository.IsUniqueName(name))
                     .WithMessage("There is already author with this name: {PropertyName}");
         }
     }

@@ -36,7 +36,7 @@ namespace BookShop.Core.Mediatr.Author.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            Domain.Entities.Author entity = await repository.GetById(request.Id);
+            Domain.Entities.Author entity = await repository.BaseRepository.GetById(request.Id);
 
             if (entity == null)
             {

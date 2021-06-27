@@ -14,6 +14,7 @@ using BookShop.Core.Mediatr.Author.Commands.Update;
 using BookShop.Core.Exceptions;
 using BookShop.Core.Abstract;
 using BookShop.Core.Mediatr.Book.Commands.Delete;
+using BookShop.Core.Abstract.Repositories.Base;
 
 namespace BookShop.Core.Tests
 {
@@ -23,11 +24,14 @@ namespace BookShop.Core.Tests
         public async Task Photo_File_Creation_Test()
         {
             // arange
+            Mock<IAsyncRepository<Photo>> base_photo_repository = new();
+            
             Mock<IPhotoRepository> photo_repository = new();
+            photo_repository.SetupGet(repo => repo.BaseRepository).Returns(base_photo_repository.Object);
 
             Mock<IBookRepository> book_repository = new();
             book_repository.Setup(ex => ex.ContainsWithName(It.IsAny<string>()))
-                .Returns(true);
+                .Returns(Task.FromResult(true));
 
             Mock<ILogger<CreatePhotoCommandHandler>> logger = new();
 
@@ -59,10 +63,10 @@ namespace BookShop.Core.Tests
         {
             // arange
             Mock<IAuthorRepository> repository = new();
-            repository.Setup(ex => ex.GetById(It.IsAny<int>()))
+            repository.Setup(ex => ex.BaseRepository.GetById(It.IsAny<int>()))
                 .Returns(Task.FromResult<Author>(null));
             repository.Setup(ex => ex.IsUniqueName(It.IsAny<string>()))
-                .Returns(true);
+                .Returns(Task.FromResult(true));
 
             Mock<IMapper> mapper = new();
 
@@ -85,7 +89,7 @@ namespace BookShop.Core.Tests
             File.WriteAllBytes(file_path, new byte[] { 0, 0, 0, 0 });
 
             Mock<IBookRepository> repository = new();
-            repository.Setup(ex => ex.GetById(It.IsAny<int>()))
+            repository.Setup(ex => ex.BaseRepository.GetById(It.IsAny<int>()))
                 .Returns(Task.FromResult(new Book { FilePath = file_path }));
 
             Mock<ILoggedInUser> logged_in_user = new();

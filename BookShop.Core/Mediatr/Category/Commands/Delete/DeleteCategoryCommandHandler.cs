@@ -33,14 +33,14 @@ namespace BookShop.Core.Mediatr.Category.Commands.Delete
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Category category = await repository.GetById(request.Id);
+            Domain.Entities.Category category = await repository.BaseRepository.GetById(request.Id);
 
             if (category == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Category), request.Id);
             }
 
-            await repository.Delete(category);
+            await repository.BaseRepository.Delete(category);
 
             logger.LogInformation($"{nameof(Domain.Entities.Category)} with Id: {request.Id} deleted by {loggedInUser.UserId} at {DateTime.Now}");
 

@@ -34,7 +34,7 @@ namespace BookShop.Core.Mediatr.Book.Commands.Delete
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Book book = await repository.GetById(request.Id);
+            Domain.Entities.Book book = await repository.BaseRepository.GetById(request.Id);
 
             if (book == null)
             {
@@ -43,7 +43,7 @@ namespace BookShop.Core.Mediatr.Book.Commands.Delete
 
             File.Delete(book.FilePath);
 
-            await repository.Delete(book);
+            await repository.BaseRepository.Delete(book);
 
             logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {request.Id} deleted by {loggedInUser.UserId} at {DateTime.Now}");
 

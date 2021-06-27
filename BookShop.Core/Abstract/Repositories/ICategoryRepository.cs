@@ -1,10 +1,11 @@
 ﻿using BookShop.Core.Abstract.Repositories.Base;
 using BookShop.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace BookShop.Core.Abstract.Repositories
 {
-    public interface ICategoryRepository : IAsyncRepository<Category>, IAsyncLinqHelper<Category>
+    public interface ICategoryRepository : IHasBaseRepository<Category>
     {
-        bool IsUniqueName(string name);
+        Task<bool> IsUniqueName(string name);
     }
 }

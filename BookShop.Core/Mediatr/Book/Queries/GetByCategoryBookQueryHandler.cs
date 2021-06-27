@@ -39,14 +39,14 @@ namespace BookShop.Core.Mediatr.Book.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            Domain.Entities.Category category = await categoryRepository.GetById(request.CategoryId);
+            Domain.Entities.Category category = await categoryRepository.BaseRepository.GetById(request.CategoryId);
 
             if (category == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Category), request.CategoryId);
             }
 
-            IList<Domain.Entities.Book> books = repository.GetByCategory(category);
+            IList<Domain.Entities.Book> books = await repository.GetByCategory(category);
 
             if (books == null || books.Count == 0)
             {

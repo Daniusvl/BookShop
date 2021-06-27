@@ -16,7 +16,7 @@ namespace BookShop.Core.Mediatr.Book.Commands.Update
                     .WithMessage("{PropertyName} cannot be null")
                 .NotEmpty()
                     .WithMessage("{PropertyName} cannot be empty")
-                .Must(repository.IsUniqueName)
+                .MustAsync(async (name, token) => await repository.IsUniqueName(name))
                     .WithMessage("Product with specified name already exists: {PropertyName}")
                 .Length(3, 150)
                     .WithMessage("{PropertyName} must contain from 3 to 150 characters");

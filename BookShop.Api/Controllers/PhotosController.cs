@@ -40,8 +40,8 @@ namespace BookShop.Api.Controllers
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Add([FromBody] CreatePhotoCommand command)
         {
-            await mediator.Send(command);
-            return Ok();
+            PhotoModel photo = await mediator.Send(command);
+            return Ok(photo);
         }
 
         [HttpDelete("{id}")]

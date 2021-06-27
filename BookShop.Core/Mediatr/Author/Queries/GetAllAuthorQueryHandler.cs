@@ -23,7 +23,7 @@ namespace BookShop.Core.Mediatr.Author.Queries
 
         public async Task<IList<AuthorModel>> Handle(GetAllAuthorQuery request, CancellationToken cancellationToken)
         {
-            IList<Domain.Entities.Author> authors = await repository.GetAll();
+            IList<Domain.Entities.Author> authors = await repository.BaseRepository.GetAll();
 
             if (authors == null || authors.Count == 0)
             {

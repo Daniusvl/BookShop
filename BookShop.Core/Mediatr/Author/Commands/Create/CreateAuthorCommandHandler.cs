@@ -38,7 +38,7 @@ namespace BookShop.Core.Mediatr.Author.Commands.Create
                 Name = request.Name
             };
 
-            await repository.Create(author);
+            await repository.BaseRepository.Create(author);
 
             logger.LogInformation($"{nameof(Domain.Entities.Author)} with Id: {author.Id} created by {author.CreatedBy} at {author.DateCreated}");
 

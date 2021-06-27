@@ -33,14 +33,14 @@ namespace BookShop.Core.Mediatr.Author.Commands.Delete
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Author author = await repository.GetById(request.Id);
+            Domain.Entities.Author author = await repository.BaseRepository.GetById(request.Id);
 
             if (author == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Author), request.Id);
             }
 
-            await repository.Delete(author);
+            await repository.BaseRepository.Delete(author);
 
             logger.LogInformation($"{nameof(Domain.Entities.Author)} with Id: {request.Id} deleted by {loggedInUser.UserId} at {DateTime.Now}");
 

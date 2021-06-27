@@ -8,7 +8,7 @@ namespace BookShop.Domain.Entities
 
         public int BookId { get; set; }
 
-        public virtual Book Book { get; set; }
+        public Book Book { get; set; }
 
         public override string ToString()
         {

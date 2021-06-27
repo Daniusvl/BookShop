@@ -33,7 +33,7 @@ namespace BookShop.Core.Mediatr.Author.Commands.Update
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Author author = await repository.GetById(request.Id);
+            Domain.Entities.Author author = await repository.BaseRepository.GetById(request.Id);
 
             if (author == null)
             {
@@ -42,7 +42,7 @@ namespace BookShop.Core.Mediatr.Author.Commands.Update
 
             author.Name = request.Name;
 
-            await repository.Update(author);
+            await repository.BaseRepository.Update(author);
 
             logger.LogInformation($"{nameof(Domain.Entities.Author)} with Id: {author.Id} updated by {author.LastModifiedBy} at {author.DateLastModified}");
 

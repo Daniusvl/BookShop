@@ -24,9 +24,9 @@ namespace BookShop.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetNewest()
         {
-            IList<BookModel> books = await mediator.Send(new GetAllBookQuery());
+            IList<BookModel> books = await mediator.Send(new GetNewestBookQuery());
             return Ok(books);
         }
 
@@ -59,7 +59,7 @@ namespace BookShop.Api.Controllers
         }
 
         [HttpGet("/ByPrice/{Min}/{Max}")]
-        public async Task<IActionResult> GetByName(decimal min, decimal max)
+        public async Task<IActionResult> GetByPrice(decimal min, decimal max)
         {
             IList<BookModel> books = await mediator.Send(new GetByPriceBookQuery(min, max));
             return Ok(books);
@@ -69,16 +69,16 @@ namespace BookShop.Api.Controllers
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Add([FromBody] CreateBookCommand command)
         {
-            await mediator.Send(command);
-            return Ok();
+            BookModel book = await mediator.Send(command);
+            return Ok(book);
         }
 
         [HttpPut]
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Update([FromBody] UpdateBookCommand command)
         {
-            await mediator.Send(command);
-            return Ok();
+            BookModel book = await mediator.Send(command);
+            return Ok(book);
         }
 
         [HttpDelete("{id}")]

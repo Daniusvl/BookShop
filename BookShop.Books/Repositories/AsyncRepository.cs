@@ -1,7 +1,7 @@
 ﻿using BookShop.Core.Abstract.Repositories.Base;
 using BookShop.Domain.Entities.Abstract;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.Books.Repositories
@@ -32,14 +32,14 @@ namespace BookShop.Books.Repositories
 
         public async Task<IList<TEntity>> GetAll()
         {
-            return ctx.Set<TEntity>()
-                .ToList();
+            return await ctx.Set<TEntity>()
+                .ToListAsync();
         }
 
         public async Task<TEntity> GetById(int id)
         {
-            return ctx.Set<TEntity>()
-                .FirstOrDefault(ent => ent.Id == id);
+            return await ctx.Set<TEntity>()
+                .FirstOrDefaultAsync(ent => ent.Id == id);
         }
 
         public async Task Update(TEntity entity)

@@ -65,7 +65,7 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
                 FilePath = path
             };
 
-            await repository.Create(photo);
+            await repository.BaseRepository.Create(photo);
 
             logger.LogInformation($"{nameof(Domain.Entities.Photo)} with Id: {photo.Id} created by {photo.CreatedBy} at {photo.DateCreated}");
 

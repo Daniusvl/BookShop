@@ -36,7 +36,7 @@ namespace BookShop.Core.Mediatr.Category.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            Domain.Entities.Category category = await repository.GetById(request.Id);
+            Domain.Entities.Category category = await repository.BaseRepository.GetById(request.Id);
 
             if (category == null)
             {

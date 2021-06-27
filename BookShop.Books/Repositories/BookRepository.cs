@@ -1,7 +1,7 @@
 ﻿using BookShop.Core.Abstract.Repositories;
 using BookShop.Core.Abstract.Repositories.Base;
 using BookShop.Domain.Entities;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,84 +11,91 @@ namespace BookShop.Books.Repositories
     public class BookRepository : IBookRepository
     {
         private readonly BooksDb ctx;
-        private readonly IAsyncRepository<Book> repo;
-        private readonly IAsyncLinqHelper<Book> helper;
+        public IAsyncRepository<Book> BaseRepository { get; }
 
-        public BookRepository(BooksDb ctx, IAsyncRepository<Book> repo, IAsyncLinqHelper<Book> helper)
+        public BookRepository(BooksDb ctx, IAsyncRepository<Book> _base)
         {
             this.ctx = ctx;
-            this.repo = repo;
-            this.helper = helper;
+            BaseRepository = _base;
         }
 
-        public bool ContainsWithName(string name)
+        public async Task<bool> ContainsWithName(string name)
         {
-            return ctx.Books.Any(ent => ent.Name == name);
+            return await ctx.Books.AnyAsync(ent => ent.Name == name);
         }
 
-        public async Task Create(Book entity)
+        public async Task<IList<Book>> GetByAuthor(Author author)
         {
-            await repo.Create(entity);
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .Where(ent => ent.Author == author)
+                .ToListAsync();
         }
 
-        public async Task Delete(Book entity)
+        public async Task<IList<Book>> GetByAuthorName(string author_name)
         {
-            await repo.Delete(entity);
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .Where(ent => ent.Author.Name == author_name)
+                .ToListAsync();
         }
 
-        public async Task<IList<Book>> GetAll()
+        public async Task<IList<Book>> GetByCategory(Category category)
         {
-            return await repo.GetAll();
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .Where(ent => ent.Category == category).ToListAsync();
         }
 
-        public IList<Book> GetByAuthor(Author author)
+        public async Task<IList<Book>> GetByCategoryName(string category_name)
         {
-            return ctx.Books.Where(ent => ent.Author == author).ToList();
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .Where(ent => ent.Category.Name == category_name)
+                .ToListAsync();
         }
 
-        public IList<Book> GetByAuthorName(string author_name)
+        public async Task<Book> GetByName(string name)
         {
-            return ctx.Books.Where(ent => ent.Author.Name == author_name).ToList();
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .FirstOrDefaultAsync(ent => ent.Name == name);
         }
 
-        public IList<Book> GetByCategory(Category category)
+        public async Task<IList<Book>> GetByPrice(decimal min, decimal max)
         {
-            return ctx.Books.Where(ent => ent.Category == category).ToList();
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .Where(b => b.Price >= min && b.Price <= max)
+                .ToListAsync();
         }
 
-        public IList<Book> GetByCategoryName(string category_name)
+        public async Task<bool> IsUniqueName(string name)
         {
-            return ctx.Books.Where(ent => ent.Category.Name == category_name).ToList();
+            return !await ContainsWithName(name);
         }
 
-        public async Task<Book> GetById(int id)
+        public async Task<IList<Book>> GetNewest(int count)
         {
-            return await repo.GetById(id);
-        }
-
-        public Book GetByName(string name)
-        {
-            return ctx.Books.FirstOrDefault(ent => ent.Name == name);
-        }
-
-        public IList<Book> GetByPrice(decimal min, decimal max)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsUniqueName(string name)
-        {
-            return !ContainsWithName(name);
-        }
-
-        public async Task Update(Book entity)
-        {
-            await repo.Update(entity);
-        }
-
-        public async Task<IList<Book>> Where(Func<Book, bool> predicate)
-        {
-            return await helper.Where(predicate);
+            return ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .AsEnumerable()
+                .TakeLast(count)
+                .ToList();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace BookShop.Core.Mediatr.Category.Commands.Create
                 Name = request?.Name ?? string.Empty
             };
 
-            await repository.Create(category);
+            await repository.BaseRepository.Create(category);
 
             logger.LogInformation($"{nameof(Domain.Entities.Category)} with Id: {category.Id} created by {category.CreatedBy} at {category.DateCreated}");
 

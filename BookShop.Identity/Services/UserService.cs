@@ -30,7 +30,7 @@ namespace BookShop.Identity.Services
             if (user == null)
                 throw new NotFoundException(nameof(AppUser), user_id);
 
-            Book product = await productRepository.GetById(book_id);
+            Book product = await productRepository.BaseRepository.GetById(book_id);
 
             if (product == null)
                 throw new NotFoundException(nameof(Book), book_id);

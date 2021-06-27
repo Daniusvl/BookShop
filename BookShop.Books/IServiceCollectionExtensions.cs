@@ -15,12 +15,13 @@ namespace BookShop.Books
                     options.UseSqlServer(configuration.GetConnectionString("BooksDb")));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
-            services.AddScoped(typeof(IAsyncLinqHelper<>), typeof(AsyncLinqHelper<>));
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }

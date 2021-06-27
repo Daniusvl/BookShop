@@ -23,7 +23,7 @@ namespace BookShop.Core.Mediatr.Category.Queries
 
         public async Task<IList<CategoryModel>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
         {
-            IList<Domain.Entities.Category> categories = await repository.GetAll();
+            IList<Domain.Entities.Category> categories = await repository.BaseRepository.GetAll();
 
             if (categories == null || categories.Count == 0)
             {

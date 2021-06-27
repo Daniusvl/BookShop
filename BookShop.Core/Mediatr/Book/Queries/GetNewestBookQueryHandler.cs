@@ -2,28 +2,31 @@
 using BookShop.Core.Abstract.Repositories;
 using BookShop.Core.Models;
 using MediatR;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace BookShop.Core.Mediatr.Book.Queries
 {
-    public class GetAllBookQuery : IRequest<IList<BookModel>> { }
+    public class GetNewestBookQuery : IRequest<IList<BookModel>> { }
 
-    public class GetAllBookQueryHandler : IRequestHandler<GetAllBookQuery, IList<BookModel>>
+    public class GetNewestBookQueryHandler : IRequestHandler<GetNewestBookQuery, IList<BookModel>>
     {
         private readonly IBookRepository repository;
         private readonly IMapper mapper;
 
-        public GetAllBookQueryHandler(IBookRepository repository, IMapper mapper)
+        public GetNewestBookQueryHandler(IBookRepository repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;
         }
 
-        public async Task<IList<BookModel>> Handle(GetAllBookQuery request, CancellationToken cancellationToken)
+        public async Task<IList<BookModel>> Handle(GetNewestBookQuery request, CancellationToken cancellationToken)
         {
-            IList<Domain.Entities.Book> books = await repository.BaseRepository.GetAll();
+            IList<Domain.Entities.Book> books = await repository.GetNewest(20);
 
             if (books == null || books.Count == 0)
             {

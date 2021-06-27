@@ -1,25 +1,28 @@
 ﻿using BookShop.Core.Abstract.Repositories.Base;
 using BookShop.Domain.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BookShop.Core.Abstract.Repositories
 {
-    public interface IBookRepository : IAsyncRepository<Book>, IAsyncLinqHelper<Book>
+    public interface IBookRepository : IHasBaseRepository<Book>
     {
-        bool ContainsWithName(string name);
+        Task<bool> ContainsWithName(string name);
 
-        bool IsUniqueName(string name);
+        Task<bool> IsUniqueName(string name);
 
-        Book GetByName(string name);
+        Task<Book> GetByName(string name);
 
-        IList<Book> GetByPrice(decimal min, decimal max);
+        Task<IList<Book>> GetNewest(int count);
 
-        IList<Book> GetByCategory(Category category);
-
-        IList<Book> GetByCategoryName(string category_name);
-
-        IList<Book> GetByAuthor(Author author);
-
-        IList<Book> GetByAuthorName(string author_name);
+        Task<IList<Book>> GetByPrice(decimal min, decimal max);
+                        
+        Task<IList<Book>> GetByCategory(Category category);
+                        
+        Task<IList<Book>> GetByCategoryName(string category_name);
+                        
+        Task<IList<Book>> GetByAuthor(Author author);
+                        
+        Task<IList<Book>> GetByAuthorName(string author_name);
     }
 }

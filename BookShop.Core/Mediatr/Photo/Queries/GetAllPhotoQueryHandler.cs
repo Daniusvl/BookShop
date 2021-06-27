@@ -23,7 +23,7 @@ namespace BookShop.Core.Mediatr.Photo.Queries
 
         public async Task<IList<PhotoModel>> Handle(GetAllPhotoQuery request, CancellationToken cancellationToken)
         {
-            IList<Domain.Entities.Photo> photos = await repository.GetAll();
+            IList<Domain.Entities.Photo> photos = await repository.BaseRepository.GetAll();
 
             if (photos == null || photos.Count == 0)
             {

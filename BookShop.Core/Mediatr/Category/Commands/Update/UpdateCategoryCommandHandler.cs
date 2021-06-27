@@ -34,7 +34,7 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Category category = await repository.GetById(request.Id);
+            Domain.Entities.Category category = await repository.BaseRepository.GetById(request.Id);
 
             if (category == null)
             {
@@ -43,7 +43,7 @@ namespace BookShop.Core.Mediatr.Category.Commands.Update
 
             category.Name = request.Name;
 
-            await repository.Update(category);
+            await repository.BaseRepository.Update(category);
 
             logger.LogInformation($"{nameof(Domain.Entities.Category)} with Id: {category.Id} modified by {category.LastModifiedBy} at {category.DateLastModified}");
 

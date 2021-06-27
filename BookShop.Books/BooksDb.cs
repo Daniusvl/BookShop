@@ -31,13 +31,6 @@ namespace BookShop.Books
             this.logged_in_user = logged_in_user;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies();
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (!configuration.IsDevelopment())

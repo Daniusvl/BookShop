@@ -1,0 +1,135 @@
+[33m6bd3087[m[33m ([m[1;36mHEAD -> [m[1;32mFeatures[m[33m)[m Refactored Repositories and added EagerLoading
+[33mf5ce2c9[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/BugFixes[m[33m, [m[1;32mmain[m[33m, [m[1;32mBugFixes[m[33m)[m Fixed BooksDb deleted and created every request
+[33m5f9cb32[m[33m ([m[1;31morigin/Features[m[33m)[m Applied ErrorResponse to error cases and added logging if not custom exception thrown
+[33me2cd90d[m Added Error folder in Models
+[33m3c471b5[m Added ToJson method
+[33m600d820[m Added ErrorResponse class
+[33mbaa5d29[m Applied new UserService changes
+[33m777a872[m Added error checking instead of returning true or false
+[33m49c2f4d[m Added UnknownException class
+[33me5844e3[m Added new ctor with string id and changed Id property type to object
+[33ma917967[m Added Logs\ folder to gitignore
+[33mf15119a[m Added Logs folder
+[33m4a6d340[m Added Logs folder
+[33md7f0b07[m Deleted Logs\ from repository
+[33m301061a[m Moved file writing to bottom after Book entity add beacouse file could be written and later some exception will be throwned
+[33mf271040[m Fixed syntax error in ctor
+[33m71c01d8[m Added AdminController with ChangeRole entry
+[33mb48115b[m Added ChangeRoleRequest class
+[33m2958722[m Chnaged IAuthenticationService to IUserService
+[33mc7afded[m Added Authentication and User services to DI
+[33mc9055b6[m Moved user management mehtods to new interface
+[33m7a3d0a2[m Added ChangeRole and GetRole methods
+[33m76c6c92[m Added Role enum
+[33m857c66d[m Changed route (added /BuyBook)
+[33mb67b55e[m Added Authorize attribute to controller
+[33mac20f4f[m Added Payment controller with BuyBook
+[33m246a076[m Added BuyBookRequest class
+[33m61e0384[m Revert
+[33m9978a9f[m Added ctor for unit test since in default ctor extension method of IConfiguration is used wich cannot be mocked
+[33m74bd878[m Added Create And Delete Product and Create And Update Photo tests
+[33m2ce70d8[m Added Create and getById Category Test
+[33mff59e76[m Installed Moq package
+[33me24123f[m Added Create Author Test
+[33m6e7ae41[m Created new context for unit testing beacouse default context ctor uses extension method wich cannot be mocked
+[33mfc7a9e1[m Changed access modifier to protected and added more information to summary
+[33md5db736[m Added ctor without IConfiguration since extension methods cannot be mocked
+[33m206dfb0[m Added BooksDbTests class where integration db tests will be
+[33m122905f[m Created BookShop.Books.Tests project and added reference to BookShop.Books
+[33maf27121[m Created BookShop.Books.Tests project
+[33mb9db0bf[m Added Book file deletion test
+[33m2906fbc[m Added if id not found throw NotFoundException test
+[33mb8bb9e3[m Process file deletion before Assert check beacouse if test will fail then files wont be deleted
+[33m9337539[m Added test that tests CraetePhotoCommandHandler for photo creation
+[33m8cd7526[m Installed Moq package and added BookShop.Core project reference
+[33m317c5ac[m Added public accesss modifier to handler
+[33m870ee5d[m Core test project craeted
+[33m9eae7e5[m Added whitespcae between # and BookShop
+[33m3776b62[m Added text: #BookShop
+[33mb14c4b9[m Applied gitignore
+[33mca27b89[m Added gitignore
+[33m9b3a67f[m Added AuthorId and CategoryId property
+[33md7b3e8c[m All exception serialized to json
+[33m2940399[m Changed return type of mediatr send output
+[33m7551a87[m Changed GetByName return type from collection to single item since theres cannot be more than 1 book with same name
+[33m04e57e6[m refactoring
+[33m3fb4a5c[m refactoring
+[33m5432eed[m Applied third migration
+[33mc457c1f[m Fixed silly naming error
+[33m3171e80[m Refactoring
+[33m969d341[m Refactoring
+[33m8055454[m Applied new migration in Photo renamed ProductId property to BookId
+[33m546a9e6[m Renamed Product/s to Book/Books
+[33mda33c18[m Removed not used exception variable
+[33m431749b[m Tell client if unknown error occurred
+[33m7444068[m Fixed Exception handler
+[33m2e5fb42[m Uncommented getting user id
+[33m6dde635[m Added Lazy Loading
+[33m06fdcfe[m Added virtual to navigation properties
+[33m7f7bf96[m Applied migration
+[33mfb811c5[m Applied migration
+[33me1535f8[m Modified Database names
+[33ma7967ee[m Renamed BookShop.Repositories project to BookShop.Books
+[33m9b551d5[m Renamed BookShop.Repositories project to BookShop.Books
+[33mf48c8ba[m Fixed errors
+[33m442dbd7[m Modifed db connection strings
+[33m813bb01[m Added foreign key properties for category and author
+[33m62e1ffe[m _
+[33mb6f4401[m Added entityFrameworkCore.Tools package
+[33m7a8ded9[m _
+[33mce91cdd[m In development usesqlserver but if development delete and create db every time
+[33mfffcf51[m In development usesqlserver but if development delete and create db every time
+[33m9b5c72c[m more refactoring
+[33mec74307[m more refactoring
+[33ma906b7c[m B!g refactoring
+[33m8ded079[m Renamed BookAuthor to Author
+[33m2a551fb[m Renamed BookAuthor to Author
+[33m197745b[m Renamed BookAuthor to Author
+[33ma024684[m Changed db name
+[33m57d2bc3[m Added Ids to starting data
+[33meca50c6[m Modified exception handler
+[33m0791077[m Modified swagger configuration
+[33mf21cb8d[m Fixed naming
+[33m64f865f[m Changed ctor
+[33m3789bdc[m Finished ProductController
+[33m9f11914[m Fixed name of static class
+[33maf48122[m Removed unused usings
+[33m5d89d0c[m Fixed ExceptionHandlerMiddleware
+[33m21635a9[m Removed ServiceNullException
+[33m00ce4fe[m Changed Query from entity to only his id
+[33mdf0ed5b[m Changed Query from entity to only his id
+[33ma1a77ee[m Added ExceptionHandlerMiddleware to pipeline
+[33m2b6f5e4[m Added ExceptionHandlerMiddleware
+[33m4c93ece[m Added AuthController
+[33m214923c[m Added not finished ProductController
+[33m480d902[m Added CategoryController
+[33ma03953a[m Removed unused usings
+[33m3f277a2[m Added BookPhotoController
+[33me0c52e4[m _
+[33m7117c0f[m Added BookAuthorController
+[33m3b67c7a[m Removed unused usings
+[33mabb907b[m Added Serilog settings
+[33mf70e4c3[m _
+[33mf88317c[m Added Serilog
+[33m9e8601e[m _
+[33m0755c24[m Added swagger
+[33m3527650[m Added scoped ILoggedInUser, LoggedInUser
+[33m9fa8d82[m Added ILoggedInUser implementation and installed Mediatr, JwtBearer, json
+[33m120470d[m Port set to 4004
+[33m69b5c5b[m Added settings prototype
+[33mb1c6c01[m _
+[33m571f1f2[m Added configuration prototype
+[33m4fcddc7[m Renamed AddAutoMapper to AddMapper
+[33m31e5699[m Created BookShop.Api project
+[33md201730[m Renamed BooksDb to BookDb
+[33m154d50e[m _
+[33m7d9831e[m Added method AddOwnedProduct
+[33m2464857[m solution build
+[33mde3a83d[m Removed unused usings
+[33m53df90a[m Applied new AppUser
+[33m660a171[m Added empty ctor
+[33m1195af1[m Moved Configuration folder from Models to main project dir
+[33m14c6bf8[m _
+[33m39e36c0[m Installed Newtonsoft.Json and added AppUser that holds OwnedProducts in json
+[33m7e944c5[m Moved IConfigurationExtensions from folder to main project directory
+[33ma4c1b60[m Moved AutoMapperProfile.cs from folder to main project dir

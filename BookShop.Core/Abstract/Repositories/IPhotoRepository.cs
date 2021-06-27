@@ -3,7 +3,7 @@ using BookShop.Domain.Entities;
 
 namespace BookShop.Core.Abstract.Repositories
 {
-    public interface IPhotoRepository : IAsyncRepository<Photo>, IAsyncLinqHelper<Photo>
+    public interface IPhotoRepository : IHasBaseRepository<Photo>
     {
         bool PhotoExists(string path);
     }

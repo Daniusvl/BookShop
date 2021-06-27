@@ -39,7 +39,7 @@ namespace BookShop.Core.Mediatr.Book.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            IList<Domain.Entities.Book> books = repository.GetByPrice(request.Min, request.Max);
+            IList<Domain.Entities.Book> books = await repository.GetByPrice(request.Min, request.Max);
 
             if (books == null || books.Count == 0)
             {

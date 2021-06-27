@@ -41,16 +41,16 @@ namespace BookShop.Api.Controllers
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Add([FromBody] CreateCategoryCommand command)
         {
-            await mediator.Send(command);
-            return Ok();
+            CategoryModel category = await mediator.Send(command);
+            return Ok(category);
         }
 
         [HttpPut]
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoryCommand command)
         {
-            await mediator.Send(command);
-            return Ok();
+            CategoryModel category = await mediator.Send(command);
+            return Ok(category);
         }
 
         [HttpDelete("{id}")]

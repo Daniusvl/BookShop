@@ -41,16 +41,16 @@ namespace BookShop.Api.Controllers
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Add([FromBody] CreateAuthorCommand command)
         {
-            await mediator.Send(command);
-            return Ok();
+            AuthorModel author = await mediator.Send(command);
+            return Ok(author);
         }
 
         [HttpPut]
         [Authorize(Policy = RoleConstants.ModeratorName)]
         public async Task<IActionResult> Update([FromBody] UpdateAuthorCommand command)
         {
-            await mediator.Send(command);
-            return Ok();
+            AuthorModel author = await mediator.Send(command);
+            return Ok(author);
         }
 
         [HttpDelete("{id}")]

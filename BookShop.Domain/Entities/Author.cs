@@ -7,7 +7,7 @@ namespace BookShop.Domain.Entities
     {
         public string Name { get; set; } = string.Empty;
 
-        public virtual IList<Book> Books { get; set; } = new List<Book>();
+        public IList<Book> Books { get; set; } = new List<Book>();
 
         public override string ToString()
         {

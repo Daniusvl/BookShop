@@ -6,7 +6,6 @@ using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -16,29 +15,20 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
 {
     public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, BookModel>
     {
-        private readonly IBookRepository repository;
-        private readonly IPhotoRepository photoRepository;
-        private readonly IAuthorRepository authorRepository;
-        private readonly ICategoryRepository categoryRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly ILogger<CreateBookCommandHandler> logger;
 
-        public CreateBookCommandHandler(IBookRepository repository, IPhotoRepository photoRepository, IAuthorRepository authorRepository,
-            ICategoryRepository categoryRepository, IMapper mapper, ILogger<CreateBookCommandHandler> logger)
+        public CreateBookCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CreateBookCommandHandler> logger)
         {
-            this.repository = repository;
-            this.photoRepository = photoRepository;
-            this.authorRepository = authorRepository;
-            this.categoryRepository = categoryRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.logger = logger;
         }
 
-        public IPhotoRepository PhotoRepository => photoRepository;
-
         public async Task<BookModel> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            CreateBookRequestValidator validator = new(repository);
+            CreateBookRequestValidator validator = new(unitOfWork.BookRepository);
             ValidationResult result = await validator.ValidateAsync(request);
 
             if (result.Errors.Count > 0)
@@ -70,37 +60,27 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
                 DateReleased = request.DateReleased
             };
 
-            foreach (int id in request.BookPhotoIds ?? new List<int>())
-            {
-                Domain.Entities.Photo photo = await PhotoRepository.GetById(id);
-
-                if (photo == null)
-                {
-                    throw new NotFoundException(nameof(Domain.Entities.Photo), id);
-                }
-                
-                book.Photos.Add(photo);
-            }
-
-            Domain.Entities.Author author = await authorRepository.GetById(request.AuthorId);
+            Domain.Entities.Author author = await unitOfWork.AuthorRepository.BaseRepository.GetById(request.AuthorId);
 
             if (author == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Author), request.AuthorId);
             }
 
+            book.AuthorId = author.Id;
             book.Author = author;
 
-            Domain.Entities.Category category = await categoryRepository.GetById(request.CategoryId);
+            Domain.Entities.Category category = await unitOfWork.CategoryRepository.BaseRepository.GetById(request.CategoryId);
 
-            if (categoryRepository == null)
+            if (category == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Category), request.CategoryId);
             }
 
+            book.CategoryId = category.Id;
             book.Category = category;
 
-            await repository.Create(book);
+            await unitOfWork.BookRepository.BaseRepository.Create(book);
 
             logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {book.Id} created by {book.CreatedBy} at {book.DateCreated}");
 

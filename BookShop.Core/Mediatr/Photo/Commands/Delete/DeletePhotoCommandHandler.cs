@@ -34,7 +34,7 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Delete
                 throw new ValidationException(result);
             }
 
-            Domain.Entities.Photo photo = await repository.GetById(request.Id);
+            Domain.Entities.Photo photo = await repository.BaseRepository.GetById(request.Id);
 
             if (photo == null)
             {
@@ -43,7 +43,7 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Delete
 
             File.Delete(photo.FilePath);
 
-            await repository.Delete(photo);
+            await repository.BaseRepository.Delete(photo);
 
             logger.LogInformation($"{nameof(Domain.Entities.Photo)} with Id: {request.Id} deleted by {loggedInUser.UserId} at {DateTime.Now}");
 

@@ -36,7 +36,7 @@ namespace BookShop.Core.Mediatr.Photo.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            Domain.Entities.Photo photo = await repository.GetById(request.Id);
+            Domain.Entities.Photo photo = await repository.BaseRepository.GetById(request.Id);
 
             if (photo == null)
             {

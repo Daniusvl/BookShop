@@ -39,14 +39,14 @@ namespace BookShop.Core.Mediatr.Book.Queries
                 throw new ValidationException("Query cannot be null");
             }
 
-            Domain.Entities.Author author = await bookAuthorRepository.GetById(request.AuthorId);
+            Domain.Entities.Author author = await bookAuthorRepository.BaseRepository.GetById(request.AuthorId);
 
             if (author == null)
             {
                 throw new NotFoundException(nameof(Domain.Entities.Author), author.Id);
             }
 
-            IList<Domain.Entities.Book> books = repository.GetByAuthor(author);
+            IList<Domain.Entities.Book> books = await repository.GetByAuthor(author);
 
             if (books == null || books.Count == 0)
             {

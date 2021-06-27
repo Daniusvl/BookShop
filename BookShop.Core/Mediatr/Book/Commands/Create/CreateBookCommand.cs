@@ -17,8 +17,6 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
 
         public DateTime DateReleased { get; set; }
 
-        public IList<int> BookPhotoIds { get; set; }
-
         public int AuthorId { get; set; }
 
         public int CategoryId { get; set; }
