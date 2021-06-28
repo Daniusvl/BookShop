@@ -97,5 +97,14 @@ namespace BookShop.Books.Repositories
                 .TakeLast(count)
                 .ToList();
         }
+
+        public async Task<Book> GetById(int id)
+        {
+            Book book = await BaseRepository.GetById(id);
+            ctx.Entry(book).Reference(e => e.Author).Load();
+            ctx.Entry(book).Reference(e => e.Category).Load();
+            ctx.Entry(book).Collection(e => e.Photos).Load();
+            return book;
+        }
     }
 }

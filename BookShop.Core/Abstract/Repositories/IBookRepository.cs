@@ -11,6 +11,8 @@ namespace BookShop.Core.Abstract.Repositories
 
         Task<bool> IsUniqueName(string name);
 
+        Task<Book> GetById(int id);
+
         Task<Book> GetByName(string name);
 
         Task<IList<Book>> GetNewest(int count);
