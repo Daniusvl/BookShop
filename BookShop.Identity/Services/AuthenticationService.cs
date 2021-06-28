@@ -43,7 +43,7 @@ namespace BookShop.Identity.Services
                 throw new UnknownException("Email or password is incorrect");
             }
 
-            bool correct_password = await user_manager.CheckPasswordAsync(user, request?.Passwrod);
+            bool correct_password = await user_manager.CheckPasswordAsync(user, request?.Password);
 
             if (!correct_password)
             {
