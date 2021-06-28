@@ -26,7 +26,7 @@ namespace BookShop.Identity
             services.AddIdentityCore<AppUser>(options => 
             {
                 options.Password.RequireNonAlphanumeric = false;
-                //options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
                 options.User.RequireUniqueEmail = true;
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
             })

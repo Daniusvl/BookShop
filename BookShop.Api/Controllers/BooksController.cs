@@ -37,28 +37,28 @@ namespace BookShop.Api.Controllers
             return Ok(book);
         }
 
-        [HttpGet("/ByAuthor/{id}")]
+        [HttpGet("ByAuthor/{id}")]
         public async Task<IActionResult> GetByAuthor(int id)
         {
             IList<BookModel> books = await mediator.Send(new GetByAuthorBookQuery(id));
             return Ok(books);
         }
 
-        [HttpGet("/ByCategory/{id}")]
+        [HttpGet("ByCategory/{id}")]
         public async Task<IActionResult> GetByCategory(int id)
         {
             IList<BookModel> books = await mediator.Send(new GetByCategoryBookQuery(id));
             return Ok(books);
         }
 
-        [HttpGet("/ByName/{name}")]
+        [HttpGet("ByName/{name}")]
         public async Task<IActionResult> GetByName(string name)
         {
             BookModel book = await mediator.Send(new GetByNameBookQuery(name));
             return Ok(book);
         }
 
-        [HttpGet("/ByPrice/{Min}/{Max}")]
+        [HttpGet("ByPrice/{Min}/{Max}")]
         public async Task<IActionResult> GetByPrice(decimal min, decimal max)
         {
             IList<BookModel> books = await mediator.Send(new GetByPriceBookQuery(min, max));

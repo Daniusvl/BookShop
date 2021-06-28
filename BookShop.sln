@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Books", "BookShop.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Core.Tests", "BookShop.Core.Tests\BookShop.Core.Tests.csproj", "{CE3E9691-9224-42C2-AFCE-EDD98ECCFE4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.Books.Tests", "BookShop.Books.Tests\BookShop.Books.Tests.csproj", "{AC73CEF6-E923-4A3C-A492-9969F27560E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Books.Tests", "BookShop.Books.Tests\BookShop.Books.Tests.csproj", "{AC73CEF6-E923-4A3C-A492-9969F27560E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.Features", "BookShop.Features\BookShop.Features.csproj", "{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{AC73CEF6-E923-4A3C-A492-9969F27560E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC73CEF6-E923-4A3C-A492-9969F27560E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC73CEF6-E923-4A3C-A492-9969F27560E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{DC1FE42E-8FB4-4F74-95CC-9A5AB69DFE7A} = {4FA2CFC6-3A88-41D7-9F6A-A13A3B9E596B}
 		{CE3E9691-9224-42C2-AFCE-EDD98ECCFE4A} = {03A13C86-152F-422D-9D57-D13A614246F5}
 		{AC73CEF6-E923-4A3C-A492-9969F27560E8} = {03A13C86-152F-422D-9D57-D13A614246F5}
+		{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8} = {4FA2CFC6-3A88-41D7-9F6A-A13A3B9E596B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {630AF308-FF70-4753-9565-27A0E1198367}

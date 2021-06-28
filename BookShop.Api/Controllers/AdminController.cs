@@ -20,7 +20,7 @@ namespace BookShop.Api.Controllers
             this.userService = userService;
         }
 
-        [HttpPost("/ChangeRole")]
+        [HttpPost("ChangeRole")]
         public async Task<ActionResult> ChangeRole([FromBody] ChangeRoleRequest request)
         {
             switch (request.Role)

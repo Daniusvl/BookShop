@@ -22,7 +22,7 @@ namespace BookShop.Api.Controllers
             this.logged_in_user = logged_in_user;
         }
 
-        [HttpPost("/BuyBook")]
+        [HttpPost("BuyBook")]
         public async Task<IActionResult> BuyBook([FromBody] BuyBookRequest buyBook)
         {
             await userService.AddOwnedProduct(logged_in_user.UserId, buyBook.BookId);

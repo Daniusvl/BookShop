@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using BookShop.Features;
 
 namespace BookShop.Api
 {
@@ -31,6 +32,8 @@ namespace BookShop.Api
 
             services.AddHttpContextAccessor();
             services.AddScoped<ILoggedInUser, LoggedInUser>();
+
+            services.AddFeatures(Configuration);
 
             services.AddControllers();
 

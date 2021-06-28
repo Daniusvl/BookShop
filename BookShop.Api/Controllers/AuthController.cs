@@ -16,30 +16,33 @@ namespace BookShop.Api.Controllers
             this.service = service;
         }
 
-        [HttpPost("/Register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            RegisterModel model = await service.Register(request);
-            if (!model.Success)
-            {
-                return BadRequest(model.PasswordErrors);
-            }
+            RegisterModel model = await service.Register(request, Request);
             return Ok(model);
         }
 
-        [HttpPost("/Authenticate")]
+        [HttpPost("Authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticationRequest request)
         {
             AuthenticationModel model = await service.Authenticate(request);
-            if (!model.Success)
-            {
-                return BadRequest();
-            }
             return Ok(model);
         }
+
+        [HttpGet("EmailConfirmation")]
+        public async Task<IActionResult> EmailConfirmation(string user_id, string email_token)
+        {
+            email_token = email_token.Replace(' ', '+');
+
+            await service.ConfirmEmail(user_id, email_token);
+
+            return Ok();
+        }
+
     }
 }
