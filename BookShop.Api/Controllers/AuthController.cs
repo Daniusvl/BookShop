@@ -30,6 +30,10 @@ namespace BookShop.Api.Controllers
         [HttpPost("Authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticationRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             AuthenticationModel model = await service.Authenticate(request);
             return Ok(model);
         }
