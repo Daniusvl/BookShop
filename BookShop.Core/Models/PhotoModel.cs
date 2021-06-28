@@ -10,6 +10,8 @@ namespace BookShop.Core.Models
 
         public IList<byte> FileBytes { get; set; }
 
+        public int BookId { get; set; }
+
         public override string ToString()
         {
             return FilePath;
