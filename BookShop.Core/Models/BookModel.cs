@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookShop.Core.Models
 {
@@ -15,8 +12,6 @@ namespace BookShop.Core.Models
         public string Description { get; set; }
 
         public decimal Price { get; set; }
-
-        public string FilePath { get; set; }
 
         public bool Hidden { get; set; }
 
