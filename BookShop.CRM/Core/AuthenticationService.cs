@@ -3,8 +3,6 @@ using BookShop.CRM.Core.Exceptions;
 using BookShop.CRM.Core.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +25,9 @@ namespace BookShop.CRM.Core
 
         public async Task<AuthenticatedUser> Authenticate(AuthenticateCommand command)
         {
-            return await Send<AuthenticatedUser, AuthenticateCommand>(HttpMethod.Post, Path, command);
+            AuthenticatedUser user = await Send<AuthenticatedUser, AuthenticateCommand>(HttpMethod.Post, Path, command);
+            userManager.User = user ?? new();
+            return user;
         }
 
         protected override async Task<TResponseModel> Send<TResponseModel, TContent>(HttpMethod method, string uri, TContent content = default)

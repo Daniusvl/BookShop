@@ -12,13 +12,13 @@ namespace BookShop.CRM.Core
     {
         public const string Path = "token.txt";
 
-        private AuthenticatedUser token;
+        private AuthenticatedUser user;
         public AuthenticatedUser User
         {
-            get => token ??= new(); 
+            get => user ??= new(); 
             set
             {
-                User = value;
+                user = value;
                 Write();
             }
         }
