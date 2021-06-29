@@ -41,7 +41,7 @@ namespace BookShop.CRM.Core
         public void Dispose()
         {
             Client.Dispose();
-            GC.SuppressFinalize(this);
+            GC.Collect();
         }
     }
 }

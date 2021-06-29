@@ -33,7 +33,7 @@ namespace BookShop.Books
         public void Dispose()
         {
             ctx.Dispose();
-            GC.SuppressFinalize(this);
+            GC.Collect();
         }
     }
 }
