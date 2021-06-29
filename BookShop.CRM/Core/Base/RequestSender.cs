@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookShop.CRM.Core.Base
 {
-    public abstract class BaseRepository
+    public abstract class RequestSender
     {
         protected HttpClient client;
         protected ITokenManager tokenManager;

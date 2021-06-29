@@ -10,7 +10,7 @@ namespace BookShop.CRM.Core
 
     public record UpdateCategoryCommand(int Id, string Name);
 
-    public class CategoryRepository : BaseRepository, ICategoryRepository
+    public class CategoryRepository : RequestSender, ICategoryRepository
     {
         protected const string Path = "api/categories/";
 

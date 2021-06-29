@@ -13,7 +13,7 @@ namespace BookShop.CRM.Core
     public record UpdateBookCommand(int Id, string Name, string Description, decimal Price, bool hidden,
         DateTime DateReleased, int AuthorId, int CategoryId, IList<byte> bytes);
 
-    public class BookRepository : BaseRepository, IBookRepository
+    public class BookRepository : RequestSender, IBookRepository
     {
         protected const string Path = "api/books/";
 

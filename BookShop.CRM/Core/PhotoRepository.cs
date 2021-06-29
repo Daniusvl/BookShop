@@ -8,7 +8,7 @@ namespace BookShop.CRM.Core
 {
     public record AddPhotoCommand(string ProductName, IList<byte> FileBytes);
 
-    public class PhotoRepository : BaseRepository, IPhotoRepository
+    public class PhotoRepository : RequestSender, IPhotoRepository
     {
         protected const string Path = "api/photos/";
 

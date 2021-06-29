@@ -1,6 +1,5 @@
 ﻿using BookShop.CRM.Core.Base;
 using BookShop.CRM.Models;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,7 +10,7 @@ namespace BookShop.CRM.Core
 
     public record UpdateAuthorCommand(int Id, string Name);
 
-    public class AuthorRepository : BaseRepository, IAuthorRepository
+    public class AuthorRepository : RequestSender, IAuthorRepository
     {
         protected const string Path = "api/authors/";
 
