@@ -14,10 +14,10 @@ namespace BookShop.CRM.Core
     {
         protected const string Path = "api/authors/";
 
-        public AuthorRepository(HttpClient client, ITokenManager tokenManager)
+        public AuthorRepository(HttpClient client, IUserManager userManager)
         {
             this.client = client;
-            this.tokenManager = tokenManager;
+            this.userManager = userManager;
         }
 
         public async Task<AuthorModel> Add(AddAuthorCommand command)

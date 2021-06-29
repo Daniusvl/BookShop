@@ -10,11 +10,11 @@ namespace BookShop.CRM.Core.Base
     public abstract class RequestSender
     {
         protected HttpClient client;
-        protected ITokenManager tokenManager;
+        protected IUserManager userManager;
 
         protected virtual async Task<TResponseModel> Send<TResponseModel, TContent>(HttpMethod method, string uri, TContent content = default)
         {
-            HttpRequestMessage message = tokenManager.GenerateRequestWithToken();
+            HttpRequestMessage message = userManager.GenerateRequestWithToken();
             message.Method = method;
             message.RequestUri = new Uri(uri);
             message.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");

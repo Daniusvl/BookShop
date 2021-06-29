@@ -3,9 +3,9 @@ using System.Net.Http;
 
 namespace BookShop.CRM.Core.Base
 {
-    public interface ITokenManager
+    public interface IUserManager
     {
-        TokenModel Token { get; set; }
+        AuthenticatedUser User { get; set; }
 
         HttpRequestMessage GenerateRequestWithToken();
     }

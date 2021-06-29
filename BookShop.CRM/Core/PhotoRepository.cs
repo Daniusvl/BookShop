@@ -12,10 +12,10 @@ namespace BookShop.CRM.Core
     {
         protected const string Path = "api/photos/";
 
-        public PhotoRepository(HttpClient client, ITokenManager tokenManager)
+        public PhotoRepository(HttpClient client, IUserManager userManager)
         {
             this.client = client;
-            this.tokenManager = tokenManager;
+            this.userManager = userManager;
         }
 
         public async Task<PhotoModel> Add(AddPhotoCommand command)

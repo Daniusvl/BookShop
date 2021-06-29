@@ -14,10 +14,10 @@ namespace BookShop.CRM.Core
     {
         protected const string Path = "api/categories/";
 
-        public CategoryRepository(HttpClient client, ITokenManager tokenManager)
+        public CategoryRepository(HttpClient client, IUserManager userManager)
         {
             this.client = client;
-            this.tokenManager = tokenManager;
+            this.userManager = userManager;
         }
 
         public async Task<CategoryModel> Add(AddCategoryCommand command)

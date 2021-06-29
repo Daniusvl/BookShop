@@ -8,22 +8,22 @@ using System.Text;
 
 namespace BookShop.CRM.Core
 {
-    public class TokenManager : ITokenManager
+    public class UserManager : IUserManager
     {
         public const string Path = "token.txt";
 
-        private TokenModel token;
-        public TokenModel Token
+        private AuthenticatedUser token;
+        public AuthenticatedUser User
         {
             get => token ??= new(); 
             set
             {
-                Token = value;
+                User = value;
                 Write();
             }
         }
 
-        public TokenManager()
+        public UserManager()
         {
             Read();
         }
@@ -31,28 +31,28 @@ namespace BookShop.CRM.Core
         public HttpRequestMessage GenerateRequestWithToken()
         {
             HttpRequestMessage message = new();
-            if (!string.IsNullOrEmpty(Token.Token))
+            if (!string.IsNullOrEmpty(User.Token))
             {
-                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", User.Token);
             }
             return message;
         }
 
         protected virtual void Write()
         {
-            string json = JsonConvert.SerializeObject(Token);
+            string json = JsonConvert.SerializeObject(User);
             byte[] bytes = Encoding.UTF8.GetBytes(json);
             File.WriteAllBytes(Path, bytes);
         }
 
-        protected virtual TokenModel Read()
+        protected virtual AuthenticatedUser Read()
         {
             if (!File.Exists(Path))
-                return Token;
+                return User;
             byte[] bytes = File.ReadAllBytes(Path);
             string json = Encoding.UTF8.GetString(bytes);
-            Token = JsonConvert.DeserializeObject<TokenModel>(json);
-            return Token;
+            User = JsonConvert.DeserializeObject<AuthenticatedUser>(json);
+            return User;
         }
     }
 }

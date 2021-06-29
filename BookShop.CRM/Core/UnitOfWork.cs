@@ -9,7 +9,7 @@ namespace BookShop.CRM.Core
         public const string BasePath = "https://localhost:4004";
 
         
-        private readonly ITokenManager tokenManager;
+        private readonly IUserManager userManager;
         
         private HttpClient Client;
 
@@ -21,21 +21,21 @@ namespace BookShop.CRM.Core
 
         private IPhotoRepository photoRepository;
 
-        public UnitOfWork(ITokenManager tokenManager)
+        public UnitOfWork(IUserManager userManager)
         {
             HttpClientHandler handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             Client = new(handler);
             Client.BaseAddress = new Uri(BasePath);
-            this.tokenManager = tokenManager;
+            this.userManager = userManager;
         }
 
-        public IBookRepository BookRepository => bookRepository ??= new BookRepository(Client, tokenManager);
+        public IBookRepository BookRepository => bookRepository ??= new BookRepository(Client, userManager);
 
-        public ICategoryRepository CategoryRepository => categoryRepository ??= new CategoryRepository(Client, tokenManager);
+        public ICategoryRepository CategoryRepository => categoryRepository ??= new CategoryRepository(Client, userManager);
 
-        public IAuthorRepository AuthorRepository => authorRepository ??= new AuthorRepository(Client, tokenManager);
+        public IAuthorRepository AuthorRepository => authorRepository ??= new AuthorRepository(Client, userManager);
 
-        public IPhotoRepository PhotoRepository => photoRepository ??= new PhotoRepository(Client, tokenManager);
+        public IPhotoRepository PhotoRepository => photoRepository ??= new PhotoRepository(Client, userManager);
     }
 }
