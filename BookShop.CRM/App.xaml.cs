@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Autofac;
 using System.Windows;
 
 namespace BookShop.CRM
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            IContainer container = AutoFac.BuildDI();
+            MainWindow window = container.Resolve<MainWindow>();
+
+            window.Show();
+        }
     }
 }
