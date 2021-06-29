@@ -37,5 +37,11 @@ namespace BookShop.CRM.Core
         public IAuthorRepository AuthorRepository => authorRepository ??= new AuthorRepository(Client, userManager);
 
         public IPhotoRepository PhotoRepository => photoRepository ??= new PhotoRepository(Client, userManager);
+
+        public void Dispose()
+        {
+            Client.Dispose();
+            GC.SuppressFinalize(this);
+        }
     }
 }

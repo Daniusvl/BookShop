@@ -1,6 +1,8 @@
-﻿namespace BookShop.CRM.Core.Base
+﻿using System;
+
+namespace BookShop.CRM.Core.Base
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IBookRepository BookRepository { get; }
 
