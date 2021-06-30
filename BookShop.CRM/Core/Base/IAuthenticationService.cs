@@ -6,5 +6,7 @@ namespace BookShop.CRM.Core.Base
     public interface IAuthenticationService
     {
         Task<AuthenticatedUser> Authenticate(AuthenticateCommand command);
+
+        Task<bool> RefreshToken();
     }
 }

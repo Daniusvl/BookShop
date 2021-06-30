@@ -31,9 +31,9 @@ namespace BookShop.CRM.Core
         public HttpRequestMessage GenerateRequestWithToken(HttpMethod method, string uri)
         {
             HttpRequestMessage message = new(method, uri);
-            if (!string.IsNullOrEmpty(User.Token))
+            if (!string.IsNullOrEmpty(User.AccessToken))
             {
-                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", User.Token);
+                message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", User.AccessToken);
             }
             return message;
         }
