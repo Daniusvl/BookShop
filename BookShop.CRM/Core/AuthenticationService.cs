@@ -42,7 +42,7 @@ namespace BookShop.CRM.Core
             if (!response.IsSuccessStatusCode)
             {
                 Response error_response = JsonConvert.DeserializeObject<Response>(json);
-                if (error_response?.ExceptionName == "UnknownException")
+                if (error_response?.ExceptionName == "CommonException")
                     return default;
                 else throw new ApiException(error_response?.Message);
             }

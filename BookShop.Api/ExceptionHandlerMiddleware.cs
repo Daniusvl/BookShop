@@ -42,10 +42,10 @@ namespace BookShop.Api
                         await context.Response.WriteAsync(
                             new ErrorResponse(nameof(ValidationException), JsonConvert.SerializeObject(v.Errors)).ToJson());
                         break;
-                    case UnknownException u:
+                    case CommonException u:
                         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         await context.Response.WriteAsync(
-                            new ErrorResponse(nameof(UnknownException), u.Message).ToJson());
+                            new ErrorResponse(nameof(CommonException), u.Message).ToJson());
                         break;
                     default:
                         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

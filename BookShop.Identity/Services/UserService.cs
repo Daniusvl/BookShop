@@ -40,7 +40,7 @@ namespace BookShop.Identity.Services
             IdentityResult result = await user_manager.UpdateAsync(user);
 
             if (!result.Succeeded)
-                throw new UnknownException(string.Join(null, result.Errors.Select(error => error.Description)));
+                throw new CommonException(string.Join(null, result.Errors.Select(error => error.Description)));
         }
 
         public async Task ChangeRole(string user_id, Role role)
@@ -53,7 +53,7 @@ namespace BookShop.Identity.Services
             IList<Claim> claims = await user_manager.GetClaimsAsync(user);
             IdentityResult result = await user_manager.RemoveClaimAsync(user, claims.FirstOrDefault(c => c.Type == "Role"));
             if (!result.Succeeded)
-                throw new UnknownException(string.Join(null, result.Errors.Select(error => error.Description)));
+                throw new CommonException(string.Join(null, result.Errors.Select(error => error.Description)));
 
             switch (role)
             {
@@ -67,7 +67,7 @@ namespace BookShop.Identity.Services
                     result = await user_manager.AddClaimAsync(user, new Claim("Role", "Administrator"));
                     break;
                 default:
-                    throw new UnknownException("Role name error");
+                    throw new CommonException("Role name error");
             }
         }
 

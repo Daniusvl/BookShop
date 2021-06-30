@@ -14,6 +14,8 @@ namespace BookShop.CRM.Core.Models
 
         public string Token { get; set; } = string.Empty;
 
+        public string RefreshToken { get; set; } = string.Empty;
+
         public DateTime DateTokenGot { get; set; } = DateTime.Now;
     }
 }
