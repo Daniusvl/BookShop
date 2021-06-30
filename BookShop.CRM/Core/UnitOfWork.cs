@@ -6,9 +6,6 @@ namespace BookShop.CRM.Core
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public const string BasePath = "https://localhost:4004";
-
-        
         private readonly IUserManager userManager;
         
         private HttpClient Client;
@@ -26,7 +23,7 @@ namespace BookShop.CRM.Core
             HttpClientHandler handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             Client = new(handler);
-            Client.BaseAddress = new Uri(BasePath);
+            Client.BaseAddress = new Uri(Constants.BaseAddress);
             this.userManager = userManager;
         }
 

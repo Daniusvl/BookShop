@@ -7,6 +7,6 @@ namespace BookShop.CRM.Core.Base
     {
         AuthenticatedUser User { get; set; }
 
-        HttpRequestMessage GenerateRequestWithToken();
+        HttpRequestMessage GenerateRequestWithToken(HttpMethod method, string uri);
     }
 }

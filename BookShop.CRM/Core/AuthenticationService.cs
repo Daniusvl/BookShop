@@ -17,9 +17,12 @@ namespace BookShop.CRM.Core
     {
         protected const string Path = "api/auth/authenticate/";
 
-        public AuthenticationService(HttpClient client, IUserManager userManager)
+        public AuthenticationService(IUserManager userManager)
         {
-            this.client = client;
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            this.client = new(handler);
+            this.client.BaseAddress = new Uri(Constants.BaseAddress);
             this.userManager = userManager;
         }
 
@@ -32,9 +35,7 @@ namespace BookShop.CRM.Core
 
         protected override async Task<TResponseModel> Send<TResponseModel, TContent>(HttpMethod method, string uri, TContent content = default)
         {
-            HttpRequestMessage message = userManager.GenerateRequestWithToken();
-            message.Method = method;
-            message.RequestUri = new Uri(uri);
+            HttpRequestMessage message = userManager.GenerateRequestWithToken(method, uri);
             message.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.SendAsync(message);
             string json = await response.Content.ReadAsStringAsync();

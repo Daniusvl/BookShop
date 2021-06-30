@@ -14,7 +14,7 @@ namespace BookShop.CRM.Core.Base
 
         protected virtual async Task<TResponseModel> Send<TResponseModel, TContent>(HttpMethod method, string uri, TContent content = default)
         {
-            HttpRequestMessage message = userManager.GenerateRequestWithToken();
+            HttpRequestMessage message = userManager.GenerateRequestWithToken(method, uri);
             message.Method = method;
             message.RequestUri = new Uri(uri);
             message.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");

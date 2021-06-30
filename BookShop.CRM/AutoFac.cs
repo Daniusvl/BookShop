@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using BookShop.CRM.Core;
 using BookShop.CRM.Core.Base;
+using BookShop.CRM.ViewModels;
+using BookShop.CRM.Wrappers;
 
 namespace BookShop.CRM
 {
@@ -16,9 +18,11 @@ namespace BookShop.CRM
             builder.RegisterType<UserManager>().As<IUserManager>();
 
             //ViewModels
+            builder.RegisterType<AuthenticationViewModel>().AsSelf();
 
             //Views
             builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<AuthenticationWindow>().AsSelf();
 
             return builder.Build();
         }

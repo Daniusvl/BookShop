@@ -5,10 +5,10 @@ namespace BookShop.CRM
 {
     public partial class App : Application
     {
-        private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        private void Application_Startup(object sender, StartupEventArgs e)
         {
             IContainer container = AutoFac.BuildDI();
-            MainWindow window = container.Resolve<MainWindow>();
+            AuthenticationWindow window = container.Resolve<AuthenticationWindow>();
 
             window.Show();
         }
