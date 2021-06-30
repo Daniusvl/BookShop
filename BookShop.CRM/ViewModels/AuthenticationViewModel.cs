@@ -3,6 +3,7 @@ using BookShop.CRM.Core.Base;
 using BookShop.CRM.Core.Models;
 using BookShop.CRM.ViewModels.Base;
 using BookShop.CRM.Wrappers;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,7 +11,7 @@ namespace BookShop.CRM.ViewModels
 {
     public class AuthenticationViewModel : BaseViewModel
     {
-        public AuthenticationViewModel(IUserManager userManager, IAuthenticationService authenticationService)
+        public AuthenticationViewModel(IAuthenticationService authenticationService, MainWindow mainWindow)
         {
             authentication = new(new());
             LoginCommand = new Command(CanLogin, Login);
@@ -21,8 +22,8 @@ namespace BookShop.CRM.ViewModels
                     ((Command)LoginCommand).RaiseCanExecuteChanged();
             };
             ((Command)LoginCommand).RaiseCanExecuteChanged();
-            this.userManager = userManager;
             this.authenticationService = authenticationService;
+            this.mainWindow = mainWindow;
         }
 
         private bool CanLogin(object param)
@@ -39,14 +40,21 @@ namespace BookShop.CRM.ViewModels
             }
             else
             {
-                userManager.User = user;
+                mainWindow.Show();
             }
         }
 
-        private AuthenticationWrapper authentication;
-        private readonly IUserManager userManager;
-        private readonly IAuthenticationService authenticationService;
+        public async Task Load()
+        {
+            bool result = await authenticationService.TryAuthenticate();
+            if (result)
+                mainWindow.Show();
+        }
 
+        private IAuthenticationService authenticationService;
+        private MainWindow mainWindow;
+
+        private AuthenticationWrapper authentication;
         public AuthenticationWrapper Authentication
         {
             get => authentication;

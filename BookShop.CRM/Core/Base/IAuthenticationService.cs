@@ -8,5 +8,7 @@ namespace BookShop.CRM.Core.Base
         Task<AuthenticatedUser> Authenticate(AuthenticateCommand command);
 
         Task<bool> RefreshToken();
+
+        Task<bool> TryAuthenticate();
     }
 }

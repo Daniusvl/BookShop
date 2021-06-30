@@ -8,7 +8,15 @@ namespace BookShop.CRM
         public AuthenticationWindow(AuthenticationViewModel view_model)
         {
             InitializeComponent();
-            DataContext = view_model;
+            ViewModel = view_model;
+            DataContext = ViewModel;
+        }
+
+        public AuthenticationViewModel ViewModel { get; }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+           await ViewModel.Load();
         }
     }
 }

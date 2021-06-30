@@ -3,6 +3,8 @@ using BookShop.CRM.Core.Exceptions;
 using BookShop.CRM.Core.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,12 +17,13 @@ namespace BookShop.CRM.Core
 
     public record RefreshTokenResponse(AuthenticatedUser Auth);
 
-    public record RefreshTokenRequest(string UserId, string RefreshRoken);
+    public record RefreshTokenRequest(string UserId, string RefreshToken);
 
     public class AuthenticationService : RequestSender, IAuthenticationService
     {
         protected const string AuthPath = "api/auth/authenticate/";
-        protected const string refreshPath = "api/auth/refreshtoken/";
+        protected const string RefreshPath = "api/auth/refreshtoken/";
+        protected const string ValidatePath = "api/auth/validatetoken/";
 
         public AuthenticationService(IUserManager userManager)
         {
@@ -40,8 +43,8 @@ namespace BookShop.CRM.Core
 
         public async Task<bool> RefreshToken()
         {
-            AuthenticatedUser user = (await Send<RefreshTokenResponse, RefreshTokenRequest>(HttpMethod.Post, refreshPath,
-                new(userManager.User.UserId, userManager.User.RefreshToken))).Auth;
+            AuthenticatedUser user = (await Send<RefreshTokenResponse, RefreshTokenRequest>(HttpMethod.Post, RefreshPath,
+                new(userManager.User.UserId, userManager.User.RefreshToken)))?.Auth;
             if(user != null)
             {
                 userManager.User = user;
@@ -50,18 +53,40 @@ namespace BookShop.CRM.Core
             return false;
         }
 
+        public async Task<bool> TryAuthenticate()
+        {
+            try
+            {
+                await Send<Dictionary<string, string>, Dictionary<string, string>>(HttpMethod.Post, ValidatePath, null);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if(ex.Message == "Unauthorized")
+                {
+                    return await RefreshToken();
+                }
+            }
+            return false;
+        }
+
         protected override async Task<TResponseModel> Send<TResponseModel, TContent>(HttpMethod method, string uri, TContent content = default)
         {
             HttpRequestMessage message = userManager.GenerateRequestWithToken(method, uri);
-            message.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+            if (!(content == null))
+            {
+                message.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+            }
             HttpResponseMessage response = await client.SendAsync(message);
             string json = await response.Content.ReadAsStringAsync();
+            if(response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                throw new Exception("Unauthorized");
+            }
             if (!response.IsSuccessStatusCode)
             {
                 Response error_response = JsonConvert.DeserializeObject<Response>(json);
-                if (error_response?.ExceptionName == "CommonException")
-                    return default;
-                else throw new ApiException(error_response?.Message);
+                return default;
             }
                 
             return JsonConvert.DeserializeObject<TResponseModel>(json);

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookShop.CRM"
         mc:Ignorable="d"
-        Title="BookShop" Height="300" Width="500" ResizeMode="CanMinimize">
+        Title="BookShop" Height="300" Width="500" ResizeMode="CanMinimize" Loaded="Window_Loaded">
     <Grid>
         <Grid Margin="150 10">
             <Grid.RowDefinitions>
