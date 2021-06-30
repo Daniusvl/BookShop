@@ -40,18 +40,18 @@ namespace BookShop.Identity.Services
 
             if(user == null)
             {
-                throw new UnknownException("Email or password is incorrect");
+                throw new CommonException("Email or password is incorrect");
             }
 
             bool correct_password = await user_manager.CheckPasswordAsync(user, request?.Password);
             if (!correct_password)
             {
-                throw new UnknownException("Email or password is incorrect");
+                throw new CommonException("Email or password is incorrect");
             }
 
             if (!user.EmailConfirmed)
             {
-                throw new UnknownException("Email not confirmed");
+                throw new CommonException("Email not confirmed");
             }
 
             authentication_model.UserId = user.Id;
@@ -79,17 +79,17 @@ namespace BookShop.Identity.Services
 
             if (!user.EmailConfirmed)
             {
-                throw new UnknownException("Email not confirmed");
+                throw new CommonException("Email not confirmed");
             }
 
             if(request.RefreshToken != user.RefreshToken)
             {
-                throw new UnknownException("Invalid refresh token");
+                throw new CommonException("Invalid refresh token");
             }
 
             if(user.RefreshTokenExpires < DateTime.UtcNow)
             {
-                throw new UnknownException("Refresh token expired");
+                throw new CommonException("Refresh token expired");
             }
 
             response.Auth.UserId = user.Id;
@@ -159,7 +159,7 @@ namespace BookShop.Identity.Services
 
             if (!result.Succeeded)
             {
-                throw new UnknownException(JsonConvert.SerializeObject(result.Errors.Select(e => e.Description)));
+                throw new CommonException(JsonConvert.SerializeObject(result.Errors.Select(e => e.Description)));
             }
 
             RegisterModel registerModel = new RegisterModel
@@ -172,7 +172,7 @@ namespace BookShop.Identity.Services
 
             if (!result.Succeeded)
             {
-                throw new UnknownException(JsonConvert.SerializeObject(result.Errors.Select(e => e.Description)));
+                throw new CommonException(JsonConvert.SerializeObject(result.Errors.Select(e => e.Description)));
             }
 
             string email_token = await user_manager.GenerateEmailConfirmationTokenAsync(user);
@@ -197,7 +197,7 @@ namespace BookShop.Identity.Services
 
             if (!result.Succeeded)
             {
-                throw new UnknownException(JsonConvert.SerializeObject(result.Errors.Select(e => e.Description)));
+                throw new CommonException(JsonConvert.SerializeObject(result.Errors.Select(e => e.Description)));
             }
         }
     }
