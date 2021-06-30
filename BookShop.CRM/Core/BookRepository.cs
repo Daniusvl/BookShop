@@ -17,10 +17,11 @@ namespace BookShop.CRM.Core
     {
         protected const string Path = "api/books/";
 
-        public BookRepository(HttpClient client, IUserManager userManager)
+        public BookRepository(HttpClient client, IUserManager userManager, IAuthenticationService authenticationService)
         {
             this.client = client;
             this.userManager = userManager;
+            this.authenticationService = authenticationService;
         }
 
         public async Task<BookModel> Add(AddBookCommand command)
