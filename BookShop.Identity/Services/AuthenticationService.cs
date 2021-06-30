@@ -58,7 +58,7 @@ namespace BookShop.Identity.Services
             authentication_model.UserName = user.UserName;
             authentication_model.Email = user.Email;
             authentication_model.Role = (await user_manager.GetClaimsAsync(user)).FirstOrDefault(claim => claim.Type == "Role").Value;
-            authentication_model.AccessToken = GenerateToken(user);
+            authentication_model.AccessToken = await GenerateToken(user);
             authentication_model.RefreshToken = user.GenerateAndWriteRefreshToken();
             IdentityResult result = await user_manager.UpdateAsync(user);
 
@@ -96,20 +96,23 @@ namespace BookShop.Identity.Services
             response.Auth.UserName = user.UserName;
             response.Auth.Email = user.Email;
             response.Auth.Role = (await user_manager.GetClaimsAsync(user)).FirstOrDefault(claim => claim.Type == "Role").Value;
-            response.Auth.AccessToken = GenerateToken(user);
+            response.Auth.AccessToken = await GenerateToken(user);
             response.Auth.RefreshToken = user.GenerateAndWriteRefreshToken();
             IdentityResult result = await user_manager.UpdateAsync(user);
 
             return response;
         }
 
-        private string GenerateToken(AppUser user)
+        private async Task<string> GenerateToken(AppUser user)
         {
+            string role = (await user_manager.GetClaimsAsync(user)).FirstOrDefault(claim => claim.Type == "Role").Value;
+
             Claim[] claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Role, role)
             };
 
             SigningCredentials credentials = new(

@@ -23,7 +23,7 @@ namespace BookShop.Api.Controllers
             this.mediator = mediator;
         }
 
-        [Authorize]
+        [Authorize(Policy = RoleConstants.ModeratorName)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

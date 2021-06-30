@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Security.Claims;
 using System.Text;
 
 namespace BookShop.Identity
@@ -52,13 +53,13 @@ namespace BookShop.Identity
             services.AddAuthorization(cfg =>
             {
                 cfg.AddPolicy(RoleConstants.DefaultUserName, policy_cfg =>
-                    policy_cfg.RequireClaim(RoleConstants.RoleClaim, RoleConstants.DefaultUser));
+                    policy_cfg.RequireClaim(ClaimTypes.Role, RoleConstants.DefaultUser));
 
                 cfg.AddPolicy(RoleConstants.ModeratorName, policy_cfg =>
-                    policy_cfg.RequireClaim(RoleConstants.RoleClaim, RoleConstants.Moderator));
+                    policy_cfg.RequireClaim(ClaimTypes.Role, RoleConstants.Moderator));
 
                 cfg.AddPolicy(RoleConstants.AdministratorName, policy_cfg =>
-                    policy_cfg.RequireClaim(RoleConstants.RoleClaim, RoleConstants.Administrator));
+                    policy_cfg.RequireClaim(ClaimTypes.Role, RoleConstants.Administrator));
 
             });
 
