@@ -33,6 +33,8 @@ namespace BookShop.CRM.ViewModels
 
         private async void Login(object param) 
         {
+            ButtonEnabled = false;
+
             AuthenticatedUser user = await authenticationService.Authenticate(new AuthenticateCommand(authentication.Email, authentication.Password));
             if(user == null)
             {
@@ -40,15 +42,21 @@ namespace BookShop.CRM.ViewModels
             }
             else
             {
+                AuthenticationWindow.Close();
                 mainWindow.Show();
             }
+
+            ButtonEnabled = true;
         }
 
         public async Task Load()
         {
             bool result = await authenticationService.TryAuthenticate();
             if (result)
+            {
+                AuthenticationWindow.Close();
                 mainWindow.Show();
+            }
         }
 
         private IAuthenticationService authenticationService;
@@ -65,6 +73,19 @@ namespace BookShop.CRM.ViewModels
             }
         }
 
+        private bool button_enabled = true;
+        public bool ButtonEnabled
+        {
+            get => button_enabled;
+            set
+            {
+                button_enabled = value;
+                OnPropertyChanged(nameof(ButtonEnabled));
+            }
+        }
+
+
         public ICommand LoginCommand { get; }
+        public AuthenticationWindow AuthenticationWindow { get; set; }
     }
 }

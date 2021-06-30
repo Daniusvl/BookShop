@@ -9,6 +9,7 @@ namespace BookShop.CRM
         {
             InitializeComponent();
             ViewModel = view_model;
+            ViewModel.AuthenticationWindow = this;
             DataContext = ViewModel;
         }
 

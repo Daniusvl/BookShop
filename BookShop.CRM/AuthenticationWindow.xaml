@@ -38,7 +38,7 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <Button Grid.Row="4"  HorizontalContentAlignment="Center" Margin="40 18" Content="Login" Command="{Binding LoginCommand}"></Button>
+            <Button Grid.Row="4" HorizontalContentAlignment="Center" Margin="40 18" Content="Login" Command="{Binding LoginCommand}" IsEnabled="{Binding ButtonEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></Button>
 
         </Grid>
     </Grid>
