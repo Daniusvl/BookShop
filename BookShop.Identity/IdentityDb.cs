@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace BookShop.Identity
 {
@@ -35,6 +36,8 @@ namespace BookShop.Identity
                 UserName = "Admin",
                 NormalizedUserName = "ADMIN",
                 SecurityStamp = string.Empty,
+                RefreshToken = "FIRST_REFRESH_TOKEN",
+                RefreshTokenExpires = DateTime.UtcNow.AddDays(5),
                 PasswordHash = hasher.HashPassword(null, email.Password)
             };
 
