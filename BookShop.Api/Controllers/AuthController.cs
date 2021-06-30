@@ -50,6 +50,17 @@ namespace BookShop.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            RefreshTokenResponse response = await service.RefreshToken(request);
+            return Ok(response);
+        }
+
         [Authorize(Policy = RoleConstants.DefaultUserName)]
         [HttpPost("ValidateToken")]
         public IActionResult ValidateToken()

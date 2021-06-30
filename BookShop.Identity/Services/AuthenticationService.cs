@@ -44,7 +44,6 @@ namespace BookShop.Identity.Services
             }
 
             bool correct_password = await user_manager.CheckPasswordAsync(user, request?.Password);
-
             if (!correct_password)
             {
                 throw new UnknownException("Email or password is incorrect");
@@ -55,6 +54,57 @@ namespace BookShop.Identity.Services
                 throw new UnknownException("Email not confirmed");
             }
 
+            authentication_model.UserId = user.Id;
+            authentication_model.UserName = user.UserName;
+            authentication_model.Email = user.Email;
+            authentication_model.Role = (await user_manager.GetClaimsAsync(user)).FirstOrDefault(claim => claim.Type == "Role").Value;
+            authentication_model.AccessToken = GenerateToken(user);
+            authentication_model.RefreshToken = user.GenerateAndWriteRefreshToken();
+            IdentityResult result = await user_manager.UpdateAsync(user);
+
+            return authentication_model;
+        }
+
+        public async Task<RefreshTokenResponse> RefreshToken(RefreshTokenRequest request)
+        {
+            RefreshTokenResponse response = new();
+            response.Auth = new();
+
+            AppUser user = await user_manager.FindByIdAsync(request.UserId);
+
+            if(user == null)
+            {
+                throw new NotFoundException(nameof(AppUser), request.UserId);
+            }
+
+            if (!user.EmailConfirmed)
+            {
+                throw new UnknownException("Email not confirmed");
+            }
+
+            if(request.RefreshToken != user.RefreshToken)
+            {
+                throw new UnknownException("Invalid refresh token");
+            }
+
+            if(user.RefreshTokenExpires < DateTime.UtcNow)
+            {
+                throw new UnknownException("Refresh token expired");
+            }
+
+            response.Auth.UserId = user.Id;
+            response.Auth.UserName = user.UserName;
+            response.Auth.Email = user.Email;
+            response.Auth.Role = (await user_manager.GetClaimsAsync(user)).FirstOrDefault(claim => claim.Type == "Role").Value;
+            response.Auth.AccessToken = GenerateToken(user);
+            response.Auth.RefreshToken = user.GenerateAndWriteRefreshToken();
+            IdentityResult result = await user_manager.UpdateAsync(user);
+
+            return response;
+        }
+
+        private string GenerateToken(AppUser user)
+        {
             Claim[] claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
@@ -62,7 +112,7 @@ namespace BookShop.Identity.Services
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            SigningCredentials credentials = new (
+            SigningCredentials credentials = new(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt_settings.Key)),
                     SecurityAlgorithms.HmacSha256
                 );
@@ -76,14 +126,7 @@ namespace BookShop.Identity.Services
                     credentials
                 );
 
-            string token_string = new JwtSecurityTokenHandler().WriteToken(token);
-
-            authentication_model.UserId = user.Id;
-            authentication_model.UserName = user.UserName;
-            authentication_model.Email = user.Email;
-            authentication_model.Role = (await user_manager.GetClaimsAsync(user)).FirstOrDefault(claim => claim.Type == "Role").Value;
-            authentication_model.Token = token_string;
-            return authentication_model;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public async Task<RegisterModel> Register(RegisterRequest request, HttpRequest http_request)

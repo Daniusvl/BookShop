@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace BookShop.Identity.Models
@@ -9,6 +10,10 @@ namespace BookShop.Identity.Models
         public AppUser() { }
 
         public AppUser(string userName) : base (userName){}
+
+        public string RefreshToken { get; set; }
+
+        public DateTime RefreshTokenExpires { get; set; }
 
         public string OwnedProducts { get; set; } = "[]";
 
@@ -22,6 +27,13 @@ namespace BookShop.Identity.Models
             IList<OwnedProduct> products = GetOwnedProducts();
             products.Add(new OwnedProduct { Id = id, Name = name, FilePath = file_path });
             OwnedProducts = JsonConvert.SerializeObject(products);
+        }
+
+        public string GenerateAndWriteRefreshToken()
+        {
+            RefreshToken = string.Join(null, Guid.NewGuid().ToString().Split('-'));
+            RefreshTokenExpires = DateTime.UtcNow.AddDays(5);
+            return RefreshToken;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace BookShop.Core.Abstract.Identity
         Task<AuthenticationModel> Authenticate(AuthenticationRequest request);
 
         Task ConfirmEmail(string user_id, string email_token);
+
+        Task<RefreshTokenResponse> RefreshToken(RefreshTokenRequest request);
     }
 }
