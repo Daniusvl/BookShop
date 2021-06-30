@@ -106,5 +106,14 @@ namespace BookShop.Books.Repositories
             ctx.Entry(book).Collection(e => e.Photos).Load();
             return book;
         }
+
+        public async Task<IList<Book>> GetAll()
+        {
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .ToListAsync();
+        }
     }
 }

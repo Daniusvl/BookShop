@@ -15,6 +15,8 @@ namespace BookShop.Core.Abstract.Repositories
 
         Task<Book> GetByName(string name);
 
+        Task<IList<Book>> GetAll();
+
         Task<IList<Book>> GetNewest(int count);
 
         Task<IList<Book>> GetByPrice(decimal min, decimal max);

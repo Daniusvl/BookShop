@@ -23,7 +23,15 @@ namespace BookShop.Api.Controllers
             this.mediator = mediator;
         }
 
+        [Authorize]
         [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            IList<BookModel> books = await mediator.Send(new GetAllBookQuery());
+            return Ok(books);
+        }
+
+        [HttpGet("GetNewest")]
         public async Task<IActionResult> GetNewest()
         {
             IList<BookModel> books = await mediator.Send(new GetNewestBookQuery());
