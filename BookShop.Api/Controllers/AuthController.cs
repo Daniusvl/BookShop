@@ -1,5 +1,7 @@
 ﻿using BookShop.Core.Abstract.Identity;
 using BookShop.Core.Models.Authentication;
+using BookShop.Identity.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -48,5 +50,11 @@ namespace BookShop.Api.Controllers
             return Ok();
         }
 
+        [Authorize(Policy = RoleConstants.DefaultUserName)]
+        [HttpPost("ValidateToken")]
+        public IActionResult ValidateToken()
+        {
+            return Ok();
+        }
     }
 }
