@@ -9,11 +9,19 @@ namespace BookShop.CRM
         {
             InitializeComponent();
             ViewModel = view_model;
-            ViewModel.AuthenticationWindow = this;
+            ViewModel.OpenMainWindow = OpenMainWindow;
             DataContext = ViewModel;
         }
-
+        
         public AuthenticationViewModel ViewModel { get; }
+
+        private void OpenMainWindow()
+        {
+            IWindowFactory windowFactory = new WindowFactory();
+            MainWindow mainWindow = windowFactory.CreateWindow<MainWindow>();
+            Close();
+            mainWindow.Show();
+        }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {

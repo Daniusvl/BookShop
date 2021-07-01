@@ -2,12 +2,13 @@
 using BookShop.CRM.Core;
 using BookShop.CRM.Core.Base;
 using BookShop.CRM.ViewModels;
-using BookShop.CRM.Wrappers;
 
 namespace BookShop.CRM
 {
     public static class AutoFac
     {
+        public static IContainer Container { get; private set; }
+
         public static IContainer BuildDI()
         {
             ContainerBuilder builder = new();
@@ -19,12 +20,14 @@ namespace BookShop.CRM
 
             //ViewModels
             builder.RegisterType<AuthenticationViewModel>().AsSelf();
+            builder.RegisterType<MainViewModel>().AsSelf();
 
             //Views
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<AuthenticationWindow>().AsSelf();
 
-            return builder.Build();
+            Container = builder.Build();
+            return Container;
         }
     }
 }
