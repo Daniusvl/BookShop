@@ -13,7 +13,7 @@ namespace BookShop.Core
             CreateMap<Photo, PhotoModel>()
                 .AfterMap((ent, model) => 
                 {
-                    model.FileBytes = File.ReadAllBytes(model.FilePath);
+                    model.FileBytes = File.ReadAllBytes(ent.FilePath);
                 })
                 .ReverseMap();
             CreateMap<Category, CategoryModel>().ReverseMap();

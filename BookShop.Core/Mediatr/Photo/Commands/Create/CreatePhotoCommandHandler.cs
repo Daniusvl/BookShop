@@ -15,23 +15,21 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
 {
     public class CreatePhotoCommandHandler : IRequestHandler<CreatePhotoCommand, PhotoModel>
     {
-        private readonly IPhotoRepository repository;
-        private readonly IBookRepository productRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly ILogger<CreatePhotoCommandHandler> logger;
 
-        public CreatePhotoCommandHandler(IPhotoRepository repository, IBookRepository productRepository, 
+        public CreatePhotoCommandHandler(IUnitOfWork unitOfWork, 
             IMapper mapper, ILogger<CreatePhotoCommandHandler> logger)
         {
-            this.repository = repository;
-            this.productRepository = productRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.logger = logger;
         }
 
         public async Task<PhotoModel> Handle(CreatePhotoCommand request, CancellationToken cancellationToken)
         {
-            CreatePhotoRequestValidator validator = new(productRepository);
+            CreatePhotoRequestValidator validator = new(unitOfWork.BookRepository);
             ValidationResult result = await validator.ValidateAsync(request);
 
             if (result.Errors.Count > 0)
@@ -62,10 +60,11 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
 
             Domain.Entities.Photo photo = new()
             {
-                FilePath = path
+                FilePath = path,
+                BookId = (await unitOfWork.BookRepository.GetByName(request.ProductName)).Id
             };
 
-            await repository.BaseRepository.Create(photo);
+            await unitOfWork.PhotoRepository.BaseRepository.Create(photo);
 
             logger.LogInformation($"{nameof(Domain.Entities.Photo)} with Id: {photo.Id} created by {photo.CreatedBy} at {photo.DateCreated}");
 

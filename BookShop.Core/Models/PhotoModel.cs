@@ -6,15 +6,13 @@ namespace BookShop.Core.Models
     {
         public int Id { get; set; }
 
-        public string FilePath { get; set; }
-
         public IList<byte> FileBytes { get; set; }
 
         public int BookId { get; set; }
 
         public override string ToString()
         {
-            return FilePath;
+            return Id.ToString();
         }
     }
 }
