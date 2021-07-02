@@ -1,13 +1,16 @@
-﻿using BookShop.Core.Mediatr.Book.Commands.Create;
+﻿using BookShop.Core.Abstract.Features.FileUploader;
+using BookShop.Core.Mediatr.Book.Commands.Create;
 using BookShop.Core.Mediatr.Book.Commands.Delete;
 using BookShop.Core.Mediatr.Book.Commands.Update;
 using BookShop.Core.Mediatr.Book.Queries;
 using BookShop.Core.Models;
+using BookShop.Features.FileUploader;
 using BookShop.Identity.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.Api.Controllers
@@ -17,10 +20,12 @@ namespace BookShop.Api.Controllers
     public class BooksController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly BaseFileUploader pdfFileUploader;
 
-        public BooksController(IMediator mediator)
+        public BooksController(IMediator mediator, IEnumerable<BaseFileUploader> baseFileUploaders)
         {
             this.mediator = mediator;
+            pdfFileUploader = baseFileUploaders.FirstOrDefault(f => f.GetType() == typeof(PdfFileUploader));
         }
 
         [Authorize(Policy = RoleConstants.ModeratorName)]
@@ -79,6 +84,14 @@ namespace BookShop.Api.Controllers
         {
             BookModel book = await mediator.Send(command);
             return Ok(book);
+        }
+
+        [HttpPost("UploadFile/{id}")]
+        [Authorize(Policy = RoleConstants.ModeratorName)]
+        public async Task<IActionResult> UploadFile(int id)
+        {
+            await pdfFileUploader.UploadFile(Request.Body, id, (int)Request.ContentLength);
+            return Ok();
         }
 
         [HttpPut]

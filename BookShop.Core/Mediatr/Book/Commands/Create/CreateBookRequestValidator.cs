@@ -10,10 +10,6 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
             RuleFor(command => command)
                 .NotNull()
                     .WithMessage("{PropertyName} cannot be null");
-            
-            RuleFor(command => command.Bytes)
-                .NotNull()
-                    .WithMessage("{PropertyName} cannot be null");
 
             RuleFor(command => command.Name)
                 .NotNull()

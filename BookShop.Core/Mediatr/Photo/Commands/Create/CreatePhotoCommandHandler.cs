@@ -56,8 +56,6 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
                 logger.LogWarning("Photo file name generation takes more than 4 iterations");
             }
 
-            await File.WriteAllBytesAsync(path, request.FileBytes.ToArray());
-
             Domain.Entities.Photo photo = new()
             {
                 FilePath = path,

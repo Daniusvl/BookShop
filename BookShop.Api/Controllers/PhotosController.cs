@@ -1,12 +1,15 @@
-﻿using BookShop.Core.Mediatr.Photo.Commands.Create;
+﻿using BookShop.Core.Abstract.Features.FileUploader;
+using BookShop.Core.Mediatr.Photo.Commands.Create;
 using BookShop.Core.Mediatr.Photo.Commands.Delete;
 using BookShop.Core.Mediatr.Photo.Queries;
 using BookShop.Core.Models;
+using BookShop.Features.FileUploader;
 using BookShop.Identity.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookShop.Api.Controllers
@@ -16,10 +19,12 @@ namespace BookShop.Api.Controllers
     public class PhotosController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly BaseFileUploader pngFileUploader;
 
-        public PhotosController(IMediator mediator)
+        public PhotosController(IMediator mediator, IEnumerable<BaseFileUploader> baseFileUploaders)
         {
             this.mediator = mediator;
+            pngFileUploader = baseFileUploaders.FirstOrDefault(f => f.GetType() == typeof(PngFileUploader));
         }
 
         [HttpGet]
@@ -42,6 +47,14 @@ namespace BookShop.Api.Controllers
         {
             PhotoModel photo = await mediator.Send(command);
             return Ok(photo);
+        }
+
+        [HttpPost("UploadFile/{id}")]
+        [Authorize(Policy = RoleConstants.ModeratorName)]
+        public async Task<IActionResult> UploadFile(int id)
+        {
+            await pngFileUploader.UploadFile(Request.Body, id, (int)Request.ContentLength);
+            return Ok();
         }
 
         [HttpDelete("{id}")]

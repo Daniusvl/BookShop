@@ -1,7 +1,6 @@
 ﻿using BookShop.Core.Models;
 using MediatR;
 using System;
-using System.Collections.Generic;
 
 namespace BookShop.Core.Mediatr.Book.Commands.Create
 {
@@ -20,7 +19,5 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
         public int AuthorId { get; set; }
 
         public int CategoryId { get; set; }
-
-        public IList<byte> Bytes { get; set; }
     }
 }

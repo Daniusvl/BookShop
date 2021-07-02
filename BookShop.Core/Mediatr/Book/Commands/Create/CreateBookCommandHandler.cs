@@ -7,7 +7,6 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -83,8 +82,6 @@ namespace BookShop.Core.Mediatr.Book.Commands.Create
             await unitOfWork.BookRepository.BaseRepository.Create(book);
 
             logger.LogInformation($"{nameof(Domain.Entities.Book)} with Id: {book.Id} created by {book.CreatedBy} at {book.DateCreated}");
-
-            await File.WriteAllBytesAsync(path, request.Bytes.ToArray());
 
             return mapper.Map<Domain.Entities.Book, BookModel>(book);
         }

@@ -18,12 +18,6 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
                     .WithMessage("{PropertyName} cannot be empty")
                 .MustAsync(async (name, token) => await repository.ContainsWithName(name))
                     .WithMessage("Where is no product with name: {PropertyName}");
-
-            RuleFor(command => command.FileBytes)
-                .NotNull()
-                    .WithMessage("{PropertyName} cannot be null")
-                .NotEmpty()
-                    .WithMessage("{PropertyName} cannot be empty");
         }
     }
 }
