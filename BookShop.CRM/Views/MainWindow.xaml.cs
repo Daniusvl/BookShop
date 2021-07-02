@@ -1,5 +1,7 @@
 ﻿using BookShop.CRM.ViewModels;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BookShop.CRM
 {

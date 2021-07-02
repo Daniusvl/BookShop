@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BookShop.CRM.Core.Base
 {
@@ -17,8 +18,6 @@ namespace BookShop.CRM.Core.Base
         protected virtual async Task<TResponseModel> Send<TResponseModel, TContent>(HttpMethod method, string uri, TContent content = default)
         {
             HttpRequestMessage message = userManager.GenerateRequestWithToken(method, uri);
-            message.Method = method;
-            message.RequestUri = new Uri(uri);
             message.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.SendAsync(message);
             string json = await response.Content.ReadAsStringAsync();
@@ -34,8 +33,19 @@ namespace BookShop.CRM.Core.Base
                     return await Send<TResponseModel, TContent>(method, uri, content);
                 }
             }
-            if (!response.IsSuccessStatusCode)
-                throw new ApiException(json);
+            else if (!response.IsSuccessStatusCode)
+            {
+                Response res = JsonConvert.DeserializeObject<Response>(json);
+                if (res?.ExceptionName == "CommonException" || res?.ExceptionName == "NotFoundException")
+                {
+                    throw new ApiException(res.Message);
+                }
+                else if (res.ExceptionName == "ValidationException")
+                {
+                    throw new ApiException("Invalid data provided");
+                }
+                else throw new ApiException("Unknown error");
+            }
             return JsonConvert.DeserializeObject<TResponseModel>(json);
         }
     }

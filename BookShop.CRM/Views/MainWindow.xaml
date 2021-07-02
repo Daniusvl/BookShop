@@ -5,31 +5,210 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookShop.CRM"
         mc:Ignorable="d"
-        Title="a" Height="450" Width="800">
+        Title="BookShop" Height="1000" Width="800" MinWidth="800" MinHeight="400"  WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    
+    <Window.Resources>
+        
+        <Style TargetType="RadioButton" x:Key="RadioButton">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10 10 5 10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="Label" x:Key="HeaderLabel">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="TextBoxLabel">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="15,5,0,0"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="TextBoxInput">
+            <Setter Property="Margin" Value="15,0,15,0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="RichTextBox" x:Key="RichTextBoxInput">
+            <Setter Property="Margin" Value="15,0,15,0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="StackPanel" x:Key="EditField">
+            <Setter Property="Margin" Value="30"/>
+        </Style>
+
+        <Style TargetType="StackPanel" x:Key="Property">
+            <Setter Property="Margin" Value="0,15,0,15"/>
+        </Style>
+
+        <local:IntStringConverter x:Key="IntStringConverter"/>
+
+        <local:DecimalStringConverter x:Key="DecimalStringConverter"/>
+
+        <local:BookModelWrapperConverter x:Key="BookModelWrapperConverter"/>
+
+    </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width=".5*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Grid Grid.Column="0">
             
-        </Grid>
+            <StackPanel Visibility="{Binding BooksVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Label Style="{StaticResource HeaderLabel}">Books</Label>
+                <Button Command="{Binding Book.LoadCommand}" Content="Load" IsEnabled="{Binding Book.LoadBooksEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <ListBox ItemsSource="{Binding Book.Books, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Book.SelectedBook, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BookModelWrapperConverter}}"></ListBox>
+            </StackPanel>
 
-        <Grid Grid.Column="1">
+            <StackPanel Visibility="{Binding AuthorsVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Label Style="{StaticResource HeaderLabel}">Authors</Label>
+                <ListBox></ListBox>
+            </StackPanel>
+
+            <StackPanel Visibility="{Binding CategoriesVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Label Style="{StaticResource HeaderLabel}">Categories</Label>
+                <ListBox></ListBox>
+            </StackPanel>
+
+            <StackPanel Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <Label Style="{StaticResource HeaderLabel}">Photos</Label>
+                <ListBox></ListBox>
+            </StackPanel>
             
         </Grid>
 
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.7*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
-            </Grid.RowDefinitions>
-            <Label Content="{Binding UserName, UpdateSourceTrigger=PropertyChanged, Mode=OneTime}"
-                   HorizontalAlignment="Right" FontSize="20"></Label>
-            <Button Grid.Row="1" Content="Log out" HorizontalAlignment="Right" Margin="5 0 5 25" FontSize="16" Padding="5" Command="{Binding LogoutCommand}"></Button>
+        <Grid  Grid.Column="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Style="{StaticResource EditField}" Visibility="{Binding BooksVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+                    <StackPanel Style="{StaticResource Property}">
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Id" />
+                        <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Book.SelectedBook.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource Property}">
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Name" />
+                        <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Book.SelectedBook.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource Property}">
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Description" />
+                        <TextBox Style="{StaticResource TextBoxInput}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Book.SelectedBook.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource Property}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.7*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Style="{StaticResource TextBoxLabel}" Content="Price (€)" Margin="15,0,0,0" />
+                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="20,5,20,5" Text="{Binding Book.SelectedBook.Price, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DecimalStringConverter}}" />
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource Property}">
+                        <CheckBox Grid.Column="4" FontSize="15" Content="Hidden" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="{Binding Book.SelectedBook.Hidden, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource Property}">
+
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Date released"/>
+                        <Calendar Margin="10" DisplayDate="{Binding Book.SelectedBook.DateReleased, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></Calendar>
+                    
+                    </StackPanel>
+
+                <StackPanel Style="{StaticResource Property}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Author id"/>
+                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="0,0,50,0" Text="{Binding Book.SelectedBook.AuthorId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Style="{StaticResource Property}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Category id"/>
+                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="0,0,50,0" Text="{Binding Book.SelectedBook.CategoryId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                    </Grid>
+                </StackPanel>
+
+                    <StackPanel Style="{StaticResource Property}" Visibility="{Binding Book.BookAddFileSectionVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Path: "/>
+                            <Button Grid.Column="1" Margin="0,0,50,0" Content="Upload file" FontSize="15" Command="{Binding Book.AddFile}"/>
+                    </Grid>
+
+                        <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Book.FilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Button Content="Add" FontSize="15" Margin="10,0,10,0" Command="{Binding Book.AddCommand}" IsEnabled="{Binding Book.AddBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.AddBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,10,0" Command="{Binding Book.UpdateCommand}" IsEnabled="{Binding Book.UpdateBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.UpdateBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,10,0" Command="{Binding Book.DeleteCommand}" IsEnabled="{Binding Book.DeleteBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.DeleteBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </Grid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Style="{StaticResource EditField}" Visibility="{Binding AuthorsVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource EditField}" Visibility="{Binding CategoriesVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource EditField}" Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+            </StackPanel>
+
         </Grid>
+
+        <StackPanel Grid.Column="2">
+
+            <Label Content="{Binding UserName, UpdateSourceTrigger=PropertyChanged, Mode=OneTime}"
+                   HorizontalAlignment="Right" FontSize="20" />
+            <Button Content="Log out" HorizontalAlignment="Right" Margin="5 0 5 25" FontSize="16" Padding="5" Command="{Binding LogoutCommand}" />
+
+            <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center">
+                <RadioButton Style="{StaticResource RadioButton}" Content="Books" IsChecked="{Binding BookPressed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <RadioButton Style="{StaticResource RadioButton}" Content="Authors" IsChecked="{Binding AuthorPressed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <RadioButton Style="{StaticResource RadioButton}" Content="Categories" IsChecked="{Binding CategoryPressed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <RadioButton Style="{StaticResource RadioButton}" Content="Photos" IsChecked="{Binding PhotoPressed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            </StackPanel>
+            
+        </StackPanel>
+            
     </Grid>
 </Window>

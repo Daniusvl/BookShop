@@ -22,6 +22,11 @@ namespace BookShop.CRM.Wrappers.Base
             Model = model;
             if (!validate_properties_on_start)
                 return;
+            ValidateAll();
+        }
+
+        public void ValidateAll()
+        {
             foreach (PropertyInfo property in typeof(TModel).GetProperties())
             {
                 PropertyValidation(property.Name);
