@@ -37,7 +37,7 @@ namespace BookShop.CRM.ViewModels
             try
             {
                 MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete this item {SelectedAuthor.Name}",
-                "Update?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                "Delete?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if(result == MessageBoxResult.Yes)
                 {
                     List<AuthorModel> authors = Authors;
