@@ -24,6 +24,7 @@ namespace BookShop.CRM.ViewModels
             VisibilityHideAll();
 
             book = new(unitOfWork);
+            author = new(unitOfWork);
         }
 
         private BookViewModel book;
@@ -35,6 +36,17 @@ namespace BookShop.CRM.ViewModels
                 book = value;
                 OnPropertyChanged(nameof(Book));
             } 
+        }
+
+        private AuthorViewModel author;
+        public AuthorViewModel Author
+        {
+            get => author;
+            set
+            {
+                author = value;
+                OnPropertyChanged(nameof(Author));
+            }
         }
 
         #region Visibilities

@@ -51,6 +51,8 @@
 
         <local:BookModelWrapperConverter x:Key="BookModelWrapperConverter"/>
 
+        <local:AuthorModelWrapperConverter x:Key="AuthorModelWrapperConverter"/>
+
     </Window.Resources>
     
     <Grid>
@@ -70,7 +72,8 @@
 
             <StackPanel Visibility="{Binding AuthorsVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Label Style="{StaticResource HeaderLabel}">Authors</Label>
-                <ListBox></ListBox>
+                <Button Command="{Binding Author.LoadCommand}" Content="Load" IsEnabled="{Binding Author.LoadEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <ListBox ItemsSource="{Binding Author.Authors, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Author.SelectedAuthor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource AuthorModelWrapperConverter}}"></ListBox>
             </StackPanel>
 
             <StackPanel Visibility="{Binding CategoriesVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -86,9 +89,11 @@
         </Grid>
 
         <Grid  Grid.Column="1">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer VerticalScrollBarVisibility="Auto"  Visibility="{Binding BooksVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <StackPanel Style="{StaticResource EditField}" Visibility="{Binding BooksVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
 
+                        
+                    
                     <StackPanel Style="{StaticResource Property}">
                         <Label Style="{StaticResource TextBoxLabel}" Content="Id" />
                         <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Book.SelectedBook.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
@@ -173,15 +178,39 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Button Content="Add" FontSize="15" Margin="10,0,10,0" Command="{Binding Book.AddCommand}" IsEnabled="{Binding Book.AddBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.AddBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                        <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,10,0" Command="{Binding Book.UpdateCommand}" IsEnabled="{Binding Book.UpdateBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.UpdateBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                        <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,10,0" Command="{Binding Book.DeleteCommand}" IsEnabled="{Binding Book.DeleteBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.DeleteBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Content="Add" FontSize="15" Margin="15,0,10,0" Command="{Binding Book.AddCommand}" IsEnabled="{Binding Book.AddBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.AddBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,15,0" Command="{Binding Book.UpdateCommand}" IsEnabled="{Binding Book.UpdateBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.UpdateBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,15,0" Command="{Binding Book.DeleteCommand}" IsEnabled="{Binding Book.DeleteBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.DeleteBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </Grid>
-
                 </StackPanel>
-            </ScrollViewer>
+             </ScrollViewer>
+
 
             <StackPanel Style="{StaticResource EditField}" Visibility="{Binding AuthorsVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <StackPanel Style="{StaticResource Property}">
+                    <Label  Style="{StaticResource TextBoxLabel}" Content="Id"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Author.SelectedAuthor.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                </StackPanel>
+
+                <StackPanel Style="{StaticResource Property}">
+                    <Label Style="{StaticResource TextBoxLabel}" Content="Name"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Author.SelectedAuthor.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </StackPanel>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="Add" FontSize="15" Margin="15,0,10,0" Command="{Binding Author.AddCommand}" IsEnabled="{Binding Author.AddEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Author.AddVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,15,0" Command="{Binding Author.UpdateCommand}" IsEnabled="{Binding Author.UpdateEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Author.UpdateVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,15,0" Command="{Binding Author.DeleteCommand}" IsEnabled="{Binding Author.DeleteEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Author.DeleteVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </Grid>
 
             </StackPanel>
 
