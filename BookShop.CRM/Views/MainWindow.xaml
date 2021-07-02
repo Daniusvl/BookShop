@@ -53,6 +53,8 @@
 
         <local:AuthorModelWrapperConverter x:Key="AuthorModelWrapperConverter"/>
 
+        <local:CategoryModelWrapperConverter x:Key="CategoryModelWrapperConverter"/>
+
     </Window.Resources>
     
     <Grid>
@@ -78,7 +80,8 @@
 
             <StackPanel Visibility="{Binding CategoriesVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Label Style="{StaticResource HeaderLabel}">Categories</Label>
-                <ListBox></ListBox>
+                <Button Command="{Binding Category.LoadCommand}" Content="Load" IsEnabled="{Binding Category.LoadEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <ListBox ItemsSource="{Binding Category.Categories, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Category.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource CategoryModelWrapperConverter}}"></ListBox>
             </StackPanel>
 
             <StackPanel Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -215,7 +218,30 @@
             </StackPanel>
 
             <StackPanel Style="{StaticResource EditField}" Visibility="{Binding CategoriesVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <StackPanel Style="{StaticResource Property}">
+                    <Label  Style="{StaticResource TextBoxLabel}" Content="Id"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Category.SelectedCategory.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                </StackPanel>
 
+                <StackPanel Style="{StaticResource Property}">
+                    <Label Style="{StaticResource TextBoxLabel}" Content="Name"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Category.SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </StackPanel>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="Add" FontSize="15" Margin="15,0,10,0" Command="{Binding Category.AddCommand}" IsEnabled="{Binding Category.AddEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Category.AddVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,15,0" Command="{Binding Category.UpdateCommand}" IsEnabled="{Binding Category.UpdateEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Category.UpdateVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,15,0" Command="{Binding Category.DeleteCommand}" IsEnabled="{Binding Category.DeleteEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Category.DeleteVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </Grid>
             </StackPanel>
 
             <StackPanel Style="{StaticResource EditField}" Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
