@@ -1,6 +1,5 @@
 ﻿using BookShop.CRM.Core.Base;
 using BookShop.CRM.Core.Exceptions;
-using BookShop.CRM.Core.Models;
 using BookShop.CRM.Models;
 using Newtonsoft.Json;
 using System;
@@ -9,10 +8,12 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace BookShop.CRM.Core
 {
+    public record AddBookCommand(string Name, string Description, decimal Price, bool Hidden,
+        DateTime DateReleased, int AuthorId, int CategoryId);
+
     public record UpdateBookCommand(int Id, string Name, string Description, decimal Price, bool Hidden,
                                         DateTime DateReleased, int AuthorId, int CategoryId);
 

@@ -46,16 +46,7 @@ namespace BookShop.CRM.Models
 
         public static implicit operator AddBookCommand(BookModel model)
         {
-            return new AddBookCommand()
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price,
-                Hidden = model.Hidden,
-                DateReleased = model.DateReleased,
-                AuthorId = model.AuthorId,
-                CategoryId = model.CategoryId
-            };
+            return new AddBookCommand(model.Name, model.Description, model.Price, model.Hidden, model.DateReleased, model.AuthorId, model.CategoryId);
         }
 
         public static explicit operator BookModel(UpdateBookCommand command)
