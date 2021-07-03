@@ -7,7 +7,6 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +28,7 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
 
         public async Task<PhotoModel> Handle(CreatePhotoCommand request, CancellationToken cancellationToken)
         {
-            CreatePhotoRequestValidator validator = new(unitOfWork.BookRepository);
+            CreatePhotoRequestValidator validator = new();
             ValidationResult result = await validator.ValidateAsync(request);
 
             if (result.Errors.Count > 0)
@@ -37,17 +36,24 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
                 throw new ValidationException(result);
             }
 
-            if (!Directory.Exists(Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}"))
+            Domain.Entities.Book book = await unitOfWork.BookRepository.GetById(request.BookId);
+
+            if(book == null)
             {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}");
+                throw new NotFoundException(nameof(Domain.Entities.Book), request.BookId);
             }
 
-            string path = Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}\{Guid.NewGuid()}.png";
+            if (!Directory.Exists(Directory.GetCurrentDirectory() + @$"\Photos\{book.Name}"))
+            {
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @$"\Photos\{book.Name}");
+            }
+
+            string path = Directory.GetCurrentDirectory() + @$"\Photos\{book.Name}\{Guid.NewGuid()}.png";
 
             int i = 0;
             while (File.Exists(path))
             {
-                path = Directory.GetCurrentDirectory() + @$"\Photos\{request.ProductName}\{Guid.NewGuid()}.png";
+                path = Directory.GetCurrentDirectory() + @$"\Photos\{book.Name}\{Guid.NewGuid()}.png";
                 i++;
             }
 
@@ -59,7 +65,7 @@ namespace BookShop.Core.Mediatr.Photo.Commands.Create
             Domain.Entities.Photo photo = new()
             {
                 FilePath = path,
-                BookId = (await unitOfWork.BookRepository.GetByName(request.ProductName)).Id
+                BookId = book.Id
             };
 
             await unitOfWork.PhotoRepository.BaseRepository.Create(photo);
