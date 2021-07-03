@@ -25,4 +25,9 @@
     <ProjectReference Include="..\BookShop.Identity\BookShop.Identity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Books\" />
+    <Folder Include="Photos\Hamlet\" />
+  </ItemGroup>
+
 </Project>
