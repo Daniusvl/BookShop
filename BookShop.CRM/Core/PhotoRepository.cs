@@ -8,11 +8,12 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace BookShop.CRM.Core
 {
-    public record AddPhotoCommand(string ProductName, IList<byte> FileBytes);
+    public record AddPhotoCommand(int BookId);
+
+    public record UpdatePhotoCommand(int Id, int BookId);
 
     public class PhotoRepository : RequestSender, IPhotoRepository
     {
@@ -40,9 +41,32 @@ namespace BookShop.CRM.Core
             return await base.Send<PhotoModel, object>(HttpMethod.Get, Path + id);
         }
 
+        public async Task<IList<byte>> GetPhotoBytes(int id)
+        {
+            HttpRequestMessage message = userManager.GenerateRequestWithToken(HttpMethod.Get, $"{Path}Download/{id}");
+            HttpResponseMessage response = await client.SendAsync(message);
+            Stream stream = await response.Content.ReadAsStreamAsync();
+
+            List<byte> bytes = new List<byte>();
+            int total_bytes_read = 0;
+            while (total_bytes_read < stream.Length)
+            {
+                byte[] b = new byte[4096];
+                int l = await stream.ReadAsync(b, 0, b.Length);
+                total_bytes_read += l;
+                bytes.AddRange(b);
+            }
+            return bytes;
+        }
+
         public async Task Remove(int id)
         {
             await base.Send<object, object>(HttpMethod.Delete, Path + id);
+        }
+
+        public async Task<PhotoModel> Update(UpdatePhotoCommand command)
+        {
+            return await base.Send<PhotoModel, UpdatePhotoCommand>(HttpMethod.Put, Path, command);
         }
 
         public async Task UploadFile(string path, int id)
@@ -72,16 +96,19 @@ namespace BookShop.CRM.Core
                         return await Send<TResponseModel, TContent>(method, uri, content);
                     }
                 }
-                Response res = JsonConvert.DeserializeObject<Response>(json);
-                if (res?.ExceptionName == "CommonException" || res?.ExceptionName == "NotFoundException")
+                else if (!response.IsSuccessStatusCode)
                 {
-                    throw new ApiException(res.Message);
+                    Response res = JsonConvert.DeserializeObject<Response>(json);
+                    if (res?.ExceptionName == "CommonException" || res?.ExceptionName == "NotFoundException")
+                    {
+                        throw new ApiException(res.Message);
+                    }
+                    else if (res?.ExceptionName == "ValidationException")
+                    {
+                        throw new ApiException("Invalid data provided");
+                    }
+                    else throw new ApiException("Unknown error");
                 }
-                else if (res.ExceptionName == "ValidationException")
-                {
-                    throw new ApiException("Invalid data provided");
-                }
-                else throw new ApiException("Unknown error");
             }
             return default;
         }

@@ -80,16 +80,19 @@ namespace BookShop.CRM.Core
                         return await Send<TResponseModel, TContent>(method, uri, content);
                     }
                 }
-                Response res = JsonConvert.DeserializeObject<Response>(json);
-                if (res?.ExceptionName == "CommonException" || res?.ExceptionName == "NotFoundException")
+                else if (!response.IsSuccessStatusCode)
                 {
-                    throw new ApiException(res.Message);
+                    Response res = JsonConvert.DeserializeObject<Response>(json);
+                    if (res?.ExceptionName == "CommonException" || res?.ExceptionName == "NotFoundException")
+                    {
+                        throw new ApiException(res.Message);
+                    }
+                    else if (res?.ExceptionName == "ValidationException")
+                    {
+                        throw new ApiException("Invalid data provided");
+                    }
+                    else throw new ApiException("Unknown error");
                 }
-                else if (res.ExceptionName == "ValidationException")
-                {
-                    throw new ApiException("Invalid data provided");
-                }
-                else throw new ApiException("Unknown error");
             }
             return default;
         }

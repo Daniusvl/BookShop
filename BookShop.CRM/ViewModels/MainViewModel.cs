@@ -26,6 +26,7 @@ namespace BookShop.CRM.ViewModels
             book = new(unitOfWork);
             author = new(unitOfWork);
             category = new(unitOfWork);
+            photo = new(unitOfWork);
         }
 
         private BookViewModel book;
@@ -58,6 +59,17 @@ namespace BookShop.CRM.ViewModels
             {
                 category = value;
                 OnPropertyChanged(nameof(Category));
+            }
+        }
+
+        private PhotoViewModel photo;
+        public PhotoViewModel Photo
+        {
+            get => photo;
+            set
+            {
+                photo = value;
+                OnPropertyChanged(nameof(Photo));
             }
         }
 

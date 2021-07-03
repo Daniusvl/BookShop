@@ -55,6 +55,8 @@
 
         <local:CategoryModelWrapperConverter x:Key="CategoryModelWrapperConverter"/>
 
+        <local:PhotoModelWrapperConverter x:Key="PhotoModelWrapperConverter"/>
+
     </Window.Resources>
     
     <Grid>
@@ -86,7 +88,8 @@
 
             <StackPanel Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Label Style="{StaticResource HeaderLabel}">Photos</Label>
-                <ListBox></ListBox>
+                <Button Command="{Binding Photo.LoadCommand}" Content="Load" IsEnabled="{Binding Photo.LoadEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <ListBox ItemsSource="{Binding Photo.Photos, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Photo.SelectedPhoto, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource PhotoModelWrapperConverter}}"></ListBox>
             </StackPanel>
             
         </Grid>
@@ -245,7 +248,53 @@
             </StackPanel>
 
             <StackPanel Style="{StaticResource EditField}" Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <StackPanel Style="{StaticResource Property}">
+                    <Label  Style="{StaticResource TextBoxLabel}" Content="Id"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Photo.SelectedPhoto.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                </StackPanel>
 
+                <StackPanel Style="{StaticResource Property}">
+                    <Label Style="{StaticResource TextBoxLabel}" Content="Book Id"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Photo.SelectedPhoto.BookId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                </StackPanel>
+
+                <StackPanel Style="{StaticResource Property}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Style="{StaticResource TextBoxLabel}" Content="Path: "/>
+                        <Button Grid.Column="1" Margin="0,0,50,0" Content="Upload file" FontSize="15" Command="{Binding Photo.UploadPhotoCommand}"/>
+                    </Grid>
+
+                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Photo.FilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </StackPanel>
+
+                <StackPanel Style="{StaticResource Property}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Margin="0,0,50,0" Content="Show photo" FontSize="15" Command="{Binding Photo.ShowPhotoCommand}" Visibility="{Binding Photo.ShowPhotoCommandVisibility}"/>
+                    </Grid>
+                </StackPanel>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="Add" FontSize="15" Margin="15,0,10,0" Command="{Binding Photo.AddCommand}" IsEnabled="{Binding Photo.AddEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Photo.AddVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,15,0" Command="{Binding Photo.UpdateCommand}" IsEnabled="{Binding Photo.UpdateEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Photo.UpdateVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,15,0" Command="{Binding Photo.DeleteCommand}" IsEnabled="{Binding Photo.DeleteEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Photo.DeleteVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </Grid>
             </StackPanel>
 
         </Grid>
