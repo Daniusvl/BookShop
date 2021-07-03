@@ -21,12 +21,13 @@ namespace BookShop.Books.Repositories
 
         public async Task<bool> ContainsWithName(string name)
         {
-            return await ctx.Books.AnyAsync(ent => ent.Name == name);
+            return await ctx.Books.Where(b => !b.Hidden).AnyAsync(ent => ent.Name == name);
         }
 
         public async Task<IList<Book>> GetByAuthor(Author author)
         {
             return await ctx.Books
+                .Where(b => !b.Hidden)
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
@@ -37,6 +38,7 @@ namespace BookShop.Books.Repositories
         public async Task<IList<Book>> GetByAuthorName(string author_name)
         {
             return await ctx.Books
+                .Where(b => !b.Hidden)
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
@@ -47,6 +49,7 @@ namespace BookShop.Books.Repositories
         public async Task<IList<Book>> GetByCategory(Category category)
         {
             return await ctx.Books
+                .Where(b => !b.Hidden)
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
@@ -56,6 +59,7 @@ namespace BookShop.Books.Repositories
         public async Task<IList<Book>> GetByCategoryName(string category_name)
         {
             return await ctx.Books
+                .Where(b => !b.Hidden)
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
@@ -66,6 +70,7 @@ namespace BookShop.Books.Repositories
         public async Task<Book> GetByName(string name)
         {
             return await ctx.Books
+                .Where(b => !b.Hidden)
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
@@ -75,6 +80,7 @@ namespace BookShop.Books.Repositories
         public async Task<IList<Book>> GetByPrice(decimal min, decimal max)
         {
             return await ctx.Books
+                .Where(b => !b.Hidden)
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
@@ -90,6 +96,7 @@ namespace BookShop.Books.Repositories
         public async Task<IList<Book>> GetNewest(int count)
         {
             return ctx.Books
+                .Where(b => !b.Hidden)
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
