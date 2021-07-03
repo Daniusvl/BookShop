@@ -1,4 +1,5 @@
-﻿using BookShop.CRM.Core.Base;
+﻿using BookShop.CRM.Core;
+using BookShop.CRM.Core.Base;
 using BookShop.CRM.Core.Exceptions;
 using BookShop.CRM.Core.Models;
 using BookShop.CRM.Models;
