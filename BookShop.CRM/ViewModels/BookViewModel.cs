@@ -1,165 +1,115 @@
-﻿using BookShop.CRM.Core;
-using BookShop.CRM.Core.Base;
-using BookShop.CRM.Core.Exceptions;
-using BookShop.CRM.Core.Models;
+﻿using BookShop.CRM.Core.Base;
 using BookShop.CRM.Models;
 using BookShop.CRM.ViewModels.Base;
 using BookShop.CRM.Wrappers;
 using Microsoft.Win32;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
 namespace BookShop.CRM.ViewModels
 {
-    public class BookViewModel : BaseViewModel
+    public class BookViewModel : BaseModelViewModel<BookModel, BookWrapper>
     {
         private readonly IUnitOfWork unitOfWork;
 
         public BookViewModel(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            Books = new();
-            Books.Add(new() { Name = "New" });
-            SelectedBook = new(Books[0]);
+            Collection = new();
+            Collection.Add(new() { Name = "New" });
+            SelectedItem = new(Collection[0]);
             LoadCommand = new Command(param => true, ExecuteLoad);
             AddCommand = new Command(CanAdd, ExecuteAdd);
-            AddFile = new Command(CanAddFile, ExecuteAddFile);
+            AddFileCommand = new Command(CanAddFile, ExecuteAddFile);
             UpdateCommand = new Command(param => true, ExecuteUpdate);
             DeleteCommand = new Command(param => true, ExecuteDelete);
         }
 
-        private List<BookModel> books;
-        public List<BookModel> Books 
-        { 
-            get => books;
-            set
-            {
-                books = value;
-                OnPropertyChanged(nameof(Books));
-            } 
-        }
-
-        private Visibility deleteBookVisibility = Visibility.Visible;
-        public Visibility DeleteBookVisibility
+        public override BookWrapper SelectedItem
         {
-            get => deleteBookVisibility;
+            get => selectedItem;
             set
             {
-                deleteBookVisibility = value;
-                OnPropertyChanged(nameof(DeleteBookVisibility));
+                selectedItem = value;
+                if (selectedItem?.Model?.Id == 0)
+                {
+                    AddFileSectionVisibility = Visibility.Visible;
+                    AddVisibility = Visibility.Visible;
+                    UpdateVisibility = Visibility.Hidden;
+                    DeleteVisibility = Visibility.Hidden;
+                }
+                else
+                {
+                    AddFileSectionVisibility = Visibility.Hidden;
+                    AddVisibility = Visibility.Hidden;
+                    UpdateVisibility = Visibility.Visible;
+                    DeleteVisibility = Visibility.Visible;
+                }
+                OnPropertyChanged(nameof(SelectedItem));
             }
         }
 
-        private Visibility updateBookVisibility = Visibility.Visible;
-        public Visibility UpdateBookVisibility
+        private Visibility addFileSectionVisibility = Visibility.Visible;
+        public Visibility AddFileSectionVisibility
         {
-            get => updateBookVisibility;
+            get => addFileSectionVisibility;
             set
             {
-                updateBookVisibility = value;
-                OnPropertyChanged(nameof(UpdateBookVisibility));
-            }
-        }
-
-        private Visibility addBookVisibility = Visibility.Visible;
-        public Visibility AddBookVisibility
-        {
-            get => addBookVisibility;
-            set
-            {
-                addBookVisibility = value;
-                OnPropertyChanged(nameof(AddBookVisibility));
-            }
-        }
-
-        private Visibility bookAddFileSectionVisibility = Visibility.Visible;
-        public Visibility BookAddFileSectionVisibility
-        {
-            get => bookAddFileSectionVisibility;
-            set
-            {
-                bookAddFileSectionVisibility = value;
-                OnPropertyChanged(nameof(BookAddFileSectionVisibility));
+                addFileSectionVisibility = value;
+                OnPropertyChanged(nameof(AddFileSectionVisibility));
             }
         }
 
 
-        public void ExecuteDelete(object param)
+        public async void ExecuteDelete(object param)
         {
-            DeleteBookEnabled = false;
-            if (selectedBook.Id == 0)
-            {
-                MessageBox.Show("This item does not exist", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                DeleteBookEnabled = true;
-                return;
-            }
+            DeleteEnabled = false;
 
-            MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete this item {SelectedBook.Name}",
+            await SafeRequestSend(async () =>
+            {
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete this item {SelectedItem.Name}",
                 "Delete?", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if(result == MessageBoxResult.Yes)
-            {
-                try
+                if (result == MessageBoxResult.Yes)
                 {
-                    unitOfWork.BookRepository.Remove(selectedBook.Id);
-                    List<BookModel> new_books = Books;
-                    BookModel book = new_books.SingleOrDefault(b => b.Id == selectedBook.Id);
-                    new_books.Remove(book);
-                    Books = new(new_books);
-                    SelectedBook = new(Books[0]);
+                    await unitOfWork.BookRepository.Remove(SelectedItem.Id);
+                    BookModel book = Collection.SingleOrDefault(b => b.Id == SelectedItem.Id);
+                    Collection.Remove(book);
+                    Collection = new(Collection);
+                    SelectedItem = new(Collection[0]);
                 }
-                catch (ApiException e)
-                {
-                    MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            DeleteBookEnabled = true;
+            });
+            
+            DeleteEnabled = true;
         }
-        public ICommand DeleteCommand { get; }
 
 
         public async void ExecuteUpdate(object param)
         {
-            UpdateBookEnabled = false;
+            UpdateEnabled = false;
 
-            if (selectedBook.Id == 0)
+            await SafeRequestSend(async () =>
             {
-                MessageBox.Show("This item does not exist", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                UpdateBookEnabled = true;
-                return;
-            }
-
-            MessageBoxResult result = MessageBox.Show($"Are you sure you want to update this item {SelectedBook.Name}",
-                "Update?", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-            {
-                try
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to update this item {SelectedItem.Name}",
+           "Update?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
                 {
-                    BookModel book = await unitOfWork.BookRepository.Update(selectedBook.Model);
-                    List<BookModel> new_books = Books;
-                    BookModel outdated = new_books.FirstOrDefault(b => b.Id == book.Id);
-                    int index = new_books.IndexOf(outdated);
-                    new_books.Remove(outdated);
-                    new_books.Insert(index, book);
-                    Books = new(new_books);
-                    SelectedBook = new(Books[index]);
+                    BookModel book = await unitOfWork.BookRepository.Update(SelectedItem.Model);
+                    BookModel outdated = Collection.FirstOrDefault(b => b.Id == book.Id);
+                    int index = Collection.IndexOf(outdated);
+                    Collection.Remove(outdated);
+                    Collection.Insert(index, book);
+                    Collection = new(Collection);
+                    SelectedItem = new(Collection[index]);
                 }
-                catch (ApiException e)
-                {
-                    MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+            });
 
-            }
-
-            UpdateBookEnabled = true;
+            UpdateEnabled = true;
         }
-
-        public ICommand UpdateCommand { get; }
 
         public bool CanAddFile(object param)
         {
-            return SelectedBook.Model.Id == 0;
+            return SelectedItem.Id == 0;
         }
 
         public void ExecuteAddFile(object param)
@@ -172,66 +122,54 @@ namespace BookShop.CRM.ViewModels
             }
         }
 
-        public ICommand AddFile { get; }
+        public ICommand AddFileCommand { get; }
 
         public bool CanAdd(object param)
         {
-            return !SelectedBook.HasErrors;
+            return !SelectedItem.HasErrors;
         }
 
         public async void ExecuteAdd(object param)
         {
-            AddBookEnabled = false;
-            if (string.IsNullOrEmpty(FilePath))
-            {
-                MessageBox.Show("You need to add file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                AddBookEnabled = true;
-                return;
-            }
+            AddEnabled = false;
 
-            AddBookCommand command = SelectedBook.Model;
-            try
+            await SafeRequestSend(async () =>
             {
-                BookModel book = await unitOfWork.BookRepository.Add(command);
+                if (string.IsNullOrEmpty(FilePath))
+                {
+                    MessageBox.Show("You need to add file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    AddEnabled = true;
+                    return;
+                }
+                BookModel book = await unitOfWork.BookRepository.Add(SelectedItem.Model);
                 if (book.Id != 0)
                 {
                     await unitOfWork.BookRepository.UploadFile(FilePath, book.Id);
-                    List<BookModel> new_books = Books;
-                    new_books[0] = book;
-                    new_books.Insert(0, new() { Name = "New" });
-                    Books = new(new_books);
-                    SelectedBook = new(new_books[1]);
+                    Collection[0] = book;
+                    Collection.Insert(0, new() { Name = "New" });
+                    Collection = new(Collection);
+                    SelectedItem = new(Collection[1]);
                     FilePath = string.Empty;
                 }
-            }
-            catch (ApiException e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            AddBookEnabled = true;
+            });
+
+            AddEnabled = true;
         }
-        public ICommand AddCommand { get; }
 
         private async void ExecuteLoad(object param)
         {
-            LoadBooksEnabled = false;
-            int selected_id = SelectedBook.Model.Id;
-            try
+            LoadEnabled = false;
+            await SafeRequestSend(async () =>
             {
-                List<BookModel> books = (await unitOfWork.BookRepository.GetAll()).ToList();
-                books.Reverse();
-                books.Insert(0, new() { Name = "New" });
-                Books = books;
-                SelectedBook = new(Books.FirstOrDefault(b => b.Id == selected_id));
-            }
-            catch (ApiException e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            LoadBooksEnabled = true;
+                int selected_id = SelectedItem.Id;
+                Collection = (await unitOfWork.BookRepository.GetAll()).ToList();
+                Collection.Reverse();
+                Collection.Insert(0, new() { Name = "New" });
+                Collection = new(Collection);
+                SelectedItem = new(Collection.FirstOrDefault(b => b.Id == selected_id));
+            });
+            LoadEnabled = true;
         }
-
-        public ICommand LoadCommand { get; }
 
         private string filePath = string.Empty;
         public string FilePath
@@ -241,75 +179,6 @@ namespace BookShop.CRM.ViewModels
             {
                 filePath = value;
                 OnPropertyChanged(nameof(FilePath));
-            }
-        }
-
-        private BookWrapper selectedBook;
-        public BookWrapper SelectedBook 
-        {
-            get => selectedBook;
-            set 
-            {
-                selectedBook = value;
-                if (selectedBook?.Model?.Id == 0)
-                {
-                    BookAddFileSectionVisibility = Visibility.Visible;
-                    AddBookVisibility = Visibility.Visible;
-                    UpdateBookVisibility = Visibility.Hidden;
-                    DeleteBookVisibility = Visibility.Hidden;
-                }
-                else 
-                {
-                    BookAddFileSectionVisibility = Visibility.Hidden;
-                    AddBookVisibility = Visibility.Hidden;
-                    UpdateBookVisibility = Visibility.Visible;
-                    DeleteBookVisibility = Visibility.Visible;
-                }
-                OnPropertyChanged(nameof(SelectedBook));
-            } 
-        }
-
-        private bool deleteBookEnabled = true;
-        public bool DeleteBookEnabled
-        {
-            get => deleteBookEnabled;
-            set
-            {
-                deleteBookEnabled = value;
-                OnPropertyChanged(nameof(DeleteBookEnabled));
-            }
-        }
-
-        private bool updateBookEnabled = true;
-        public bool UpdateBookEnabled
-        {
-            get => updateBookEnabled;
-            set
-            {
-                updateBookEnabled = value;
-                OnPropertyChanged(nameof(UpdateBookEnabled));
-            }
-        }
-
-        private bool addBookEnabled = true;
-        public bool AddBookEnabled
-        {
-            get => addBookEnabled;
-            set
-            {
-                addBookEnabled = value;
-                OnPropertyChanged(nameof(AddBookEnabled));
-            }
-        }
-
-        private bool loadBooksEnabled = true;
-        public bool LoadBooksEnabled
-        {
-            get => loadBooksEnabled;
-            set
-            {
-                loadBooksEnabled = value;
-                OnPropertyChanged(nameof(LoadBooksEnabled));
             }
         }
     }

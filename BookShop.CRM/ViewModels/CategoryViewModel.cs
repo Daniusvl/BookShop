@@ -1,27 +1,21 @@
-﻿using BookShop.CRM.Core;
-using BookShop.CRM.Core.Base;
-using BookShop.CRM.Core.Exceptions;
+﻿using BookShop.CRM.Core.Base;
 using BookShop.CRM.Models;
 using BookShop.CRM.ViewModels.Base;
 using BookShop.CRM.Wrappers;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
 
 namespace BookShop.CRM.ViewModels
 {
-    public class CategoryViewModel : BaseViewModel
+    public class CategoryViewModel : BaseModelViewModel<CategoryModel, CategoryWrapper>
     {
         private readonly IUnitOfWork unitOfWork;
 
         public CategoryViewModel(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            List<CategoryModel> categories = new();
-            categories.Add(new CategoryModel { Name = "New" });
-            Categories = categories;
-            SelectedCategory = new(Categories[0]);
+            Collection = new() { new CategoryModel { Name = "New" } };
+            SelectedItem = new(Collection[0]);
 
             LoadCommand = new Command(param => true, ExecuteLoad);
             AddCommand = new Command(CanAdd, ExecuteAdd);
@@ -29,129 +23,13 @@ namespace BookShop.CRM.ViewModels
             DeleteCommand = new Command(param => true, ExecuteDelete);
         }
 
-        public ICommand LoadCommand { get; }
-        
-        public ICommand AddCommand { get; }
-        
-        public ICommand UpdateCommand { get; }
-
-        public ICommand DeleteCommand { get; }
-
-        public async void ExecuteLoad(object param)
+        public override CategoryWrapper SelectedItem
         {
-            LoadEnabled = false;
-
-            try
-            {
-                int id = selectedCategory.Model.Id;
-                List<CategoryModel> categories = (await unitOfWork.CategoryRepository.GetAll()).ToList();
-                categories.Reverse();
-                categories.Insert(0, new CategoryModel { Name = "New" });
-                Categories = new(categories);
-                SelectedCategory = new(Categories.FirstOrDefault(c => c.Id == id));
-            }
-            catch (ApiException e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-            LoadEnabled = true;
-        }
-
-        public bool CanAdd(object param)
-        {
-            return !SelectedCategory.HasErrors;
-        }
-
-        public async void ExecuteAdd(object param)
-        {
-            AddEnabled = false;
-            try
-            {
-                AddCategoryCommand command = selectedCategory.Model;
-                CategoryModel category = await unitOfWork.CategoryRepository.Add(command);
-                List<CategoryModel> categories = Categories;
-                categories[0] = category;
-                categories.Insert(0, new CategoryModel { Name = "New" });
-                Categories = new(categories);
-                SelectedCategory = new(Categories[1]);
-            }
-            catch (ApiException e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            AddEnabled = true;
-        }
-
-        public async void ExecuteUpdate(object param)
-        {
-            UpdateEnabled = false;
-            try
-            {
-                MessageBoxResult result = MessageBox.Show($"Are you sure you want to update this item {SelectedCategory.Name}",
-                "Update?", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if(result == MessageBoxResult.Yes)
-                {
-                    UpdateCategoryCommand command = selectedCategory.Model;
-                    CategoryModel category = await unitOfWork.CategoryRepository.Update(command);
-                    List<CategoryModel> categories = Categories;
-                    CategoryModel previous = categories.FirstOrDefault(c => c.Id == selectedCategory.Model.Id);
-                    int index = categories.IndexOf(previous);
-                    categories[index] = category;
-                    Categories = new(categories);
-                    SelectedCategory = new(Categories[index]);
-                }
-            }
-            catch (ApiException e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            UpdateEnabled = true;
-        }
-
-        public async void ExecuteDelete(object param)
-        {
-            DeleteEnabled = false;
-            try
-            {
-                MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete this item {SelectedCategory.Name}",
-                "Delete?", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if(result == MessageBoxResult.Yes)
-                {
-                    await unitOfWork.CategoryRepository.Remove(selectedCategory.Model.Id);
-                    List<CategoryModel> categories = Categories;
-                    CategoryModel previous = categories.FirstOrDefault(c => c.Id == selectedCategory.Model.Id);
-                    categories.Remove(previous);
-                    Categories = new(categories);
-                    SelectedCategory = new(Categories[0]);
-                }
-            }
-            catch (ApiException e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            DeleteEnabled = true;
-        }
-
-        private List<CategoryModel> categories;
-        public List<CategoryModel> Categories 
-        {
-            get => categories;
+            get => selectedItem;
             set
             {
-                categories = value;
-                OnPropertyChanged(nameof(Categories));
-            }        
-        }
-
-        private CategoryWrapper selectedCategory;
-        public CategoryWrapper SelectedCategory
-        {
-            get => selectedCategory;
-            set
-            {
-                selectedCategory = value;
-                if(selectedCategory?.Model?.Id == 0)
+                selectedItem = value;
+                if (selectedItem?.Model?.Id == 0)
                 {
                     AddVisibility = Visibility.Visible;
                     UpdateVisibility = Visibility.Hidden;
@@ -163,85 +41,89 @@ namespace BookShop.CRM.ViewModels
                     UpdateVisibility = Visibility.Visible;
                     DeleteVisibility = Visibility.Visible;
                 }
-                OnPropertyChanged(nameof(SelectedCategory));
+                OnPropertyChanged(nameof(SelectedItem));
             }
         }
 
-        private Visibility deleteVisibility = Visibility.Visible;
-        public Visibility DeleteVisibility
+        public async void ExecuteLoad(object param)
         {
-            get => deleteVisibility;
-            set
+            LoadEnabled = false;
+
+            await SafeRequestSend(async () =>
             {
-                deleteVisibility = value;
-                OnPropertyChanged(nameof(DeleteVisibility));
-            }
+                int id = selectedItem.Id;
+                Collection = (await unitOfWork.CategoryRepository.GetAll()).ToList();
+                Collection.Reverse();
+                Collection.Insert(0, new CategoryModel { Name = "New" });
+                Collection = new(Collection);
+                SelectedItem = new(Collection.FirstOrDefault(c => c.Id == id));
+            });
+
+            LoadEnabled = true;
         }
 
-        private Visibility updateVisibility = Visibility.Visible;
-        public Visibility UpdateVisibility
+        public bool CanAdd(object param)
         {
-            get => updateVisibility;
-            set
-            {
-                updateVisibility = value;
-                OnPropertyChanged(nameof(UpdateVisibility));
-            }
+            return !SelectedItem.HasErrors;
         }
 
-        private Visibility addVisibility = Visibility.Visible;
-        public Visibility AddVisibility
+        public async void ExecuteAdd(object param)
         {
-            get => addVisibility;
-            set
+            AddEnabled = false;
+
+            await SafeRequestSend(async () =>
             {
-                addVisibility = value;
-                OnPropertyChanged(nameof(AddVisibility));
-            }
+                CategoryModel category = await unitOfWork.CategoryRepository.Add(SelectedItem.Model);
+                Collection[0] = category;
+                Collection.Insert(0, new CategoryModel { Name = "New" });
+                Collection = new(Collection);
+                SelectedItem = new(Collection[1]);
+            });
+
+            AddEnabled = true;
         }
 
-        private bool deleteEnabled = true;
-        public bool DeleteEnabled
+        public async void ExecuteUpdate(object param)
         {
-            get => deleteEnabled;
-            set
+            UpdateEnabled = false;
+
+            await SafeRequestSend(async () =>
             {
-                deleteEnabled = value;
-                OnPropertyChanged(nameof(DeleteEnabled));
-            }
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to update this item {SelectedItem.Name}",
+                        "Update?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    CategoryModel category = await unitOfWork.CategoryRepository.Update(SelectedItem.Model);
+                    CategoryModel previous = Collection.FirstOrDefault(c => c.Id == SelectedItem.Id);
+                    int index = Collection.IndexOf(previous);
+                    Collection[index] = category;
+                    Collection = new(Collection);
+                    SelectedItem = new(Collection[index]);
+                }
+            });
+
+            UpdateEnabled = true;
         }
 
-        private bool updateEnabled = true;
-        public bool UpdateEnabled
+        public async void ExecuteDelete(object param)
         {
-            get => updateEnabled;
-            set
-            {
-                updateEnabled = value;
-                OnPropertyChanged(nameof(UpdateEnabled));
-            }
-        }
+            DeleteEnabled = false;
 
-        private bool addEnabled = true;
-        public bool AddEnabled 
-        { 
-            get => addEnabled; 
-            set
+            await SafeRequestSend(async () =>
             {
-                addEnabled = value;
-                OnPropertyChanged(nameof(AddEnabled));
-            }
-        }
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete this item {SelectedItem.Name}",
+                    "Delete?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    await unitOfWork.CategoryRepository.Remove(SelectedItem.Id);
+                    CategoryModel previous = Collection.FirstOrDefault(c => c.Id == SelectedItem.Id);
+                    Collection.Remove(previous);
+                    Collection = new(Collection);
+                    SelectedItem = new(Collection[0]);
+                }
+            });
 
-        private bool loadEnabled = true;
-        public bool LoadEnabled
-        {
-            get => loadEnabled;
-            set
-            {
-                loadEnabled = value;
-                OnPropertyChanged(nameof(LoadEnabled));
-            }
+            DeleteEnabled = true;
         }
     }
 }

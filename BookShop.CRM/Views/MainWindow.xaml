@@ -70,26 +70,26 @@
             
             <StackPanel Visibility="{Binding BooksVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Label Style="{StaticResource HeaderLabel}">Books</Label>
-                <Button Command="{Binding Book.LoadCommand}" Content="Load" IsEnabled="{Binding Book.LoadBooksEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <ListBox ItemsSource="{Binding Book.Books, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Book.SelectedBook, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BookModelWrapperConverter}}"></ListBox>
+                <Button Command="{Binding Book.LoadCommand}" Content="Load" IsEnabled="{Binding Book.LoadEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <ListBox ItemsSource="{Binding Book.Collection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Book.SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BookModelWrapperConverter}}"></ListBox>
             </StackPanel>
 
             <StackPanel Visibility="{Binding AuthorsVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Label Style="{StaticResource HeaderLabel}">Authors</Label>
                 <Button Command="{Binding Author.LoadCommand}" Content="Load" IsEnabled="{Binding Author.LoadEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <ListBox ItemsSource="{Binding Author.Authors, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Author.SelectedAuthor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource AuthorModelWrapperConverter}}"></ListBox>
+                <ListBox ItemsSource="{Binding Author.Collection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Author.SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource AuthorModelWrapperConverter}}"></ListBox>
             </StackPanel>
 
             <StackPanel Visibility="{Binding CategoriesVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Label Style="{StaticResource HeaderLabel}">Categories</Label>
                 <Button Command="{Binding Category.LoadCommand}" Content="Load" IsEnabled="{Binding Category.LoadEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <ListBox ItemsSource="{Binding Category.Categories, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Category.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource CategoryModelWrapperConverter}}"></ListBox>
+                <ListBox ItemsSource="{Binding Category.Collection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Category.SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource CategoryModelWrapperConverter}}"></ListBox>
             </StackPanel>
 
             <StackPanel Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <Label Style="{StaticResource HeaderLabel}">Photos</Label>
                 <Button Command="{Binding Photo.LoadCommand}" Content="Load" IsEnabled="{Binding Photo.LoadEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <ListBox ItemsSource="{Binding Photo.Photos, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Photo.SelectedPhoto, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource PhotoModelWrapperConverter}}"></ListBox>
+                <ListBox ItemsSource="{Binding Photo.Collection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Photo.SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource PhotoModelWrapperConverter}}"></ListBox>
             </StackPanel>
             
         </Grid>
@@ -102,17 +102,17 @@
                     
                     <StackPanel Style="{StaticResource Property}">
                         <Label Style="{StaticResource TextBoxLabel}" Content="Id" />
-                        <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Book.SelectedBook.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                        <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Book.SelectedItem.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource Property}">
                         <Label Style="{StaticResource TextBoxLabel}" Content="Name" />
-                        <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Book.SelectedBook.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Book.SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource Property}">
                         <Label Style="{StaticResource TextBoxLabel}" Content="Description" />
-                        <TextBox Style="{StaticResource TextBoxInput}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Book.SelectedBook.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBox Style="{StaticResource TextBoxInput}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Book.SelectedItem.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource Property}">
@@ -123,18 +123,18 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Style="{StaticResource TextBoxLabel}" Content="Price (€)" Margin="15,0,0,0" />
-                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="20,5,20,5" Text="{Binding Book.SelectedBook.Price, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DecimalStringConverter}}" />
+                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="20,5,20,5" Text="{Binding Book.SelectedItem.Price, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource DecimalStringConverter}}" />
                         </Grid>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource Property}">
-                        <CheckBox Grid.Column="4" FontSize="15" Content="Hidden" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="{Binding Book.SelectedBook.Hidden, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <CheckBox Grid.Column="4" FontSize="15" Content="Hidden" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="{Binding Book.SelectedItem.Hidden, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource Property}">
 
                         <Label Style="{StaticResource TextBoxLabel}" Content="Date released"/>
-                        <Calendar Margin="10" DisplayDate="{Binding Book.SelectedBook.DateReleased, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></Calendar>
+                        <Calendar Margin="10" DisplayDate="{Binding Book.SelectedItem.DateReleased, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></Calendar>
                     
                     </StackPanel>
 
@@ -145,7 +145,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Style="{StaticResource TextBoxLabel}" Content="Author id"/>
-                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="0,0,50,0" Text="{Binding Book.SelectedBook.AuthorId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="0,0,50,0" Text="{Binding Book.SelectedItem.AuthorId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
                     </Grid>
                 </StackPanel>
 
@@ -156,18 +156,18 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Style="{StaticResource TextBoxLabel}" Content="Category id"/>
-                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="0,0,50,0" Text="{Binding Book.SelectedBook.CategoryId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                            <TextBox Style="{StaticResource TextBoxInput}" Grid.Column="1" Margin="0,0,50,0" Text="{Binding Book.SelectedItem.CategoryId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
                     </Grid>
                 </StackPanel>
 
-                    <StackPanel Style="{StaticResource Property}" Visibility="{Binding Book.BookAddFileSectionVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <StackPanel Style="{StaticResource Property}" Visibility="{Binding Book.AddFileSectionVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width=".8*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Style="{StaticResource TextBoxLabel}" Content="Path: "/>
-                            <Button Grid.Column="1" Margin="0,0,50,0" Content="Upload file" FontSize="15" Command="{Binding Book.AddFile}"/>
+                            <Button Grid.Column="1" Margin="0,0,50,0" Content="Upload file" FontSize="15" Command="{Binding Book.AddFileCommand}"/>
                     </Grid>
 
                         <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Book.FilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -184,9 +184,9 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Button Content="Add" FontSize="15" Margin="15,0,10,0" Command="{Binding Book.AddCommand}" IsEnabled="{Binding Book.AddBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.AddBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                        <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,15,0" Command="{Binding Book.UpdateCommand}" IsEnabled="{Binding Book.UpdateBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.UpdateBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                        <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,15,0" Command="{Binding Book.DeleteCommand}" IsEnabled="{Binding Book.DeleteBookEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.DeleteBookVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Content="Add" FontSize="15" Margin="15,0,10,0" Command="{Binding Book.AddCommand}" IsEnabled="{Binding Book.AddEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.AddVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Grid.Column="1" Content="Update" FontSize="15" Margin="10,0,15,0" Command="{Binding Book.UpdateCommand}" IsEnabled="{Binding Book.UpdateEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.UpdateVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Grid.Column="1" Grid.Row="1" Content="Delete" FontSize="15" Margin="10,0,15,0" Command="{Binding Book.DeleteCommand}" IsEnabled="{Binding Book.DeleteEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Visibility="{Binding Book.DeleteVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </Grid>
                 </StackPanel>
              </ScrollViewer>
@@ -195,12 +195,12 @@
             <StackPanel Style="{StaticResource EditField}" Visibility="{Binding AuthorsVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <StackPanel Style="{StaticResource Property}">
                     <Label  Style="{StaticResource TextBoxLabel}" Content="Id"/>
-                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Author.SelectedAuthor.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Author.SelectedItem.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
                 </StackPanel>
 
                 <StackPanel Style="{StaticResource Property}">
                     <Label Style="{StaticResource TextBoxLabel}" Content="Name"/>
-                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Author.SelectedAuthor.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Author.SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
 
                 <Grid>
@@ -223,12 +223,12 @@
             <StackPanel Style="{StaticResource EditField}" Visibility="{Binding CategoriesVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <StackPanel Style="{StaticResource Property}">
                     <Label  Style="{StaticResource TextBoxLabel}" Content="Id"/>
-                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Category.SelectedCategory.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Category.SelectedItem.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
                 </StackPanel>
 
                 <StackPanel Style="{StaticResource Property}">
                     <Label Style="{StaticResource TextBoxLabel}" Content="Name"/>
-                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Category.SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Category.SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
 
                 <Grid>
@@ -250,12 +250,12 @@
             <StackPanel Style="{StaticResource EditField}" Visibility="{Binding PhotosVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <StackPanel Style="{StaticResource Property}">
                     <Label  Style="{StaticResource TextBoxLabel}" Content="Id"/>
-                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Photo.SelectedPhoto.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" IsReadOnly="True" Text="{Binding Photo.SelectedItem.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
                 </StackPanel>
 
                 <StackPanel Style="{StaticResource Property}">
                     <Label Style="{StaticResource TextBoxLabel}" Content="Book Id"/>
-                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Photo.SelectedPhoto.BookId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
+                    <TextBox Style="{StaticResource TextBoxInput}" Text="{Binding Photo.SelectedItem.BookId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntStringConverter}}"/>
                 </StackPanel>
 
                 <StackPanel Style="{StaticResource Property}">
