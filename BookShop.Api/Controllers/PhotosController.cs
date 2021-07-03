@@ -1,6 +1,7 @@
 ﻿using BookShop.Core.Abstract.Features.FileUploader;
 using BookShop.Core.Mediatr.Photo.Commands.Create;
 using BookShop.Core.Mediatr.Photo.Commands.Delete;
+using BookShop.Core.Mediatr.Photo.Commands.Update;
 using BookShop.Core.Mediatr.Photo.Queries;
 using BookShop.Core.Models;
 using BookShop.Features.FileUploader;
@@ -55,6 +56,14 @@ namespace BookShop.Api.Controllers
         {
             await pngFileUploader.UploadFile(Request.Body, id, (int)Request.ContentLength);
             return Ok();
+        }
+
+        [HttpPut]
+        [Authorize(Policy = RoleConstants.ModeratorName)]
+        public async Task<IActionResult> Update(UpdatePhotoCommand command)
+        {
+            PhotoModel photo = await mediator.Send(command);
+            return Ok(photo);
         }
 
         [HttpDelete("{id}")]
