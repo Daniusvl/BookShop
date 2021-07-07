@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Books.Tests", "Boo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Features", "BookShop.Features\BookShop.Features.csproj", "{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.CRM", "BookShop.CRM\BookShop.CRM.csproj", "{987884EB-0BE3-412E-8B61-28B67776FEEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.CRM", "BookShop.CRM\BookShop.CRM.csproj", "{987884EB-0BE3-412E-8B61-28B67776FEEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookShop.BrowserClient", "BookShop.BrowserClient\BookShop.BrowserClient.csproj", "{799F6257-2DA5-4735-8508-D8E2FE888EA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{987884EB-0BE3-412E-8B61-28B67776FEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{987884EB-0BE3-412E-8B61-28B67776FEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{987884EB-0BE3-412E-8B61-28B67776FEEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{799F6257-2DA5-4735-8508-D8E2FE888EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{799F6257-2DA5-4735-8508-D8E2FE888EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{799F6257-2DA5-4735-8508-D8E2FE888EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{799F6257-2DA5-4735-8508-D8E2FE888EA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{AC73CEF6-E923-4A3C-A492-9969F27560E8} = {03A13C86-152F-422D-9D57-D13A614246F5}
 		{E6B71927-3E17-47FC-B8BE-CEAA6DEB5BE8} = {4FA2CFC6-3A88-41D7-9F6A-A13A3B9E596B}
 		{987884EB-0BE3-412E-8B61-28B67776FEEB} = {90F9FA72-C79A-45E2-82E8-A364BF03A76C}
+		{799F6257-2DA5-4735-8508-D8E2FE888EA9} = {90F9FA72-C79A-45E2-82E8-A364BF03A76C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {630AF308-FF70-4753-9565-27A0E1198367}
