@@ -125,5 +125,18 @@ namespace BookShop.Books.Repositories
                 .Include(b => b.Photos)
                 .ToListAsync();
         }
+
+        public async Task<IList<Book>> GetByFilters(IList<Category> categories, IList<Author> authors, decimal PriceMin, decimal PriceMax)
+        {
+            return await ctx.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .Include(b => b.Photos)
+                .Where(b => categories.Contains(b.Category) &&
+                            authors.Contains(b.Author) && 
+                            b.Price >= PriceMin && 
+                            b.Price <= PriceMax)
+                .ToListAsync();
+        }
     }
 }

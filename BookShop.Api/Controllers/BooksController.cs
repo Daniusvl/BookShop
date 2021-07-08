@@ -43,6 +43,13 @@ namespace BookShop.Api.Controllers
             return Ok(books);
         }
 
+        [HttpGet("ByFilter")]
+        public async Task<IActionResult> GetByFilter([FromBody] GetByFiltersQuery query)
+        {
+            IList<BookModel> books = await mediator.Send(query);
+            return Ok(books);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetbyId(int id)
         {

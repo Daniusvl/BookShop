@@ -28,5 +28,7 @@ namespace BookShop.Core.Abstract.Repositories
         Task<IList<Book>> GetByAuthor(Author author);
                         
         Task<IList<Book>> GetByAuthorName(string author_name);
+
+        Task<IList<Book>> GetByFilters(IList<Category> categories, IList<Author> authors, decimal PriceMin, decimal PriceMax);
     }
 }
