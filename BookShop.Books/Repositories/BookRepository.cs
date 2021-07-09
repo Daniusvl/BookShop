@@ -132,6 +132,7 @@ namespace BookShop.Books.Repositories
                 .Include(b => b.Author)
                 .Include(b => b.Category)
                 .Include(b => b.Photos)
+                .Where(b => !b.Hidden)
                 .Where(b => categories.Contains(b.Category) &&
                             authors.Contains(b.Author) && 
                             b.Price >= PriceMin && 
