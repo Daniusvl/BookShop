@@ -43,6 +43,11 @@ namespace BookShop.Api
                     Version= "v1",
                     Title = "BookShop API",
                 }));
+
+            services.AddCors(setup =>
+            {
+                setup.AddDefaultPolicy(p => p.WithOrigins("https://localhost:5101").AllowAnyHeader());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -54,6 +59,9 @@ namespace BookShop.Api
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseRouting();
+
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
