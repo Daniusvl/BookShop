@@ -43,7 +43,7 @@ namespace BookShop.Api.Controllers
             return Ok(books);
         }
 
-        [HttpGet("ByFilter")]
+        [HttpPost("ByFilter")]
         public async Task<IActionResult> GetByFilter([FromBody] GetByFiltersQuery query)
         {
             IList<BookModel> books = await mediator.Send(query);
